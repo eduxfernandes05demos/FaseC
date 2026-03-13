@@ -34,19 +34,19 @@ graph TD
 
 | File | Path | Purpose | Key Functions |
 |------|------|---------|---------------|
-| `r_main.c` | `Quake/WinQuake/` | Rendering entry point, frustum setup | `R_RenderView()`, `R_SetupFrame()` |
-| `r_bsp.c` | `Quake/WinQuake/` | BSP tree traversal, visible surface determination | `R_RenderWorld()`, `R_RecursiveWorldNode()` |
-| `r_edge.c` | `Quake/WinQuake/` | Edge-based scan conversion | `R_EdgeDrawing()`, `R_ScanEdges()` |
-| `r_surf.c` | `Quake/WinQuake/` | Surface rendering with lightmaps | `R_DrawSurface()`, `R_BuildLightMap()` |
-| `r_alias.c` | `Quake/WinQuake/` | Animated mesh model rendering | `R_AliasDrawModel()` |
-| `r_light.c` | `Quake/WinQuake/` | Dynamic light contribution | `R_AddDynamicLights()`, `R_MarkLights()` |
-| `r_part.c` | `Quake/WinQuake/` | Particle effects | `R_DrawParticles()` |
-| `r_sky.c` | `Quake/WinQuake/` | Scrolling sky texture | `R_DrawSkyChain()` |
-| `d_edge.c` | `Quake/WinQuake/` | Low-level edge processing | `D_DrawSurfaces()` |
-| `d_scan.c` | `Quake/WinQuake/` | Affine texture mapping spans | `D_DrawSpans8()` |
-| `d_surf.c` | `Quake/WinQuake/` | Surface cache management | `D_CacheSurface()` |
+| `r_main.c` | `legacy-src/desktop-engine/` | Rendering entry point, frustum setup | `R_RenderView()`, `R_SetupFrame()` |
+| `r_bsp.c` | `legacy-src/desktop-engine/` | BSP tree traversal, visible surface determination | `R_RenderWorld()`, `R_RecursiveWorldNode()` |
+| `r_edge.c` | `legacy-src/desktop-engine/` | Edge-based scan conversion | `R_EdgeDrawing()`, `R_ScanEdges()` |
+| `r_surf.c` | `legacy-src/desktop-engine/` | Surface rendering with lightmaps | `R_DrawSurface()`, `R_BuildLightMap()` |
+| `r_alias.c` | `legacy-src/desktop-engine/` | Animated mesh model rendering | `R_AliasDrawModel()` |
+| `r_light.c` | `legacy-src/desktop-engine/` | Dynamic light contribution | `R_AddDynamicLights()`, `R_MarkLights()` |
+| `r_part.c` | `legacy-src/desktop-engine/` | Particle effects | `R_DrawParticles()` |
+| `r_sky.c` | `legacy-src/desktop-engine/` | Scrolling sky texture | `R_DrawSkyChain()` |
+| `d_edge.c` | `legacy-src/desktop-engine/` | Low-level edge processing | `D_DrawSurfaces()` |
+| `d_scan.c` | `legacy-src/desktop-engine/` | Affine texture mapping spans | `D_DrawSpans8()` |
+| `d_surf.c` | `legacy-src/desktop-engine/` | Surface cache management | `D_CacheSurface()` |
 
-**Key data structures (`Quake/WinQuake/model.h`, `Quake/WinQuake/r_local.h`):**
+**Key data structures (`legacy-src/desktop-engine/model.h`, `legacy-src/desktop-engine/r_local.h`):**
 
 | Structure | Purpose |
 |-----------|---------|
@@ -62,18 +62,18 @@ The OpenGL renderer replaces the software rasterizer with hardware-accelerated p
 
 | File | Path | Purpose | Key Functions |
 |------|------|---------|---------------|
-| `gl_rmain.c` | `Quake/WinQuake/` | GL rendering entry point | `R_RenderView()`, `R_DrawEntitiesOnList()` |
-| `gl_rsurf.c` | `Quake/WinQuake/` | GL surface/BSP rendering | `R_DrawBrushModel()`, `R_DrawWorld()` |
-| `gl_mesh.c` | `Quake/WinQuake/` | GL alias model mesh rendering | `GL_MakeAliasModelDisplayLists()` |
-| `gl_rlight.c` | `Quake/WinQuake/` | GL dynamic lighting | `R_RenderDlights()` |
-| `gl_draw.c` | `Quake/WinQuake/` | GL 2D drawing (HUD, console) | `GL_Upload8()`, `Draw_Pic()` |
-| `gl_warp.c` | `Quake/WinQuake/` | GL sky and water warping | `EmitWaterPolys()`, `R_DrawSkyChain()` |
-| `gl_model.c` | `Quake/WinQuake/` | GL-specific model loading | `Mod_LoadBrushModel()` |
-| `gl_refrag.c` | `Quake/WinQuake/` | GL entity fragment linking | `R_StoreEfrags()` |
-| `gl_screen.c` | `Quake/WinQuake/` | GL screen management | `SCR_UpdateScreen()` |
-| `gl_vidnt.c` | `Quake/WinQuake/` | GL Windows video driver | `VID_Init()` |
-| `gl_vidlinux.c` | `Quake/WinQuake/` | GL Linux SVGA video driver | `VID_Init()` |
-| `gl_vidlinuxglx.c` | `Quake/WinQuake/` | GL Linux X11/GLX video driver | `VID_Init()` |
+| `gl_rmain.c` | `legacy-src/desktop-engine/` | GL rendering entry point | `R_RenderView()`, `R_DrawEntitiesOnList()` |
+| `gl_rsurf.c` | `legacy-src/desktop-engine/` | GL surface/BSP rendering | `R_DrawBrushModel()`, `R_DrawWorld()` |
+| `gl_mesh.c` | `legacy-src/desktop-engine/` | GL alias model mesh rendering | `GL_MakeAliasModelDisplayLists()` |
+| `gl_rlight.c` | `legacy-src/desktop-engine/` | GL dynamic lighting | `R_RenderDlights()` |
+| `gl_draw.c` | `legacy-src/desktop-engine/` | GL 2D drawing (HUD, console) | `GL_Upload8()`, `Draw_Pic()` |
+| `gl_warp.c` | `legacy-src/desktop-engine/` | GL sky and water warping | `EmitWaterPolys()`, `R_DrawSkyChain()` |
+| `gl_model.c` | `legacy-src/desktop-engine/` | GL-specific model loading | `Mod_LoadBrushModel()` |
+| `gl_refrag.c` | `legacy-src/desktop-engine/` | GL entity fragment linking | `R_StoreEfrags()` |
+| `gl_screen.c` | `legacy-src/desktop-engine/` | GL screen management | `SCR_UpdateScreen()` |
+| `gl_vidnt.c` | `legacy-src/desktop-engine/` | GL Windows video driver | `VID_Init()` |
+| `gl_vidlinux.c` | `legacy-src/desktop-engine/` | GL Linux SVGA video driver | `VID_Init()` |
+| `gl_vidlinuxglx.c` | `legacy-src/desktop-engine/` | GL Linux X11/GLX video driver | `VID_Init()` |
 
 **Defined by:** `GLQUAKE` preprocessor macro
 
@@ -96,15 +96,15 @@ graph TD
 
 | File | Path | Purpose |
 |------|------|---------|
-| `net_main.c` | `Quake/WinQuake/` | Network initialization, message dispatch, driver management |
-| `net_dgrm.c` | `Quake/WinQuake/` | Reliable datagram protocol (sequence numbers, ACK/retransmit) |
-| `net_loop.c` | `Quake/WinQuake/` | Loopback driver for single-machine play |
-| `net_udp.c` | `Quake/WinQuake/` | BSD UDP socket implementation |
-| `net_wins.c` | `Quake/WinQuake/` | Windows Winsock UDP |
-| `net_wipx.c` | `Quake/WinQuake/` | Windows IPX/SPX protocol |
-| `net_ser.c` | `Quake/WinQuake/` | Serial/modem point-to-point |
+| `net_main.c` | `legacy-src/desktop-engine/` | Network initialization, message dispatch, driver management |
+| `net_dgrm.c` | `legacy-src/desktop-engine/` | Reliable datagram protocol (sequence numbers, ACK/retransmit) |
+| `net_loop.c` | `legacy-src/desktop-engine/` | Loopback driver for single-machine play |
+| `net_udp.c` | `legacy-src/desktop-engine/` | BSD UDP socket implementation |
+| `net_wins.c` | `legacy-src/desktop-engine/` | Windows Winsock UDP |
+| `net_wipx.c` | `legacy-src/desktop-engine/` | Windows IPX/SPX protocol |
+| `net_ser.c` | `legacy-src/desktop-engine/` | Serial/modem point-to-point |
 
-**Key data structure — `qsocket_t` (`Quake/WinQuake/net.h`):**
+**Key data structure — `qsocket_t` (`legacy-src/desktop-engine/net.h`):**
 - Connection state: `connecttime`, `lastMessageTime`, `disconnected`
 - Reliable messaging: `ackSequence`, `sendSequence`, `sendMessage[]`
 - Receive tracking: `receiveSequence`, `receiveMessage[]`
@@ -115,14 +115,14 @@ QuakeWorld replaces the WinQuake networking with an internet-optimized system:
 
 | File | Path | Purpose |
 |------|------|---------|
-| `net_chan.c` | `Quake/QW/client/` | Network channel with reliable + unreliable streams |
-| `cl_ents.c` | `Quake/QW/client/` | Entity delta decompression |
-| `cl_pred.c` | `Quake/QW/client/` | Client-side movement prediction |
-| `sv_ents.c` | `Quake/QW/server/` | Entity delta compression for server |
-| `sv_send.c` | `Quake/QW/server/` | Server message sending, PVS culling |
-| `sv_nchan.c` | `Quake/QW/server/` | Server reliable channel management |
+| `net_chan.c` | `legacy-src/QW/client/` | Network channel with reliable + unreliable streams |
+| `cl_ents.c` | `legacy-src/QW/client/` | Entity delta decompression |
+| `cl_pred.c` | `legacy-src/QW/client/` | Client-side movement prediction |
+| `sv_ents.c` | `legacy-src/QW/server/` | Entity delta compression for server |
+| `sv_send.c` | `legacy-src/QW/server/` | Server message sending, PVS culling |
+| `sv_nchan.c` | `legacy-src/QW/server/` | Server reliable channel management |
 
-**Delta compression protocol (`Quake/QW/client/protocol.h`):**
+**Delta compression protocol (`legacy-src/QW/client/protocol.h`):**
 
 | Flag | Bit | Field |
 |------|-----|-------|
@@ -151,13 +151,13 @@ graph TD
 
 | File | Path | Purpose | Key Functions |
 |------|------|---------|---------------|
-| `pr_exec.c` | `Quake/WinQuake/` | Bytecode execution loop | `PR_ExecuteProgram()`, `PR_EnterFunction()` |
-| `pr_edict.c` | `Quake/WinQuake/` | Entity allocation, field access, progs loading | `ED_Alloc()`, `ED_Free()`, `PR_LoadProgs()` |
-| `pr_cmds.c` | `Quake/WinQuake/` | Engine-to-script bridge (builtins) | `PF_traceline()`, `PF_sound()`, `PF_spawn()` |
-| `pr_comp.h` | `Quake/WinQuake/` | Opcode definitions, instruction format | ~80 opcodes defined |
-| `progs.h` | `Quake/WinQuake/` | VM data structures | `edict_t`, `dstatement_t`, `dfunction_t` |
+| `pr_exec.c` | `legacy-src/desktop-engine/` | Bytecode execution loop | `PR_ExecuteProgram()`, `PR_EnterFunction()` |
+| `pr_edict.c` | `legacy-src/desktop-engine/` | Entity allocation, field access, progs loading | `ED_Alloc()`, `ED_Free()`, `PR_LoadProgs()` |
+| `pr_cmds.c` | `legacy-src/desktop-engine/` | Engine-to-script bridge (builtins) | `PF_traceline()`, `PF_sound()`, `PF_spawn()` |
+| `pr_comp.h` | `legacy-src/desktop-engine/` | Opcode definitions, instruction format | ~80 opcodes defined |
+| `progs.h` | `legacy-src/desktop-engine/` | VM data structures | `edict_t`, `dstatement_t`, `dfunction_t` |
 
-**Instruction format (`Quake/WinQuake/pr_comp.h`):**
+**Instruction format (`legacy-src/desktop-engine/pr_comp.h`):**
 ```
 typedef struct {
     unsigned short op;      // Opcode
@@ -195,12 +195,12 @@ graph TD
 
 | File | Path | Purpose |
 |------|------|---------|
-| `snd_dma.c` | `Quake/WinQuake/` | Main sound system: channel management, spatialization, DMA control |
-| `snd_mix.c` | `Quake/WinQuake/` | Audio mixing of multiple channels into DMA buffer |
-| `snd_mem.c` | `Quake/WinQuake/` | WAV file loading and sample memory management |
-| `sound.h` | `Quake/WinQuake/` | Sound structures: `channel_t`, `sfx_t`, `dma_t` |
+| `snd_dma.c` | `legacy-src/desktop-engine/` | Main sound system: channel management, spatialization, DMA control |
+| `snd_mix.c` | `legacy-src/desktop-engine/` | Audio mixing of multiple channels into DMA buffer |
+| `snd_mem.c` | `legacy-src/desktop-engine/` | WAV file loading and sample memory management |
+| `sound.h` | `legacy-src/desktop-engine/` | Sound structures: `channel_t`, `sfx_t`, `dma_t` |
 
-**Key data structures (`Quake/WinQuake/sound.h`):**
+**Key data structures (`legacy-src/desktop-engine/sound.h`):**
 
 | Structure | Purpose |
 |-----------|---------|
@@ -215,15 +215,15 @@ graph TD
 
 | File | Path | Purpose |
 |------|------|---------|
-| `in_win.c` | `Quake/WinQuake/` | Windows input: mouse (DirectInput), joystick (6-axis), keyboard |
-| `in_dos.c` | `Quake/WinQuake/` | DOS input: mouse, keyboard via interrupts |
-| `in_sun.c` | `Quake/WinQuake/` | Solaris input via X11 events |
-| `in_null.c` | `Quake/WinQuake/` | Null input driver (stub) |
-| `keys.c` | `Quake/WinQuake/` | Key binding management, key event dispatch |
-| `keys.h` | `Quake/WinQuake/` | Key code definitions |
-| `input.h` | `Quake/WinQuake/` | Input interface: `IN_Init()`, `IN_Move()`, `IN_Commands()` |
+| `in_win.c` | `legacy-src/desktop-engine/` | Windows input: mouse (DirectInput), joystick (6-axis), keyboard |
+| `in_dos.c` | `legacy-src/desktop-engine/` | DOS input: mouse, keyboard via interrupts |
+| `in_sun.c` | `legacy-src/desktop-engine/` | Solaris input via X11 events |
+| `in_null.c` | `legacy-src/desktop-engine/` | Null input driver (stub) |
+| `keys.c` | `legacy-src/desktop-engine/` | Key binding management, key event dispatch |
+| `keys.h` | `legacy-src/desktop-engine/` | Key code definitions |
+| `input.h` | `legacy-src/desktop-engine/` | Input interface: `IN_Init()`, `IN_Move()`, `IN_Commands()` |
 
-**User command structure (`Quake/WinQuake/protocol.h`):**
+**User command structure (`legacy-src/desktop-engine/protocol.h`):**
 ```
 typedef struct {
     byte    msec;           // Milliseconds since last command
@@ -241,12 +241,12 @@ typedef struct {
 
 | File | Path | Purpose |
 |------|------|---------|
-| `cmd.c` | `Quake/WinQuake/` | Command buffer, tokenization, execution |
-| `cmd.h` | `Quake/WinQuake/` | Command interface |
-| `cvar.c` | `Quake/WinQuake/` | Console variable registration, get/set |
-| `cvar.h` | `Quake/WinQuake/` | CVar structure definition |
-| `console.c` | `Quake/WinQuake/` | Console rendering, scrollback, notification |
-| `console.h` | `Quake/WinQuake/` | Console interface |
+| `cmd.c` | `legacy-src/desktop-engine/` | Command buffer, tokenization, execution |
+| `cmd.h` | `legacy-src/desktop-engine/` | Command interface |
+| `cvar.c` | `legacy-src/desktop-engine/` | Console variable registration, get/set |
+| `cvar.h` | `legacy-src/desktop-engine/` | CVar structure definition |
+| `console.c` | `legacy-src/desktop-engine/` | Console rendering, scrollback, notification |
+| `console.h` | `legacy-src/desktop-engine/` | Console interface |
 
 **Command execution pipeline:**
 ```
@@ -261,7 +261,7 @@ Cmd_ExecuteString("command")        → Look up and execute
 xcommand_t callback()               → Registered function runs
 ```
 
-**CVar structure (`Quake/WinQuake/cvar.h`):**
+**CVar structure (`legacy-src/desktop-engine/cvar.h`):**
 ```
 typedef struct cvar_s {
     char     *name;      // Variable name
@@ -279,14 +279,14 @@ typedef struct cvar_s {
 
 | File | Path | Platform |
 |------|------|----------|
-| `sys_win.c` | `Quake/WinQuake/` | Windows (Win32 API, console allocation, timer) |
-| `sys_linux.c` | `Quake/WinQuake/` | Linux (signal handling, `/dev/` access) |
-| `sys_dos.c` | `Quake/WinQuake/` | MS-DOS (real-mode, DPMI, interrupt handlers) |
-| `sys_sun.c` | `Quake/WinQuake/` | Solaris/SunOS |
-| `sys_null.c` | `Quake/WinQuake/` | Null platform (stub for porting reference) |
-| `sys.h` | `Quake/WinQuake/` | Platform interface definition |
+| `sys_win.c` | `legacy-src/desktop-engine/` | Windows (Win32 API, console allocation, timer) |
+| `sys_linux.c` | `legacy-src/desktop-engine/` | Linux (signal handling, `/dev/` access) |
+| `sys_dos.c` | `legacy-src/desktop-engine/` | MS-DOS (real-mode, DPMI, interrupt handlers) |
+| `sys_sun.c` | `legacy-src/desktop-engine/` | Solaris/SunOS |
+| `sys_null.c` | `legacy-src/desktop-engine/` | Null platform (stub for porting reference) |
+| `sys.h` | `legacy-src/desktop-engine/` | Platform interface definition |
 
-**Interface contract (`Quake/WinQuake/sys.h`):**
+**Interface contract (`legacy-src/desktop-engine/sys.h`):**
 
 | Function | Purpose |
 |----------|---------|
@@ -306,13 +306,13 @@ typedef struct cvar_s {
 
 | File | Path | Purpose |
 |------|------|---------|
-| `model.c` | `Quake/WinQuake/` | Model loading, caching, BSP/alias/sprite format parsing |
-| `model.h` | `Quake/WinQuake/` | Model data structures |
-| `gl_model.c` | `Quake/WinQuake/` | OpenGL-specific model loading (texture upload) |
-| `gl_model.h` | `Quake/WinQuake/` | GL model structures |
-| `bspfile.h` | `Quake/WinQuake/` | BSP file format definition (version 29, 15 lumps) |
+| `model.c` | `legacy-src/desktop-engine/` | Model loading, caching, BSP/alias/sprite format parsing |
+| `model.h` | `legacy-src/desktop-engine/` | Model data structures |
+| `gl_model.c` | `legacy-src/desktop-engine/` | OpenGL-specific model loading (texture upload) |
+| `gl_model.h` | `legacy-src/desktop-engine/` | GL model structures |
+| `bspfile.h` | `legacy-src/desktop-engine/` | BSP file format definition (version 29, 15 lumps) |
 
-**BSP lumps (`Quake/WinQuake/bspfile.h`):**
+**BSP lumps (`legacy-src/desktop-engine/bspfile.h`):**
 
 | Lump | Content |
 |------|---------|
@@ -346,16 +346,16 @@ typedef struct cvar_s {
 
 | File | Path | Platform | API |
 |------|------|----------|-----|
-| `vid_win.c` | `Quake/WinQuake/` | Windows | DirectDraw, DIB, MGL (Scitech) |
-| `vid_dos.c` | `Quake/WinQuake/` | DOS | VGA registers, VESA BIOS |
-| `vid_svgalib.c` | `Quake/WinQuake/` | Linux | SVGAlib |
-| `vid_x.c` | `Quake/WinQuake/` | Linux/Unix | X11 (XImage/XShmImage) |
-| `vid_sunx.c` | `Quake/WinQuake/` | Solaris | X11 |
-| `vid_sunxil.c` | `Quake/WinQuake/` | Solaris | XIL (accelerated) |
-| `vid_null.c` | `Quake/WinQuake/` | Any | Null driver (stub) |
-| `vid.h` | `Quake/WinQuake/` | — | Video interface definition |
+| `vid_win.c` | `legacy-src/desktop-engine/` | Windows | DirectDraw, DIB, MGL (Scitech) |
+| `vid_dos.c` | `legacy-src/desktop-engine/` | DOS | VGA registers, VESA BIOS |
+| `vid_svgalib.c` | `legacy-src/desktop-engine/` | Linux | SVGAlib |
+| `vid_x.c` | `legacy-src/desktop-engine/` | Linux/Unix | X11 (XImage/XShmImage) |
+| `vid_sunx.c` | `legacy-src/desktop-engine/` | Solaris | X11 |
+| `vid_sunxil.c` | `legacy-src/desktop-engine/` | Solaris | XIL (accelerated) |
+| `vid_null.c` | `legacy-src/desktop-engine/` | Any | Null driver (stub) |
+| `vid.h` | `legacy-src/desktop-engine/` | — | Video interface definition |
 
-**Video state (`viddef_t` in `Quake/WinQuake/vid.h`):**
+**Video state (`viddef_t` in `legacy-src/desktop-engine/vid.h`):**
 
 | Field | Purpose |
 |-------|---------|
@@ -374,8 +374,8 @@ typedef struct cvar_s {
 
 | File | Path | Purpose |
 |------|------|---------|
-| `qwfwd.c` | `Quake/QW/qwfwd/` | UDP relay proxy: forwards packets between clients and servers |
-| `misc.c` | `Quake/QW/qwfwd/` | Utility functions for the proxy |
+| `qwfwd.c` | `legacy-src/QW/qwfwd/` | UDP relay proxy: forwards packets between clients and servers |
+| `misc.c` | `legacy-src/QW/qwfwd/` | Utility functions for the proxy |
 
 Architecture: Maintains a linked list of `peer_t` structures, each mapping a client address to a server connection. Uses `select()` for non-blocking I/O.
 
@@ -383,7 +383,7 @@ Architecture: Maintains a linked list of `peer_t` structures, each mapping a cli
 
 | File | Path | Purpose |
 |------|------|---------|
-| `gas2masm.c` | `Quake/QW/gas2masm/` | Converts GNU as (AT&T syntax) x86 assembly to MASM (Intel syntax) |
+| `gas2masm.c` | `legacy-src/QW/gas2masm/` | Converts GNU as (AT&T syntax) x86 assembly to MASM (Intel syntax) |
 
 Translates 100+ instruction mnemonics, register names, addressing modes, and section directives.
 
@@ -391,20 +391,20 @@ Translates 100+ instruction mnemonics, register names, addressing modes, and sec
 
 | File | Path | Purpose |
 |------|------|---------|
-| `defs.qc` | `Quake/qw-qc/` | Global definitions, entity fields, builtin function declarations |
-| `weapons.qc` | `Quake/qw-qc/` | 7 weapon implementations with projectile physics |
-| `items.qc` | `Quake/qw-qc/` | Health, armor, ammo, keys, powerup pickups |
-| `combat.qc` | `Quake/qw-qc/` | Damage system (`T_Damage`, `T_RadiusDamage`) |
-| `client.qc` | `Quake/qw-qc/` | Player spawning, death, respawn, level transitions |
-| `spectate.qc` | `Quake/qw-qc/` | Spectator mode (non-interactive observation) |
-| `doors.qc` | `Quake/qw-qc/` | Door mechanics (linked, keyed, secret) |
-| `triggers.qc` | `Quake/qw-qc/` | Trigger entities (teleport, hurt, push, relay, counter) |
-| `plats.qc` | `Quake/qw-qc/` | Moving platforms and trains |
-| `world.qc` | `Quake/qw-qc/` | World initialization and asset precaching |
-| `player.qc` | `Quake/qw-qc/` | Player animation frame definitions |
-| `buttons.qc` | `Quake/qw-qc/` | Pushbutton mechanics |
-| `misc.qc` | `Quake/qw-qc/` | Lights, fireballs, explosive barrels |
-| `subs.qc` | `Quake/qw-qc/` | Movement utilities and target-firing system |
-| `server.qc` | `Quake/qw-qc/` | Monster waypoint pathing (path_corner) |
-| `models.qc` | `Quake/qw-qc/` | Model entity spawning helpers |
-| `sprites.qc` | `Quake/qw-qc/` | Sprite entity spawning |
+| `defs.qc` | `legacy-src/qw-qc/` | Global definitions, entity fields, builtin function declarations |
+| `weapons.qc` | `legacy-src/qw-qc/` | 7 weapon implementations with projectile physics |
+| `items.qc` | `legacy-src/qw-qc/` | Health, armor, ammo, keys, powerup pickups |
+| `combat.qc` | `legacy-src/qw-qc/` | Damage system (`T_Damage`, `T_RadiusDamage`) |
+| `client.qc` | `legacy-src/qw-qc/` | Player spawning, death, respawn, level transitions |
+| `spectate.qc` | `legacy-src/qw-qc/` | Spectator mode (non-interactive observation) |
+| `doors.qc` | `legacy-src/qw-qc/` | Door mechanics (linked, keyed, secret) |
+| `triggers.qc` | `legacy-src/qw-qc/` | Trigger entities (teleport, hurt, push, relay, counter) |
+| `plats.qc` | `legacy-src/qw-qc/` | Moving platforms and trains |
+| `world.qc` | `legacy-src/qw-qc/` | World initialization and asset precaching |
+| `player.qc` | `legacy-src/qw-qc/` | Player animation frame definitions |
+| `buttons.qc` | `legacy-src/qw-qc/` | Pushbutton mechanics |
+| `misc.qc` | `legacy-src/qw-qc/` | Lights, fireballs, explosive barrels |
+| `subs.qc` | `legacy-src/qw-qc/` | Movement utilities and target-firing system |
+| `server.qc` | `legacy-src/qw-qc/` | Monster waypoint pathing (path_corner) |
+| `models.qc` | `legacy-src/qw-qc/` | Model entity spawning helpers |
+| `sprites.qc` | `legacy-src/qw-qc/` | Sprite entity spawning |

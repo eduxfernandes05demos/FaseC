@@ -63,7 +63,7 @@ graph TB
 
 ## 2. Component Overview
 
-### 2.1 Main Loop (`Quake/WinQuake/host.c`)
+### 2.1 Main Loop (`legacy-src/desktop-engine/host.c`)
 
 The engine runs a single-threaded main loop via `Host_Frame()` (line ~729):
 
@@ -87,8 +87,8 @@ Host_Frame()
 
 | Variant | Path | Purpose |
 |---------|------|---------|
-| **WinQuake** | `Quake/WinQuake/` | Full engine for single-player + LAN multiplayer |
-| **QuakeWorld** | `Quake/QW/client/` + `Quake/QW/server/` | Internet-optimized multiplayer with separated client & dedicated server |
+| **WinQuake** | `legacy-src/desktop-engine/` | Full engine for single-player + LAN multiplayer |
+| **QuakeWorld** | `legacy-src/QW/client/` + `legacy-src/QW/server/` | Internet-optimized multiplayer with separated client & dedicated server |
 
 Key architectural differences:
 
@@ -151,7 +151,7 @@ sequenceDiagram
 
 ## 4. Memory Architecture
 
-The engine uses a custom memory management system (`Quake/WinQuake/zone.c`):
+The engine uses a custom memory management system (`legacy-src/desktop-engine/zone.c`):
 
 ```mermaid
 graph LR
@@ -171,10 +171,10 @@ graph LR
 
 | Zone | Lifetime | Usage | Source |
 |------|----------|-------|--------|
-| **Hunk** | Level lifetime | BSP data, models, textures | `Quake/WinQuake/zone.c` |
-| **Zone** | Variable | Network buffers, command strings | `Quake/WinQuake/zone.c` |
-| **Cache** | Evictable | Sound samples, model skins | `Quake/WinQuake/zone.c` |
-| **Temp** | Per-frame | Temporary calculations | `Quake/WinQuake/zone.c` |
+| **Hunk** | Level lifetime | BSP data, models, textures | `legacy-src/desktop-engine/zone.c` |
+| **Zone** | Variable | Network buffers, command strings | `legacy-src/desktop-engine/zone.c` |
+| **Cache** | Evictable | Sound samples, model skins | `legacy-src/desktop-engine/zone.c` |
+| **Temp** | Per-frame | Temporary calculations | `legacy-src/desktop-engine/zone.c` |
 
 ---
 
@@ -184,30 +184,30 @@ graph LR
 
 | Target | Platform | Renderer | Build File |
 |--------|----------|----------|------------|
-| `squake` | Linux (SVGAlib) | Software | `Quake/WinQuake/Makefile.linuxi386` |
-| `glquake` | Linux (Mesa) | OpenGL | `Quake/WinQuake/Makefile.linuxi386` |
-| `glquake.glx` | Linux (X11 GLX) | OpenGL | `Quake/WinQuake/Makefile.linuxi386` |
-| `quake.x11` | Linux (X11) | Software | `Quake/WinQuake/Makefile.linuxi386` |
-| `WinQuake.exe` | Windows | Software + GL | `Quake/WinQuake/WinQuake.dsp` |
-| `quake.sw` | Solaris (X11) | Software | `Quake/WinQuake/Makefile.Solaris` |
+| `squake` | Linux (SVGAlib) | Software | `legacy-src/desktop-engine/Makefile.linuxi386` |
+| `glquake` | Linux (Mesa) | OpenGL | `legacy-src/desktop-engine/Makefile.linuxi386` |
+| `glquake.glx` | Linux (X11 GLX) | OpenGL | `legacy-src/desktop-engine/Makefile.linuxi386` |
+| `quake.x11` | Linux (X11) | Software | `legacy-src/desktop-engine/Makefile.linuxi386` |
+| `WinQuake.exe` | Windows | Software + GL | `legacy-src/desktop-engine/WinQuake.dsp` |
+| `quake.sw` | Solaris (X11) | Software | `legacy-src/desktop-engine/Makefile.Solaris` |
 
 ### QuakeWorld Targets
 
 | Target | Platform | Description | Build File |
 |--------|----------|-------------|------------|
-| `qwsv` | Linux/Solaris | Dedicated server | `Quake/QW/Makefile.Linux` |
-| `qwcl` | Linux (SVGAlib) | Software client | `Quake/QW/Makefile.Linux` |
-| `qwcl.x11` | Linux (X11) | Software client | `Quake/QW/Makefile.Linux` |
-| `glqwcl` | Linux (Mesa) | OpenGL client | `Quake/QW/Makefile.Linux` |
-| `glqwcl.glx` | Linux (X11 GLX) | OpenGL client | `Quake/QW/Makefile.Linux` |
+| `qwsv` | Linux/Solaris | Dedicated server | `legacy-src/QW/Makefile.Linux` |
+| `qwcl` | Linux (SVGAlib) | Software client | `legacy-src/QW/Makefile.Linux` |
+| `qwcl.x11` | Linux (X11) | Software client | `legacy-src/QW/Makefile.Linux` |
+| `glqwcl` | Linux (Mesa) | OpenGL client | `legacy-src/QW/Makefile.Linux` |
+| `glqwcl.glx` | Linux (X11 GLX) | OpenGL client | `legacy-src/QW/Makefile.Linux` |
 
 ### Utility Targets
 
 | Target | Description | Build File |
 |--------|-------------|------------|
-| `gas2masm` | GAS → MASM assembly converter | `Quake/QW/gas2masm/gas2masm.dsp` |
-| `qwfwd` | QuakeWorld UDP forwarding proxy | `Quake/QW/qwfwd/` |
-| `qwprogs.dat` | Compiled QuakeC game logic | `Quake/qw-qc/progs.src` |
+| `gas2masm` | GAS → MASM assembly converter | `legacy-src/QW/gas2masm/gas2masm.dsp` |
+| `qwfwd` | QuakeWorld UDP forwarding proxy | `legacy-src/QW/qwfwd/` |
+| `qwprogs.dat` | Compiled QuakeC game logic | `legacy-src/qw-qc/progs.src` |
 
 ---
 

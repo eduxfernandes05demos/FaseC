@@ -27,14 +27,14 @@ The codebase contains **664 instances** of unsafe string functions:
 
 | File | sprintf | strcpy | strcat | Total |
 |------|---------|--------|--------|-------|
-| `Quake/WinQuake/common.c` | 7 | 12 | 1 | 20 |
-| `Quake/WinQuake/host_cmd.c` | 5+ | 3+ | 8 | 16+ |
-| `Quake/WinQuake/net_dgrm.c` | 3+ | 5+ | 1 | 9+ |
-| `Quake/WinQuake/cmd.c` | 2 | 2+ | 6 | 10+ |
-| `Quake/QW/server/sv_main.c` | 5+ | 3+ | 3 | 11+ |
-| `Quake/QW/client/cl_main.c` | 5+ | 3+ | 5 | 13+ |
-| `Quake/WinQuake/console.c` | 4 | 1+ | 0 | 5+ |
-| `Quake/WinQuake/gl_model.c` | 4 | 3+ | 0 | 7+ |
+| `legacy-src/desktop-engine/common.c` | 7 | 12 | 1 | 20 |
+| `legacy-src/desktop-engine/host_cmd.c` | 5+ | 3+ | 8 | 16+ |
+| `legacy-src/desktop-engine/net_dgrm.c` | 3+ | 5+ | 1 | 9+ |
+| `legacy-src/desktop-engine/cmd.c` | 2 | 2+ | 6 | 10+ |
+| `legacy-src/QW/server/sv_main.c` | 5+ | 3+ | 3 | 11+ |
+| `legacy-src/QW/client/cl_main.c` | 5+ | 3+ | 5 | 13+ |
+| `legacy-src/desktop-engine/console.c` | 4 | 1+ | 0 | 5+ |
+| `legacy-src/desktop-engine/gl_model.c` | 4 | 3+ | 0 | 7+ |
 
 ### 2.2 Unchecked Memory Allocations
 
@@ -42,25 +42,25 @@ The codebase contains **664 instances** of unsafe string functions:
 
 | File | Line | Code |
 |------|------|------|
-| `Quake/WinQuake/host.c` | 791 | `com_argv = malloc(com_argc * sizeof(char *));` |
-| `Quake/WinQuake/host.c` | 796 | `p = malloc(len);` |
-| `Quake/WinQuake/gl_warp.c` | 410 | `pcx_rgb = malloc(count * 4);` |
-| `Quake/WinQuake/gl_warp.c` | 520 | `targa_rgba = malloc(numPixels*4);` |
-| `Quake/WinQuake/gl_screen.c` | 618 | `buffer = malloc(glwidth*glheight*3 + 18);` |
-| `Quake/QW/client/gl_screen.c` | 651 | `buffer = malloc(glwidth*glheight*3 + 18);` |
-| `Quake/QW/client/gl_screen.c` | 879 | `newbuf = malloc(glheight * glwidth * 3);` |
-| `Quake/QW/client/cl_parse.c` | 490 | `upload_data = malloc(size);` |
-| `Quake/QW/client/screen.c` | 845 | `newbuf = malloc(w*h);` |
-| `Quake/QW/qwfwd/qwfwd.c` | 225 | `p = malloc(sizeof *p);` |
+| `legacy-src/desktop-engine/host.c` | 791 | `com_argv = malloc(com_argc * sizeof(char *));` |
+| `legacy-src/desktop-engine/host.c` | 796 | `p = malloc(len);` |
+| `legacy-src/desktop-engine/gl_warp.c` | 410 | `pcx_rgb = malloc(count * 4);` |
+| `legacy-src/desktop-engine/gl_warp.c` | 520 | `targa_rgba = malloc(numPixels*4);` |
+| `legacy-src/desktop-engine/gl_screen.c` | 618 | `buffer = malloc(glwidth*glheight*3 + 18);` |
+| `legacy-src/QW/client/gl_screen.c` | 651 | `buffer = malloc(glwidth*glheight*3 + 18);` |
+| `legacy-src/QW/client/gl_screen.c` | 879 | `newbuf = malloc(glheight * glwidth * 3);` |
+| `legacy-src/QW/client/cl_parse.c` | 490 | `upload_data = malloc(size);` |
+| `legacy-src/QW/client/screen.c` | 845 | `newbuf = malloc(w*h);` |
+| `legacy-src/QW/qwfwd/qwfwd.c` | 225 | `p = malloc(sizeof *p);` |
 
-**Only 1 correct NULL check found**: `Quake/QW/server/sys_unix.c:235`
+**Only 1 correct NULL check found**: `legacy-src/QW/server/sys_unix.c:235`
 
 ### 2.3 Unsafe System Calls
 
 | File | Line | Code | Risk |
 |------|------|------|------|
-| `Quake/WinQuake/sys_linux.c` | 276 | `system(cmd);` | Command injection |
-| `Quake/QW/client/sys_linux.c` | 278 | `system(cmd);` | Command injection |
+| `legacy-src/desktop-engine/sys_linux.c` | 276 | `system(cmd);` | Command injection |
+| `legacy-src/QW/client/sys_linux.c` | 278 | `system(cmd);` | Command injection |
 
 ---
 
@@ -86,11 +86,11 @@ Platform conditionals embedded in shared code:
 
 | File | Line | Conditional |
 |------|------|-------------|
-| `Quake/WinQuake/host.c` | 908 | `#ifdef _WIN32` |
-| `Quake/WinQuake/snd_mix.c` | 51-63 | `#ifdef _WIN32` |
-| `Quake/WinQuake/snd_dma.c` | 196+ | `#ifdef _WIN32` |
-| `Quake/WinQuake/mathlib.c` | various | `#ifdef id386` |
-| `Quake/WinQuake/glquake.h` | various | `#ifdef _WIN32` |
+| `legacy-src/desktop-engine/host.c` | 908 | `#ifdef _WIN32` |
+| `legacy-src/desktop-engine/snd_mix.c` | 51-63 | `#ifdef _WIN32` |
+| `legacy-src/desktop-engine/snd_dma.c` | 196+ | `#ifdef _WIN32` |
+| `legacy-src/desktop-engine/mathlib.c` | various | `#ifdef id386` |
+| `legacy-src/desktop-engine/glquake.h` | various | `#ifdef _WIN32` |
 
 ---
 
@@ -100,11 +100,11 @@ Platform conditionals embedded in shared code:
 
 | File | Globals | Key Variables |
 |------|---------|---------------|
-| `Quake/WinQuake/host.c` | ~22 | `host_parms`, `host_initialized`, `host_frametime`, `realtime`, `host_framecount` |
-| `Quake/WinQuake/common.c` | ~17 | `registered`, `com_modified`, `com_argc`, `com_searchpaths`, `loadsize` |
-| `Quake/WinQuake/net_main.c` | ~25 | `DEFAULTnet_hostport`, `net_activeconnections`, sockets, serial config |
-| `Quake/WinQuake/cl_main.c` | ~20 | `cls`, `cl`, `cl_numvisedicts`, client cvars |
-| `Quake/WinQuake/sv_main.c` | ~3 | `sv`, `svs`, `fatbytes` |
+| `legacy-src/desktop-engine/host.c` | ~22 | `host_parms`, `host_initialized`, `host_frametime`, `realtime`, `host_framecount` |
+| `legacy-src/desktop-engine/common.c` | ~17 | `registered`, `com_modified`, `com_argc`, `com_searchpaths`, `loadsize` |
+| `legacy-src/desktop-engine/net_main.c` | ~25 | `DEFAULTnet_hostport`, `net_activeconnections`, sockets, serial config |
+| `legacy-src/desktop-engine/cl_main.c` | ~20 | `cls`, `cl`, `cl_numvisedicts`, client cvars |
+| `legacy-src/desktop-engine/sv_main.c` | ~3 | `sv`, `svs`, `fatbytes` |
 
 **Impact**: Makes unit testing impossible, prevents multi-instance execution, creates hidden dependencies between components.
 
@@ -178,12 +178,12 @@ Configuration is spread across:
 
 | File | Target | Issues |
 |------|--------|--------|
-| `Quake/WinQuake/Makefile.linuxi386` | Linux WinQuake | GNU Make, x86 only |
-| `Quake/WinQuake/Makefile.Solaris` | Solaris WinQuake | Separate from Linux |
-| `Quake/QW/Makefile.Linux` | Linux QuakeWorld | Different structure |
-| `Quake/QW/Makefile.Solaris` | Solaris QuakeWorld | Different structure |
-| `Quake/WinQuake/WinQuake.dsp` | Windows WinQuake | MSVC 4-6 format |
-| `Quake/QW/qw.dsw` | Windows QuakeWorld | MSVC workspace |
+| `legacy-src/desktop-engine/Makefile.linuxi386` | Linux WinQuake | GNU Make, x86 only |
+| `legacy-src/desktop-engine/Makefile.Solaris` | Solaris WinQuake | Separate from Linux |
+| `legacy-src/QW/Makefile.Linux` | Linux QuakeWorld | Different structure |
+| `legacy-src/QW/Makefile.Solaris` | Solaris QuakeWorld | Different structure |
+| `legacy-src/desktop-engine/WinQuake.dsp` | Windows WinQuake | MSVC 4-6 format |
+| `legacy-src/QW/qw.dsw` | Windows QuakeWorld | MSVC workspace |
 
 ### 6.2 Build System Issues
 

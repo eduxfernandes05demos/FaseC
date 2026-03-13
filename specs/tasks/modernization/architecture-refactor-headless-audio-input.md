@@ -27,12 +27,12 @@ Enhance the existing null audio and input drivers to support headless operation 
 
 | File | Platform | Key Functions |
 |------|----------|---------------|
-| `Quake/WinQuake/snd_dma.c` | Core | `S_Init()`, `S_Update()`, `S_PaintChannels()` (line 261 in `snd_mix.c`) |
-| `Quake/WinQuake/snd_mix.c` | Core | `S_PaintChannels()` (line 261) — Main mixing loop |
-| `Quake/WinQuake/snd_mem.c` | Core | Sound loading |
-| `Quake/WinQuake/snd_win.c` | Windows | DirectSound output |
-| `Quake/WinQuake/snd_linux.c` | Linux | `/dev/dsp` output |
-| `Quake/WinQuake/snd_null.c` | Stub | **Existing** — empty stubs |
+| `legacy-src/desktop-engine/snd_dma.c` | Core | `S_Init()`, `S_Update()`, `S_PaintChannels()` (line 261 in `snd_mix.c`) |
+| `legacy-src/desktop-engine/snd_mix.c` | Core | `S_PaintChannels()` (line 261) — Main mixing loop |
+| `legacy-src/desktop-engine/snd_mem.c` | Core | Sound loading |
+| `legacy-src/desktop-engine/snd_win.c` | Windows | DirectSound output |
+| `legacy-src/desktop-engine/snd_linux.c` | Linux | `/dev/dsp` output |
+| `legacy-src/desktop-engine/snd_null.c` | Stub | **Existing** — empty stubs |
 
 ### Sound Mixing Pipeline
 
@@ -60,11 +60,11 @@ void SNDDMA_Submit(void) { }
 
 | File | Platform | Key Functions |
 |------|----------|---------------|
-| `Quake/WinQuake/in_win.c` | Windows | `IN_Init()`, `IN_Move()`, `IN_Commands()` |
-| `Quake/WinQuake/in_dos.c` | DOS | `IN_Init()`, `IN_Move()` |
-| `Quake/WinQuake/in_sun.c` | Solaris | `IN_Init()`, `IN_Move()` |
-| `Quake/WinQuake/in_null.c` | Stub | **Existing** — empty stubs |
-| `Quake/WinQuake/keys.c` | Core | Key event processing |
+| `legacy-src/desktop-engine/in_win.c` | Windows | `IN_Init()`, `IN_Move()`, `IN_Commands()` |
+| `legacy-src/desktop-engine/in_dos.c` | DOS | `IN_Init()`, `IN_Move()` |
+| `legacy-src/desktop-engine/in_sun.c` | Solaris | `IN_Init()`, `IN_Move()` |
+| `legacy-src/desktop-engine/in_null.c` | Stub | **Existing** — empty stubs |
+| `legacy-src/desktop-engine/keys.c` | Core | Key event processing |
 
 ### Current in_null.c
 
@@ -82,7 +82,7 @@ void IN_Move(usercmd_t *cmd) { }
 
 ### Step 1: Enhance snd_null.c for Audio Capture
 
-**Modified file**: `Quake/WinQuake/snd_null.c`
+**Modified file**: `legacy-src/desktop-engine/snd_null.c`
 
 Add audio capture capability so the streaming pipeline can access mixed audio:
 
@@ -140,7 +140,7 @@ int SND_GetCapturedAudio(int16_t *out, int max_samples) {
 
 ### Step 2: Enhance in_null.c for Remote Input
 
-**Modified file**: `Quake/WinQuake/in_null.c`
+**Modified file**: `legacy-src/desktop-engine/in_null.c`
 
 Add remote input injection for cloud gaming:
 
@@ -205,7 +205,7 @@ void IN_InjectRemoteInput(float forward, float side, float up,
 
 ### Step 3: Enhance CD Audio Null Driver
 
-**File**: `Quake/WinQuake/cd_null.c` — Already a complete null implementation. No changes needed unless music capture is required for streaming.
+**File**: `legacy-src/desktop-engine/cd_null.c` — Already a complete null implementation. No changes needed unless music capture is required for streaming.
 
 ---
 
@@ -213,11 +213,11 @@ void IN_InjectRemoteInput(float forward, float side, float up,
 
 | File | Change Type | Description |
 |------|------------|-------------|
-| `Quake/WinQuake/snd_null.c` | **Enhance** | Add audio capture capability |
-| `Quake/WinQuake/in_null.c` | **Enhance** | Add remote input injection |
-| `Quake/WinQuake/sound.h` | Minor edit | Add `SND_GetCapturedAudio()` declaration |
-| `Quake/WinQuake/input.h` | Minor edit | Add `IN_InjectRemoteInput()` declaration |
-| `Quake/WinQuake/CMakeLists.txt` | Edit | Include null drivers in headless target |
+| `legacy-src/desktop-engine/snd_null.c` | **Enhance** | Add audio capture capability |
+| `legacy-src/desktop-engine/in_null.c` | **Enhance** | Add remote input injection |
+| `legacy-src/desktop-engine/sound.h` | Minor edit | Add `SND_GetCapturedAudio()` declaration |
+| `legacy-src/desktop-engine/input.h` | Minor edit | Add `IN_InjectRemoteInput()` declaration |
+| `legacy-src/desktop-engine/CMakeLists.txt` | Edit | Include null drivers in headless target |
 
 ---
 

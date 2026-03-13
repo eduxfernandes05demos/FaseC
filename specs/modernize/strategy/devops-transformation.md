@@ -164,7 +164,7 @@ FROM ubuntu:22.04 AS builder
 RUN apt-get update && apt-get install -y \
     gcc cmake make libsdl2-dev \
     && rm -rf /var/lib/apt/lists/*
-COPY Quake/ /src/Quake/
+COPY legacy-src/ /src/legacy-src/
 WORKDIR /src/Quake
 RUN cmake -B build \
     -DCMAKE_BUILD_TYPE=Release \
@@ -178,8 +178,8 @@ RUN apt-get update && apt-get install -y \
     libsdl2-2.0-0 curl \
     && rm -rf /var/lib/apt/lists/* \
     && useradd -m -s /bin/bash quake
-COPY --from=builder /src/Quake/build/quake-headless /usr/local/bin/
-COPY --from=builder /src/Quake/build/quake-server /usr/local/bin/
+COPY --from=builder /src/legacy-src/build/quake-headless /usr/local/bin/
+COPY --from=builder /src/legacy-src/build/quake-server /usr/local/bin/
 USER quake
 WORKDIR /home/quake
 EXPOSE 26000/udp 8080/tcp

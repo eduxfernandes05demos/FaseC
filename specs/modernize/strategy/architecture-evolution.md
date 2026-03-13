@@ -184,15 +184,15 @@ void IN_InjectInput(const remote_input_t *input) {
 # Multi-stage build
 FROM ubuntu:22.04 AS builder
 RUN apt-get update && apt-get install -y gcc cmake libsdl2-dev
-COPY Quake/ /src/Quake/
+COPY legacy-src/ /src/legacy-src/
 WORKDIR /src/Quake
 RUN cmake -B build -DHEADLESS=ON -DCMAKE_BUILD_TYPE=Release && \
     cmake --build build
 
 FROM ubuntu:22.04 AS runtime
 RUN useradd -m -s /bin/bash quake
-COPY --from=builder /src/Quake/build/quake-server /usr/local/bin/
-COPY --from=builder /src/Quake/build/quake-headless /usr/local/bin/
+COPY --from=builder /src/legacy-src/build/quake-server /usr/local/bin/
+COPY --from=builder /src/legacy-src/build/quake-headless /usr/local/bin/
 USER quake
 EXPOSE 26000/udp
 EXPOSE 8080/tcp

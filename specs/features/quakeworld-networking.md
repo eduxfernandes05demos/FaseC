@@ -1,6 +1,6 @@
 # Feature: QuakeWorld Multiplayer Networking
 
-> Reverse-engineered from `Quake/QW/client/` and `Quake/QW/server/`
+> Reverse-engineered from `legacy-src/QW/client/` and `legacy-src/QW/server/`
 
 ---
 
@@ -15,38 +15,38 @@ QuakeWorld implements an internet-optimized multiplayer networking system that a
 ### Server
 | File | Purpose |
 |------|---------|
-| `Quake/QW/server/sv_main.c` | Server initialization, main loop, client management |
-| `Quake/QW/server/sv_send.c` | Message sending, PVS-based entity filtering |
-| `Quake/QW/server/sv_ents.c` | Entity delta compression and encoding |
-| `Quake/QW/server/sv_user.c` | User command processing, spectator handling |
-| `Quake/QW/server/sv_ccmds.c` | Server console commands (status, kick, map, etc.) |
-| `Quake/QW/server/sv_init.c` | Server spawn, level loading |
-| `Quake/QW/server/sv_phys.c` | Server-side physics simulation |
-| `Quake/QW/server/sv_move.c` | Entity movement and pathfinding |
-| `Quake/QW/server/sv_nchan.c` | Reliable network channel management |
+| `legacy-src/QW/server/sv_main.c` | Server initialization, main loop, client management |
+| `legacy-src/QW/server/sv_send.c` | Message sending, PVS-based entity filtering |
+| `legacy-src/QW/server/sv_ents.c` | Entity delta compression and encoding |
+| `legacy-src/QW/server/sv_user.c` | User command processing, spectator handling |
+| `legacy-src/QW/server/sv_ccmds.c` | Server console commands (status, kick, map, etc.) |
+| `legacy-src/QW/server/sv_init.c` | Server spawn, level loading |
+| `legacy-src/QW/server/sv_phys.c` | Server-side physics simulation |
+| `legacy-src/QW/server/sv_move.c` | Entity movement and pathfinding |
+| `legacy-src/QW/server/sv_nchan.c` | Reliable network channel management |
 
 ### Client
 | File | Purpose |
 |------|---------|
-| `Quake/QW/client/cl_main.c` | Client main loop, connection management |
-| `Quake/QW/client/cl_parse.c` | Server message parsing (svc_* handlers) |
-| `Quake/QW/client/cl_ents.c` | Entity delta decompression, entity linking |
-| `Quake/QW/client/cl_pred.c` | Client-side movement prediction |
-| `Quake/QW/client/cl_input.c` | User input sampling and command generation |
-| `Quake/QW/client/cl_demo.c` | Demo recording and playback |
-| `Quake/QW/client/cl_cam.c` | Chase camera (spectator view) |
+| `legacy-src/QW/client/cl_main.c` | Client main loop, connection management |
+| `legacy-src/QW/client/cl_parse.c` | Server message parsing (svc_* handlers) |
+| `legacy-src/QW/client/cl_ents.c` | Entity delta decompression, entity linking |
+| `legacy-src/QW/client/cl_pred.c` | Client-side movement prediction |
+| `legacy-src/QW/client/cl_input.c` | User input sampling and command generation |
+| `legacy-src/QW/client/cl_demo.c` | Demo recording and playback |
+| `legacy-src/QW/client/cl_cam.c` | Chase camera (spectator view) |
 
 ### Shared
 | File | Purpose |
 |------|---------|
-| `Quake/QW/client/protocol.h` | Protocol constants, message types, delta flags |
-| `Quake/QW/client/net_chan.c` | Network channel (reliable + unreliable streams) |
+| `legacy-src/QW/client/protocol.h` | Protocol constants, message types, delta flags |
+| `legacy-src/QW/client/net_chan.c` | Network channel (reliable + unreliable streams) |
 
 ---
 
 ## Protocol Details
 
-**Protocol version**: 28 (`Quake/QW/client/protocol.h`)
+**Protocol version**: 28 (`legacy-src/QW/client/protocol.h`)
 
 ### Ports
 | Port | Purpose |
@@ -85,7 +85,7 @@ Key messages include:
 
 ## Delta Compression
 
-### Server-Side Encoding (`Quake/QW/server/sv_ents.c`)
+### Server-Side Encoding (`legacy-src/QW/server/sv_ents.c`)
 
 **`SV_WriteDelta()`** (line ~155):
 1. Compare source and destination `entity_state_t` fields
@@ -102,7 +102,7 @@ Key messages include:
    - `newnum > oldnum`: Removed entity → `U_REMOVE` flag
 3. Write `0x0000` to mark end of entity list
 
-### Client-Side Decoding (`Quake/QW/client/cl_ents.c`)
+### Client-Side Decoding (`legacy-src/QW/client/cl_ents.c`)
 
 **`CL_ParseDelta()`** (line ~160):
 1. Copy previous entity state to destination
@@ -111,7 +111,7 @@ Key messages include:
 4. For each flag set: read and update that field only
 5. Unchanged fields remain from previous state
 
-### Delta Flags (`Quake/QW/client/protocol.h`)
+### Delta Flags (`legacy-src/QW/client/protocol.h`)
 
 | Flag | Bit | Field | Encoding |
 |------|-----|-------|----------|
@@ -132,7 +132,7 @@ Key messages include:
 
 ---
 
-## Client-Side Prediction (`Quake/QW/client/cl_pred.c`)
+## Client-Side Prediction (`legacy-src/QW/client/cl_pred.c`)
 
 ### Algorithm
 
@@ -151,7 +151,7 @@ Key messages include:
 
 ### Key Data Structures
 
-**`frame_t`** (`Quake/QW/client/client.h`):
+**`frame_t`** (`legacy-src/QW/client/client.h`):
 ```
 - cmd: usercmd_t         — Command that generated this frame
 - senttime: double       — Time command was sent
@@ -169,32 +169,32 @@ Circular buffer of `UPDATE_BACKUP = 64` frames for prediction replay.
 ## Server Features
 
 ### Spectator Mode
-- `client->spectator` flag in `client_t` (`Quake/QW/server/server.h:121`)
+- `client->spectator` flag in `client_t` (`legacy-src/QW/server/server.h:121`)
 - Spectators receive entity updates but cannot interact with the game
 - Can track specific player via `spec_track` field
 - Separate password (`spectator_password` cvar)
 
 ### Anti-Cheat Measures
-- **Model checksums**: `model_player_checksum`, `eyes_player_checksum` (`Quake/QW/server/server.h`)
+- **Model checksums**: `model_player_checksum`, `eyes_player_checksum` (`legacy-src/QW/server/server.h`)
 - **Download restrictions**: `allow_download`, `allow_download_skins`, `allow_download_models`, `allow_download_sounds`, `allow_download_maps` cvars
 - **Choke counting**: `chokecount` field tracks dropped packets
 - **Delta sequence validation**: Ensures client isn't spoofing frame references
 - **RCON password**: Remote console access protection
 
 ### Master Server Registration
-- `SV_SetMaster_f()` in `Quake/QW/server/sv_ccmds.c` registers server with master servers
+- `SV_SetMaster_f()` in `legacy-src/QW/server/sv_ccmds.c` registers server with master servers
 - Allows server discovery through master server queries
 
 ---
 
-## QW Forwarding Proxy (`Quake/QW/qwfwd/`)
+## QW Forwarding Proxy (`legacy-src/QW/qwfwd/`)
 
 A transparent UDP relay that forwards traffic between clients and servers.
 
 | File | Purpose |
 |------|---------|
-| `Quake/QW/qwfwd/qwfwd.c` | Main proxy implementation (269 lines) |
-| `Quake/QW/qwfwd/misc.c` | Utility functions (452 lines) |
+| `legacy-src/QW/qwfwd/qwfwd.c` | Main proxy implementation (269 lines) |
+| `legacy-src/QW/qwfwd/misc.c` | Utility functions (452 lines) |
 
 **Architecture**: Maintains `peer_t` linked list mapping client addresses to server connections. Uses `select()` for non-blocking I/O. Peers time out after 2 minutes of inactivity.
 

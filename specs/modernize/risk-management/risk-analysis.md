@@ -31,7 +31,7 @@ This document identifies and assesses the key risks associated with modernizing 
 | **Likelihood** | High (60%) |
 | **Impact** | High |
 | **Risk Score** | **Critical** |
-| **Description** | Replacing 664 string operations risks introducing truncation bugs, off-by-one errors, or behavioral changes. For example, `sprintf` at `Quake/WinQuake/common.c:1286` constructs file paths — truncation could cause file-not-found errors. |
+| **Description** | Replacing 664 string operations risks introducing truncation bugs, off-by-one errors, or behavioral changes. For example, `sprintf` at `legacy-src/desktop-engine/common.c:1286` constructs file paths — truncation could cause file-not-found errors. |
 | **Affected Files** | All 240 `.c` files with string operations |
 | **Indicators** | Test failures, file loading errors, network protocol mismatches |
 
@@ -42,7 +42,7 @@ This document identifies and assesses the key risks associated with modernizing 
 | **Likelihood** | High (70%) |
 | **Impact** | Medium |
 | **Risk Score** | **High** |
-| **Description** | The 21 assembly files (10,748 lines) in `Quake/WinQuake/*.s` provide 2-5x speedup for rendering inner loops. C replacements will be slower. Key files: `d_polysa.s` (1,744 lines), `d_draw.s` (1,037 lines). |
+| **Description** | The 21 assembly files (10,748 lines) in `legacy-src/desktop-engine/*.s` provide 2-5x speedup for rendering inner loops. C replacements will be slower. Key files: `d_polysa.s` (1,744 lines), `d_draw.s` (1,037 lines). |
 | **Affected Files** | All `.s` files and their C counterparts |
 | **Indicators** | FPS drop > 50% in timedemo benchmark |
 

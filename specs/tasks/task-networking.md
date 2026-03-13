@@ -10,7 +10,7 @@ The networking subsystem provides two distinct implementations: WinQuake's LAN-f
 
 ---
 
-## WinQuake Networking Files (`Quake/WinQuake/`)
+## WinQuake Networking Files (`legacy-src/desktop-engine/`)
 
 | File | Responsibility |
 |------|----------------|
@@ -37,7 +37,7 @@ The networking subsystem provides two distinct implementations: WinQuake's LAN-f
 
 ## QuakeWorld Networking Files
 
-### Server (`Quake/QW/server/`)
+### Server (`legacy-src/QW/server/`)
 | File | Responsibility |
 |------|----------------|
 | `sv_main.c` | Server initialization, client management, main loop |
@@ -48,7 +48,7 @@ The networking subsystem provides two distinct implementations: WinQuake's LAN-f
 | `sv_init.c` | Server spawn, level loading |
 | `sv_nchan.c` | Reliable channel management, fragmentation |
 
-### Client (`Quake/QW/client/`)
+### Client (`legacy-src/QW/client/`)
 | File | Responsibility |
 |------|----------------|
 | `cl_main.c` | Client main loop, connection management |
@@ -68,13 +68,13 @@ The networking subsystem provides two distinct implementations: WinQuake's LAN-f
 
 ## Key Data Structures
 
-### WinQuake `qsocket_t` (`Quake/WinQuake/net.h`)
+### WinQuake `qsocket_t` (`legacy-src/desktop-engine/net.h`)
 - Connection state (active, send/receive capability)
 - Reliable message buffer with sequence tracking
 - ACK-based retransmission
 - Per-driver data pointer
 
-### QuakeWorld `client_t` (`Quake/QW/server/server.h`)
+### QuakeWorld `client_t` (`legacy-src/QW/server/server.h`)
 - `spectator` flag, `userid`, `userinfo` string
 - Datagram buffer (unreliable), backup buffer (reliable)
 - `frames[UPDATE_BACKUP]` — 64-frame circular buffer for delta reference
@@ -82,7 +82,7 @@ The networking subsystem provides two distinct implementations: WinQuake's LAN-f
 - `chokecount` — Packet choke tracking
 - `netchan_t` — Network channel with reliable/unreliable streams
 
-### QuakeWorld `frame_t` (`Quake/QW/client/client.h`)
+### QuakeWorld `frame_t` (`legacy-src/QW/client/client.h`)
 - `cmd` — usercmd_t that generated frame
 - `senttime` / `receivedtime` — For latency calculation
 - `delta_sequence` — Sequence to delta from
@@ -110,7 +110,7 @@ The networking subsystem provides two distinct implementations: WinQuake's LAN-f
 
 ## Delta Compression Algorithm
 
-### Server Side (`SV_WriteDelta()` — `Quake/QW/server/sv_ents.c:155`)
+### Server Side (`SV_WriteDelta()` — `legacy-src/QW/server/sv_ents.c:155`)
 ```
 For each entity field (origin, angles, model, frame, etc.):
   if field changed since last acknowledged state:
@@ -119,7 +119,7 @@ Write: entity_number | flags
 Write: only changed field values
 ```
 
-### Client Side (`CL_ParseDelta()` — `Quake/QW/client/cl_ents.c:160`)
+### Client Side (`CL_ParseDelta()` — `legacy-src/QW/client/cl_ents.c:160`)
 ```
 Copy previous state → new state
 Read: entity_number | flags
@@ -127,7 +127,7 @@ For each set flag:
   Read and overwrite that field
 ```
 
-### Entity List Delta (`SV_EmitPacketEntities()` — `Quake/QW/server/sv_ents.c:250`)
+### Entity List Delta (`SV_EmitPacketEntities()` — `legacy-src/QW/server/sv_ents.c:250`)
 ```
 Merge old and new entity lists:
   New entity (newnum < oldnum): Delta from baseline

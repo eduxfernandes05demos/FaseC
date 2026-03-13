@@ -29,15 +29,15 @@ The engine has platform-specific video drivers selected at compile time:
 
 | File | Platform | Key Functions |
 |------|----------|---------------|
-| `Quake/WinQuake/vid_win.c` | Windows | `VID_Init()`, `VID_Update()`, `VID_AllocBuffers()` (line 260) |
-| `Quake/WinQuake/vid_svgalib.c` | Linux SVGAlib | `VID_Init()` (line 555), `VID_Update()` (line 722) |
-| `Quake/WinQuake/vid_x.c` | Linux X11 | `VID_Init()`, `VID_Update()` |
-| `Quake/WinQuake/vid_dos.c` | DOS | `VID_Init()`, `VID_Update()` |
-| `Quake/WinQuake/vid_null.c` | Stub | Minimal stubs (exists but incomplete) |
+| `legacy-src/desktop-engine/vid_win.c` | Windows | `VID_Init()`, `VID_Update()`, `VID_AllocBuffers()` (line 260) |
+| `legacy-src/desktop-engine/vid_svgalib.c` | Linux SVGAlib | `VID_Init()` (line 555), `VID_Update()` (line 722) |
+| `legacy-src/desktop-engine/vid_x.c` | Linux X11 | `VID_Init()`, `VID_Update()` |
+| `legacy-src/desktop-engine/vid_dos.c` | DOS | `VID_Init()`, `VID_Update()` |
+| `legacy-src/desktop-engine/vid_null.c` | Stub | Minimal stubs (exists but incomplete) |
 
 ### Current Video Interface
 
-The engine accesses video through global `viddef_t vid` (defined in `Quake/WinQuake/vid.h`):
+The engine accesses video through global `viddef_t vid` (defined in `legacy-src/desktop-engine/vid.h`):
 
 ```c
 typedef struct {
@@ -63,7 +63,7 @@ typedef struct {
 
 ### Critical Dependency: VID_AllocBuffers
 
-`Quake/WinQuake/vid_win.c:260` — `VID_AllocBuffers()` allocates the Z-buffer and surface cache from Hunk memory. The headless driver MUST replicate this:
+`legacy-src/desktop-engine/vid_win.c:260` — `VID_AllocBuffers()` allocates the Z-buffer and surface cache from Hunk memory. The headless driver MUST replicate this:
 
 ```c
 /* From vid_win.c:260 */
@@ -79,7 +79,7 @@ void VID_AllocBuffers(int width, int height) {
 
 ### Step 1: Define Video Interface
 
-**New file**: `Quake/WinQuake/video_interface.h`
+**New file**: `legacy-src/desktop-engine/video_interface.h`
 
 ```c
 typedef struct video_interface_s {
@@ -97,7 +97,7 @@ typedef struct video_interface_s {
 
 ### Step 2: Create Headless Video Driver
 
-**New file**: `Quake/WinQuake/vid_headless.c`
+**New file**: `legacy-src/desktop-engine/vid_headless.c`
 
 Must implement:
 
@@ -114,7 +114,7 @@ Must implement:
 
 ### Step 3: Wire Into Engine Initialization
 
-Modify `Quake/WinQuake/host.c:835` (`Host_Init`) to select video driver based on configuration:
+Modify `legacy-src/desktop-engine/host.c:835` (`Host_Init`) to select video driver based on configuration:
 
 ```c
 /* In Host_Init: */
@@ -141,7 +141,7 @@ This API is called by the streaming gateway to extract rendered frames.
 
 ### Step 5: Handle Screen Management
 
-`Quake/WinQuake/screen.c` calls `VID_Update()` at the end of `SCR_UpdateScreen()`. In headless mode, this must:
+`legacy-src/desktop-engine/screen.c` calls `VID_Update()` at the end of `SCR_UpdateScreen()`. In headless mode, this must:
 - Complete all rendering to `vid.buffer`
 - Signal frame availability (for streaming)
 - Not attempt any display operations
@@ -152,12 +152,12 @@ This API is called by the streaming gateway to extract rendered frames.
 
 | File | Change Type | Description |
 |------|------------|-------------|
-| `Quake/WinQuake/vid_headless.c` | **New** | Headless video driver |
-| `Quake/WinQuake/video_interface.h` | **New** | Video interface definition |
-| `Quake/WinQuake/vid.h` | Minor edit | Add `VID_GetFramebuffer()` declaration |
-| `Quake/WinQuake/host.c` | Minor edit | Add headless mode startup logic (line 835) |
-| `Quake/WinQuake/screen.c` | Minor edit | Handle headless mode in `SCR_UpdateScreen()` |
-| `Quake/WinQuake/CMakeLists.txt` | Edit | Add `vid_headless.c` to headless build target |
+| `legacy-src/desktop-engine/vid_headless.c` | **New** | Headless video driver |
+| `legacy-src/desktop-engine/video_interface.h` | **New** | Video interface definition |
+| `legacy-src/desktop-engine/vid.h` | Minor edit | Add `VID_GetFramebuffer()` declaration |
+| `legacy-src/desktop-engine/host.c` | Minor edit | Add headless mode startup logic (line 835) |
+| `legacy-src/desktop-engine/screen.c` | Minor edit | Handle headless mode in `SCR_UpdateScreen()` |
+| `legacy-src/desktop-engine/CMakeLists.txt` | Edit | Add `vid_headless.c` to headless build target |
 
 ---
 

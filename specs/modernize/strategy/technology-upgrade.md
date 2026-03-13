@@ -18,9 +18,9 @@ This document details the technology upgrade path from the 1996 C89 toolchain to
 | Component | Current | Notes |
 |-----------|---------|-------|
 | C Standard | C89 (ANSI C) | No `inline`, no `_Bool`, no `restrict`, no VLAs |
-| Compiler (Linux) | GCC (unspecified version) | `Quake/WinQuake/Makefile.linuxi386` |
-| Compiler (Windows) | MSVC 4-6 | `Quake/WinQuake/WinQuake.dsp` |
-| Compiler (Solaris) | Sun cc | `Quake/WinQuake/Makefile.Solaris` |
+| Compiler (Linux) | GCC (unspecified version) | `legacy-src/desktop-engine/Makefile.linuxi386` |
+| Compiler (Windows) | MSVC 4-6 | `legacy-src/desktop-engine/WinQuake.dsp` |
+| Compiler (Solaris) | Sun cc | `legacy-src/desktop-engine/Makefile.Solaris` |
 
 ### 2.2 Target State
 
@@ -50,25 +50,25 @@ This document details the technology upgrade path from the 1996 C89 toolchain to
 
 | File | Target |
 |------|--------|
-| `Quake/WinQuake/Makefile.linuxi386` | Linux WinQuake |
-| `Quake/WinQuake/Makefile.Solaris` | Solaris WinQuake |
-| `Quake/QW/Makefile.Linux` | Linux QuakeWorld |
-| `Quake/QW/Makefile.Solaris` | Solaris QuakeWorld |
-| `Quake/WinQuake/WinQuake.dsp` | MSVC WinQuake |
-| `Quake/WinQuake/WinQuake.dsw` | MSVC Workspace |
-| `Quake/QW/qw.dsw` | MSVC QW Workspace |
+| `legacy-src/desktop-engine/Makefile.linuxi386` | Linux WinQuake |
+| `legacy-src/desktop-engine/Makefile.Solaris` | Solaris WinQuake |
+| `legacy-src/QW/Makefile.Linux` | Linux QuakeWorld |
+| `legacy-src/QW/Makefile.Solaris` | Solaris QuakeWorld |
+| `legacy-src/desktop-engine/WinQuake.dsp` | MSVC WinQuake |
+| `legacy-src/desktop-engine/WinQuake.dsw` | MSVC Workspace |
+| `legacy-src/QW/qw.dsw` | MSVC QW Workspace |
 
 ### 3.2 CMake Structure
 
 ```
-Quake/
+legacy-src/
 ├── CMakeLists.txt              # Top-level project
 ├── cmake/
 │   ├── CompilerOptions.cmake   # Compiler flags, sanitizers
 │   ├── PlatformDetect.cmake    # OS/arch detection
 │   └── FindDependencies.cmake  # External library discovery
-├── WinQuake/
-│   ├── CMakeLists.txt          # WinQuake targets
+├── desktop-engine/
+│   ├── CMakeLists.txt          # Desktop engine targets
 │   └── ...
 ├── QW/
 │   ├── CMakeLists.txt          # QuakeWorld targets
@@ -212,8 +212,8 @@ extern platform_interface_t platform_headless; /* sys_headless.c (new) */
 
 | Dependency | Source | Management |
 |------------|--------|-----------|
-| DirectX SDK | `Quake/WinQuake/dxsdk/` | Vendored (outdated) |
-| Scitech MGL | `Quake/WinQuake/scitech/` | Vendored (obsolete) |
+| DirectX SDK | `legacy-src/desktop-engine/dxsdk/` | Vendored (outdated) |
+| Scitech MGL | `legacy-src/desktop-engine/scitech/` | Vendored (obsolete) |
 | OpenGL | System | Implicit link |
 | POSIX/Win32 | System | Implicit |
 

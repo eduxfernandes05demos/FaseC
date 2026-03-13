@@ -12,7 +12,7 @@ The platform abstraction layer isolates the engine from OS-specific APIs through
 
 ## File Inventory
 
-### System Layer (`Quake/WinQuake/`)
+### System Layer (`legacy-src/desktop-engine/`)
 
 | File | Platform | Key APIs Used |
 |------|----------|---------------|
@@ -23,7 +23,7 @@ The platform abstraction layer isolates the engine from OS-specific APIs through
 | `sys_null.c` | Any | Stub (porting reference) |
 | `sys.h` | — | Interface definition |
 
-### Video Layer (`Quake/WinQuake/`)
+### Video Layer (`legacy-src/desktop-engine/`)
 
 | File | Platform | API |
 |------|----------|-----|
@@ -38,7 +38,7 @@ The platform abstraction layer isolates the engine from OS-specific APIs through
 | `vid_null.c` | Any | Stub |
 | `vid.h` / `vid_dos.h` | — | Interface definitions |
 
-### Input Layer (`Quake/WinQuake/`)
+### Input Layer (`legacy-src/desktop-engine/`)
 
 | File | Platform | API |
 |------|----------|-----|
@@ -48,7 +48,7 @@ The platform abstraction layer isolates the engine from OS-specific APIs through
 | `in_null.c` | Any | Stub |
 | `input.h` | — | Interface definition |
 
-### Sound Layer (`Quake/WinQuake/`)
+### Sound Layer (`legacy-src/desktop-engine/`)
 
 | File | Platform | API |
 |------|----------|-----|
@@ -60,7 +60,7 @@ The platform abstraction layer isolates the engine from OS-specific APIs through
 | `snd_next.c` | NeXTSTEP | NeXT audio |
 | `snd_null.c` | Any | Stub |
 
-### CD Audio Layer (`Quake/WinQuake/`)
+### CD Audio Layer (`legacy-src/desktop-engine/`)
 
 | File | Platform | API |
 |------|----------|-----|
@@ -87,7 +87,7 @@ The platform abstraction layer isolates the engine from OS-specific APIs through
 
 ## Build System Integration
 
-### Linux Makefile (`Quake/WinQuake/Makefile.linuxi386`)
+### Linux Makefile (`legacy-src/desktop-engine/Makefile.linuxi386`)
 ```makefile
 # Software SVGA
 SQUAKE_OBJS = ... sys_linux.o vid_svgalib.o in_null.o snd_linux.o cd_linux.o ...
@@ -99,12 +99,12 @@ X11_OBJS = ... sys_linux.o vid_x.o in_null.o snd_linux.o cd_linux.o ...
 GLQUAKE_OBJS = ... sys_linux.o gl_vidlinux.o in_null.o snd_linux.o cd_linux.o ...
 ```
 
-### Windows Project (`Quake/WinQuake/WinQuake.dsp`)
+### Windows Project (`legacy-src/desktop-engine/WinQuake.dsp`)
 ```
 Source: sys_win.c, vid_win.c, in_win.c, snd_win.c, cd_win.c, conproc.c
 ```
 
-### Solaris Makefile (`Quake/WinQuake/Makefile.Solaris`)
+### Solaris Makefile (`legacy-src/desktop-engine/Makefile.Solaris`)
 ```makefile
 OBJS = ... sys_sun.o vid_sunx.o in_sun.o snd_sun.o cd_null.o ...
 ```

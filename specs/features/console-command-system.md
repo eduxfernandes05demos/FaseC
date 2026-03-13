@@ -1,6 +1,6 @@
 # Feature: Console and Command System
 
-> Reverse-engineered from `Quake/WinQuake/cmd.c`, `Quake/WinQuake/cvar.c`, `Quake/WinQuake/console.c`, `Quake/WinQuake/keys.c`
+> Reverse-engineered from `legacy-src/desktop-engine/cmd.c`, `legacy-src/desktop-engine/cvar.c`, `legacy-src/desktop-engine/console.c`, `legacy-src/desktop-engine/keys.c`
 
 ---
 
@@ -14,14 +14,14 @@ The console and command system provides a unified text-based interface for confi
 
 | File | Purpose |
 |------|---------|
-| `Quake/WinQuake/cmd.c` | Command buffer, tokenization, command registration and execution |
-| `Quake/WinQuake/cmd.h` | Command system interface |
-| `Quake/WinQuake/cvar.c` | Console variable registration, get/set, archival |
-| `Quake/WinQuake/cvar.h` | CVar structure definition |
-| `Quake/WinQuake/console.c` | Console rendering, scrollback buffer, notification lines |
-| `Quake/WinQuake/console.h` | Console interface |
-| `Quake/WinQuake/keys.c` | Key binding, key event dispatch |
-| `Quake/WinQuake/keys.h` | Key code definitions |
+| `legacy-src/desktop-engine/cmd.c` | Command buffer, tokenization, command registration and execution |
+| `legacy-src/desktop-engine/cmd.h` | Command system interface |
+| `legacy-src/desktop-engine/cvar.c` | Console variable registration, get/set, archival |
+| `legacy-src/desktop-engine/cvar.h` | CVar structure definition |
+| `legacy-src/desktop-engine/console.c` | Console rendering, scrollback buffer, notification lines |
+| `legacy-src/desktop-engine/console.h` | Console interface |
+| `legacy-src/desktop-engine/keys.c` | Key binding, key event dispatch |
+| `legacy-src/desktop-engine/keys.h` | Key code definitions |
 
 ---
 
@@ -49,7 +49,7 @@ Cmd_ExecuteString(line)
 
 ---
 
-## Command Buffer (`Quake/WinQuake/cmd.c`)
+## Command Buffer (`legacy-src/desktop-engine/cmd.c`)
 
 | Function | Purpose |
 |----------|---------|
@@ -79,7 +79,7 @@ The buffer is a simple text string. `Cbuf_Execute()` extracts lines (delimited b
 
 ---
 
-## Console Variables (CVars) (`Quake/WinQuake/cvar.c`)
+## Console Variables (CVars) (`legacy-src/desktop-engine/cvar.c`)
 
 ### CVar Structure
 ```c
@@ -125,7 +125,7 @@ typedef struct cvar_s {
 
 ---
 
-## Key Binding System (`Quake/WinQuake/keys.c`)
+## Key Binding System (`legacy-src/desktop-engine/keys.c`)
 
 ### Key States
 ```c
@@ -159,7 +159,7 @@ Platform input (e.g., in_win.c)
 
 ---
 
-## Console Display (`Quake/WinQuake/console.c`)
+## Console Display (`legacy-src/desktop-engine/console.c`)
 
 ### Features
 - Drop-down overlay that slides from top of screen

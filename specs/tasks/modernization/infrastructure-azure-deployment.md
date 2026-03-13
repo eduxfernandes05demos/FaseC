@@ -309,7 +309,7 @@ az deployment sub create \
 az aks get-credentials -g quake-dev-rg -n quake-dev-aks
 
 # 3. Build and push container images
-az acr build -r quakedevacr -t quake/engine:latest Quake/
+az acr build -r quakedevacr -t quake/engine:latest legacy-src/
 az acr build -r quakedevacr -t quake/gateway:latest services/streaming-gateway/
 az acr build -r quakedevacr -t quake/session-mgr:latest services/session-manager/
 

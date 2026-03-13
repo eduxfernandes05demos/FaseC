@@ -10,7 +10,7 @@ All gameplay mechanics are implemented in QuakeC scripts compiled into `qwprogs.
 
 ---
 
-## File Inventory (`Quake/qw-qc/`)
+## File Inventory (`legacy-src/qw-qc/`)
 
 | File | LOC | Primary Systems |
 |------|-----|-----------------|

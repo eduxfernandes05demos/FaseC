@@ -11,7 +11,7 @@ The Quake engine communicates between subsystems through well-defined C function
 
 ---
 
-## 2. System Interface (`Quake/WinQuake/sys.h`)
+## 2. System Interface (`legacy-src/desktop-engine/sys.h`)
 
 Platform abstraction layer — every platform implements these functions.
 
@@ -37,7 +37,7 @@ Platform abstraction layer — every platform implements these functions.
 
 ---
 
-## 3. Video Interface (`Quake/WinQuake/vid.h`)
+## 3. Video Interface (`legacy-src/desktop-engine/vid.h`)
 
 Display initialization and framebuffer management.
 
@@ -65,7 +65,7 @@ Display initialization and framebuffer management.
 
 ---
 
-## 4. Input Interface (`Quake/WinQuake/input.h`)
+## 4. Input Interface (`legacy-src/desktop-engine/input.h`)
 
 Input device abstraction.
 
@@ -81,7 +81,7 @@ Input device abstraction.
 
 ---
 
-## 5. Sound Interface (`Quake/WinQuake/sound.h`)
+## 5. Sound Interface (`legacy-src/desktop-engine/sound.h`)
 
 Audio system API.
 
@@ -102,7 +102,7 @@ Audio system API.
 
 ---
 
-## 6. Network Interface (`Quake/WinQuake/net.h`)
+## 6. Network Interface (`legacy-src/desktop-engine/net.h`)
 
 Network subsystem API (WinQuake).
 
@@ -123,7 +123,7 @@ Network subsystem API (WinQuake).
 
 ---
 
-## 7. Rendering Interface (`Quake/WinQuake/render.h`)
+## 7. Rendering Interface (`legacy-src/desktop-engine/render.h`)
 
 Rendering subsystem API — shared by software and OpenGL renderers.
 
@@ -139,7 +139,7 @@ Rendering subsystem API — shared by software and OpenGL renderers.
 
 ---
 
-## 8. Command System Interface (`Quake/WinQuake/cmd.h`)
+## 8. Command System Interface (`legacy-src/desktop-engine/cmd.h`)
 
 Console command execution API.
 
@@ -159,7 +159,7 @@ Console command execution API.
 
 ---
 
-## 9. CVar Interface (`Quake/WinQuake/cvar.h`)
+## 9. CVar Interface (`legacy-src/desktop-engine/cvar.h`)
 
 Console variable API.
 
@@ -177,7 +177,7 @@ Console variable API.
 
 ---
 
-## 10. QuakeC VM Interface (`Quake/WinQuake/progs.h`, `Quake/WinQuake/pr_comp.h`)
+## 10. QuakeC VM Interface (`legacy-src/desktop-engine/progs.h`, `legacy-src/desktop-engine/pr_comp.h`)
 
 QuakeC virtual machine API.
 
@@ -193,7 +193,7 @@ QuakeC virtual machine API.
 | `ED_PrintEdicts` | `void ED_PrintEdicts(void)` | Debug print all entities |
 | `PR_Profile_f` | `void PR_Profile_f(void)` | Print VM execution profile |
 
-**Key builtin functions bridge** (`Quake/WinQuake/pr_cmds.c`):
+**Key builtin functions bridge** (`legacy-src/desktop-engine/pr_cmds.c`):
 
 | Builtin # | Function | Engine Function Called |
 |-----------|----------|----------------------|
@@ -210,7 +210,7 @@ QuakeC virtual machine API.
 
 ---
 
-## 11. Model Loading Interface (`Quake/WinQuake/model.h`)
+## 11. Model Loading Interface (`legacy-src/desktop-engine/model.h`)
 
 Model and BSP loading API.
 
@@ -226,7 +226,7 @@ Model and BSP loading API.
 
 ---
 
-## 12. Memory Management Interface (`Quake/WinQuake/zone.h`)
+## 12. Memory Management Interface (`legacy-src/desktop-engine/zone.h`)
 
 Custom memory allocation API.
 
@@ -245,7 +245,7 @@ Custom memory allocation API.
 
 ---
 
-## 13. Common Utilities Interface (`Quake/WinQuake/common.h`)
+## 13. Common Utilities Interface (`legacy-src/desktop-engine/common.h`)
 
 Shared utility functions.
 
@@ -266,7 +266,7 @@ Shared utility functions.
 
 ---
 
-## 14. World / Physics Interface (`Quake/WinQuake/world.h`)
+## 14. World / Physics Interface (`legacy-src/desktop-engine/world.h`)
 
 Spatial query and collision detection API.
 
@@ -282,7 +282,7 @@ Spatial query and collision detection API.
 
 ---
 
-## 15. Math Library Interface (`Quake/WinQuake/mathlib.h`)
+## 15. Math Library Interface (`legacy-src/desktop-engine/mathlib.h`)
 
 Vector and matrix math utilities.
 
@@ -298,7 +298,7 @@ Vector and matrix math utilities.
 | `FloorDivMod(double numer, double denom, int *quotient, int *rem)` | Floor division with remainder |
 | `GreatestCommonDivisor(int i1, int i2)` | GCD computation |
 
-**Inline macros** (`Quake/WinQuake/mathlib.h`):
+**Inline macros** (`legacy-src/desktop-engine/mathlib.h`):
 ```c
 #define DotProduct(x,y)    (x[0]*y[0]+x[1]*y[1]+x[2]*y[2])
 #define VectorSubtract(a,b,c) {c[0]=a[0]-b[0];c[1]=a[1]-b[1];c[2]=a[2]-b[2];}

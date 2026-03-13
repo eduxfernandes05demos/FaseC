@@ -1,6 +1,6 @@
 # Feature: QuakeC Scripting Engine
 
-> Reverse-engineered from `Quake/WinQuake/pr_exec.c`, `Quake/WinQuake/pr_edict.c`, `Quake/WinQuake/pr_cmds.c`, and `Quake/qw-qc/`
+> Reverse-engineered from `legacy-src/desktop-engine/pr_exec.c`, `legacy-src/desktop-engine/pr_edict.c`, `legacy-src/desktop-engine/pr_cmds.c`, and `legacy-src/qw-qc/`
 
 ---
 
@@ -15,38 +15,38 @@ QuakeC is a custom scripting language designed by John Carmack for Quake. It all
 ### Engine (VM Implementation)
 | File | Purpose |
 |------|---------|
-| `Quake/WinQuake/pr_exec.c` | Bytecode execution loop — `PR_ExecuteProgram()` |
-| `Quake/WinQuake/pr_edict.c` | Entity allocation, field access, progs loading — `ED_Alloc()`, `PR_LoadProgs()` |
-| `Quake/WinQuake/pr_cmds.c` | ~100 builtin functions bridging script to engine |
-| `Quake/WinQuake/pr_comp.h` | Opcode definitions (~80 opcodes), instruction format |
-| `Quake/WinQuake/progs.h` | VM data structures (`edict_t`, `dstatement_t`, `dfunction_t`) |
+| `legacy-src/desktop-engine/pr_exec.c` | Bytecode execution loop — `PR_ExecuteProgram()` |
+| `legacy-src/desktop-engine/pr_edict.c` | Entity allocation, field access, progs loading — `ED_Alloc()`, `PR_LoadProgs()` |
+| `legacy-src/desktop-engine/pr_cmds.c` | ~100 builtin functions bridging script to engine |
+| `legacy-src/desktop-engine/pr_comp.h` | Opcode definitions (~80 opcodes), instruction format |
+| `legacy-src/desktop-engine/progs.h` | VM data structures (`edict_t`, `dstatement_t`, `dfunction_t`) |
 
 ### Game Logic (QuakeC Source)
 | File | Lines | Purpose |
 |------|-------|---------|
-| `Quake/qw-qc/defs.qc` | 754 | Global definitions, entity fields, builtin declarations |
-| `Quake/qw-qc/subs.qc` | 310 | Movement utilities, target-firing system |
-| `Quake/qw-qc/combat.qc` | 350 | Damage system |
-| `Quake/qw-qc/items.qc` | 1,686 | All pickups |
-| `Quake/qw-qc/weapons.qc` | 1,427 | Weapon implementations |
-| `Quake/qw-qc/world.qc` | 432 | World initialization, precaching |
-| `Quake/qw-qc/client.qc` | 1,524 | Player management |
-| `Quake/qw-qc/spectate.qc` | 111 | Spectator mode |
-| `Quake/qw-qc/player.qc` | 736 | Player animation frames |
-| `Quake/qw-qc/doors.qc` | 809 | Door mechanics |
-| `Quake/qw-qc/buttons.qc` | 166 | Button mechanics |
-| `Quake/qw-qc/triggers.qc` | 672 | Trigger entities |
-| `Quake/qw-qc/plats.qc` | 393 | Platforms and trains |
-| `Quake/qw-qc/misc.qc` | 756 | Lights, effects, barrels |
-| `Quake/qw-qc/models.qc` | 611 | Model entity spawning |
-| `Quake/qw-qc/sprites.qc` | 52 | Sprite entities |
-| `Quake/qw-qc/server.qc` | 123 | Monster waypoint pathing |
+| `legacy-src/qw-qc/defs.qc` | 754 | Global definitions, entity fields, builtin declarations |
+| `legacy-src/qw-qc/subs.qc` | 310 | Movement utilities, target-firing system |
+| `legacy-src/qw-qc/combat.qc` | 350 | Damage system |
+| `legacy-src/qw-qc/items.qc` | 1,686 | All pickups |
+| `legacy-src/qw-qc/weapons.qc` | 1,427 | Weapon implementations |
+| `legacy-src/qw-qc/world.qc` | 432 | World initialization, precaching |
+| `legacy-src/qw-qc/client.qc` | 1,524 | Player management |
+| `legacy-src/qw-qc/spectate.qc` | 111 | Spectator mode |
+| `legacy-src/qw-qc/player.qc` | 736 | Player animation frames |
+| `legacy-src/qw-qc/doors.qc` | 809 | Door mechanics |
+| `legacy-src/qw-qc/buttons.qc` | 166 | Button mechanics |
+| `legacy-src/qw-qc/triggers.qc` | 672 | Trigger entities |
+| `legacy-src/qw-qc/plats.qc` | 393 | Platforms and trains |
+| `legacy-src/qw-qc/misc.qc` | 756 | Lights, effects, barrels |
+| `legacy-src/qw-qc/models.qc` | 611 | Model entity spawning |
+| `legacy-src/qw-qc/sprites.qc` | 52 | Sprite entities |
+| `legacy-src/qw-qc/server.qc` | 123 | Monster waypoint pathing |
 
 ---
 
 ## VM Architecture
 
-### Instruction Format (`Quake/WinQuake/pr_comp.h`)
+### Instruction Format (`legacy-src/desktop-engine/pr_comp.h`)
 ```c
 typedef struct {
     unsigned short op;      // Opcode (0-79)
@@ -67,7 +67,7 @@ typedef struct {
 | Functions | `OP_CALL0`–`OP_CALL8`, `OP_RETURN`, `OP_DONE` | Function calls with 0-8 parameters |
 | Bitwise | `OP_BITAND`, `OP_BITOR` | Bitwise AND/OR |
 
-### Execution Loop (`Quake/WinQuake/pr_exec.c`)
+### Execution Loop (`legacy-src/desktop-engine/pr_exec.c`)
 
 **`PR_ExecuteProgram(func_t fnum)`** (line ~361):
 1. `PR_EnterFunction()` — Push current state onto call stack, set up locals
@@ -91,7 +91,7 @@ typedef struct {
 | `void` | — | 0 bytes |
 | function | `int` (function index) | 4 bytes |
 
-### Entity Structure (`Quake/WinQuake/progs.h`)
+### Entity Structure (`legacy-src/desktop-engine/progs.h`)
 ```c
 typedef struct edict_s {
     qboolean    free;           // Available for reuse?
@@ -104,7 +104,7 @@ typedef struct edict_s {
 
 ---
 
-## Builtin Functions (`Quake/WinQuake/pr_cmds.c`)
+## Builtin Functions (`legacy-src/desktop-engine/pr_cmds.c`)
 
 Key bridge functions between QuakeC and engine:
 
@@ -156,7 +156,7 @@ The engine calls QuakeC functions through the entity callback system:
 
 ## Compilation
 
-**Input**: `.qc` files listed in `Quake/qw-qc/progs.src`
+**Input**: `.qc` files listed in `legacy-src/qw-qc/progs.src`
 **Output**: `qwprogs.dat` — binary bytecode
 **Compiler**: `qcc` (QuakeC compiler, not included in this repository)
 

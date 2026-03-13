@@ -44,12 +44,12 @@ The software renderer writes directly to `vid.buffer` (palette-indexed 8-bit pix
 
 | Property | Value | Source |
 |----------|-------|--------|
-| Buffer pointer | `vid.buffer` | `Quake/WinQuake/vid.h` — `viddef_t` struct |
+| Buffer pointer | `vid.buffer` | `legacy-src/desktop-engine/vid.h` — `viddef_t` struct |
 | Width | `vid.width` | Typically 320-640 |
 | Height | `vid.height` | Typically 200-480 |
 | Pixel format | 8-bit palette indexed | `vid.colormap` provides palette |
 | Row stride | `vid.rowbytes` | May differ from width |
-| Frame completion | After `SCR_UpdateScreen()` | `Quake/WinQuake/screen.c` |
+| Frame completion | After `SCR_UpdateScreen()` | `legacy-src/desktop-engine/screen.c` |
 
 **Extraction method**:
 ```c
@@ -77,7 +77,7 @@ The OpenGL renderer uses GPU framebuffer:
 
 | Property | Value | Source |
 |----------|-------|--------|
-| Read method | `glReadPixels()` | `Quake/WinQuake/gl_screen.c:618` |
+| Read method | `glReadPixels()` | `legacy-src/desktop-engine/gl_screen.c:618` |
 | Pixel format | RGB (24-bit) | Direct RGB output |
 | Performance | Slow (GPU→CPU stall) | Needs async readback |
 
@@ -235,12 +235,12 @@ qboolean frame_changed(const uint8_t *buffer, int size) {
 
 | File | Change Type | Description |
 |------|------------|-------------|
-| `Quake/WinQuake/encode.c` | **New** | Frame encoding pipeline |
-| `Quake/WinQuake/encode.h` | **New** | Encoding API |
-| `Quake/WinQuake/color_convert.c` | **New** | RGB→YUV conversion with SIMD |
-| `Quake/WinQuake/vid_headless.c` | **Edit** | Add double-buffered frame extraction |
-| `Quake/WinQuake/screen.c` | **Edit** | Trigger encoding after `SCR_UpdateScreen()` |
-| `Quake/WinQuake/CMakeLists.txt` | **Edit** | Add FFmpeg/libx264 dependency |
+| `legacy-src/desktop-engine/encode.c` | **New** | Frame encoding pipeline |
+| `legacy-src/desktop-engine/encode.h` | **New** | Encoding API |
+| `legacy-src/desktop-engine/color_convert.c` | **New** | RGB→YUV conversion with SIMD |
+| `legacy-src/desktop-engine/vid_headless.c` | **Edit** | Add double-buffered frame extraction |
+| `legacy-src/desktop-engine/screen.c` | **Edit** | Trigger encoding after `SCR_UpdateScreen()` |
+| `legacy-src/desktop-engine/CMakeLists.txt` | **Edit** | Add FFmpeg/libx264 dependency |
 
 ---
 

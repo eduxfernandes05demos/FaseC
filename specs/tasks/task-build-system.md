@@ -16,48 +16,48 @@ The Quake codebase uses platform-specific build systems: GNU Makefiles for Linux
 
 | File | Purpose |
 |------|---------|
-| `Quake/WinQuake/Makefile.linuxi386` | WinQuake Linux/x86 build |
-| `Quake/WinQuake/Makefile.Solaris` | WinQuake Solaris build |
-| `Quake/QW/Makefile.Linux` | QuakeWorld Linux build (client + server) |
-| `Quake/QW/Makefile.Solaris` | QuakeWorld Solaris server build |
+| `legacy-src/desktop-engine/Makefile.linuxi386` | WinQuake Linux/x86 build |
+| `legacy-src/desktop-engine/Makefile.Solaris` | WinQuake Solaris build |
+| `legacy-src/QW/Makefile.Linux` | QuakeWorld Linux build (client + server) |
+| `legacy-src/QW/Makefile.Solaris` | QuakeWorld Solaris server build |
 
 ### Windows Build Files
 
 | File | Purpose |
 |------|---------|
-| `Quake/WinQuake/WinQuake.dsp` | MSVC project (WinQuake) |
-| `Quake/WinQuake/WinQuake.dsw` | MSVC workspace (WinQuake) |
-| `Quake/WinQuake/WinQuake.mdp` | MSVC makefile project |
-| `Quake/QW/qw.dsw` | MSVC workspace (QuakeWorld all projects) |
-| `Quake/QW/gas2masm/gas2masm.dsp` | MSVC project (gas2masm tool) |
+| `legacy-src/desktop-engine/WinQuake.dsp` | MSVC project (WinQuake) |
+| `legacy-src/desktop-engine/WinQuake.dsw` | MSVC workspace (WinQuake) |
+| `legacy-src/desktop-engine/WinQuake.mdp` | MSVC makefile project |
+| `legacy-src/QW/qw.dsw` | MSVC workspace (QuakeWorld all projects) |
+| `legacy-src/QW/gas2masm/gas2masm.dsp` | MSVC project (gas2masm tool) |
 
 ### Utility Scripts
 
 | File | Purpose |
 |------|---------|
-| `Quake/WinQuake/clean.bat` | Windows build cleanup |
-| `Quake/QW/clean.bat` | QW Windows build cleanup |
-| `Quake/WinQuake/q.bat`, `qa.bat`, `qb.bat`, `qt.bat`, `wq.bat` | Windows launch scripts |
-| `Quake/WinQuake/makezip.bat` | Package distribution |
-| `Quake/QW/makezip.bat` | QW package distribution |
+| `legacy-src/desktop-engine/clean.bat` | Windows build cleanup |
+| `legacy-src/QW/clean.bat` | QW Windows build cleanup |
+| `legacy-src/desktop-engine/q.bat`, `qa.bat`, `qb.bat`, `qt.bat`, `wq.bat` | Windows launch scripts |
+| `legacy-src/desktop-engine/makezip.bat` | Package distribution |
+| `legacy-src/QW/makezip.bat` | QW package distribution |
 
 ### Packaging Scripts
 
 | File | Purpose |
 |------|---------|
-| `Quake/WinQuake/quake.spec.sh` | Linux RPM spec for full Quake |
-| `Quake/WinQuake/quake-data.spec.sh` | Linux RPM spec for data files |
-| `Quake/WinQuake/quake-shareware.spec.sh` | Linux RPM spec for shareware |
-| `Quake/WinQuake/quake-hipnotic.spec.sh` | Linux RPM spec for Hipnotic expansion |
-| `Quake/WinQuake/quake-rogue.spec.sh` | Linux RPM spec for Rogue expansion |
-| `Quake/QW/qwcl.spec.sh` | QW client RPM spec |
-| `Quake/QW/qwcl.x11.spec.sh` | QW X11 client RPM spec |
-| `Quake/QW/qwsv.spec.sh` | QW server RPM spec |
-| `Quake/QW/glqwcl.spec.sh` | QW GL client RPM spec |
+| `legacy-src/desktop-engine/quake.spec.sh` | Linux RPM spec for full Quake |
+| `legacy-src/desktop-engine/quake-data.spec.sh` | Linux RPM spec for data files |
+| `legacy-src/desktop-engine/quake-shareware.spec.sh` | Linux RPM spec for shareware |
+| `legacy-src/desktop-engine/quake-hipnotic.spec.sh` | Linux RPM spec for Hipnotic expansion |
+| `legacy-src/desktop-engine/quake-rogue.spec.sh` | Linux RPM spec for Rogue expansion |
+| `legacy-src/QW/qwcl.spec.sh` | QW client RPM spec |
+| `legacy-src/QW/qwcl.x11.spec.sh` | QW X11 client RPM spec |
+| `legacy-src/QW/qwsv.spec.sh` | QW server RPM spec |
+| `legacy-src/QW/glqwcl.spec.sh` | QW GL client RPM spec |
 
 ---
 
-## WinQuake Linux Targets (`Quake/WinQuake/Makefile.linuxi386`)
+## WinQuake Linux Targets (`legacy-src/desktop-engine/Makefile.linuxi386`)
 
 | Target | Binary | Renderer | Video | Sound |
 |--------|--------|----------|-------|-------|
@@ -81,7 +81,7 @@ DEBUG_CFLAGS = $(BASE_CFLAGS) -g
 
 ---
 
-## QuakeWorld Linux Targets (`Quake/QW/Makefile.Linux`)
+## QuakeWorld Linux Targets (`legacy-src/QW/Makefile.Linux`)
 
 | Target | Binary | Description |
 |--------|--------|-------------|
@@ -93,7 +93,7 @@ DEBUG_CFLAGS = $(BASE_CFLAGS) -g
 
 ---
 
-## Windows Build Configurations (`Quake/WinQuake/WinQuake.dsp`)
+## Windows Build Configurations (`legacy-src/desktop-engine/WinQuake.dsp`)
 
 | Configuration | Description |
 |---------------|-------------|
@@ -123,7 +123,7 @@ kernel32.lib user32.lib gdi32.lib — Standard Win32
 
 ---
 
-## Solaris Build (`Quake/WinQuake/Makefile.Solaris`)
+## Solaris Build (`legacy-src/desktop-engine/Makefile.Solaris`)
 
 | Target | Description |
 |--------|-------------|
@@ -141,8 +141,8 @@ XIL_LIBS = -lm -lX11 -lxil
 
 | File | Purpose |
 |------|---------|
-| `Quake/qw-qc/progs.src` | Lists `.qc` files in compilation order |
-| `Quake/qw-qc/qwprogs.dat` | Pre-compiled bytecode (included in repo) |
+| `legacy-src/qw-qc/progs.src` | Lists `.qc` files in compilation order |
+| `legacy-src/qw-qc/qwprogs.dat` | Pre-compiled bytecode (included in repo) |
 
 **Compiler**: `qcc` (not included in repository)
 

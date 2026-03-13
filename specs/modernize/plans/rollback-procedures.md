@@ -33,12 +33,12 @@ Each modernization step is designed to be independently reversible. This documen
 
 ```bash
 # 1. Restore original build files
-git checkout main -- Quake/WinQuake/Makefile.linuxi386
-git checkout main -- Quake/QW/Makefile.Linux
-git checkout main -- Quake/WinQuake/WinQuake.dsp
+git checkout main -- legacy-src/desktop-engine/Makefile.linuxi386
+git checkout main -- legacy-src/QW/Makefile.Linux
+git checkout main -- legacy-src/desktop-engine/WinQuake.dsp
 
 # 2. Build with original Makefiles
-cd Quake/WinQuake && make -f Makefile.linuxi386
+cd legacy-src/desktop-engine && make -f Makefile.linuxi386
 
 # 3. Validate binary output matches known-good
 md5sum quake && diff <(md5sum quake) known_good.md5
@@ -46,7 +46,7 @@ md5sum quake && diff <(md5sum quake) known_good.md5
 
 ### Mitigation
 
-- Original build files preserved in `Quake/legacy-build/` directory
+- Original build files preserved in `legacy-src/legacy-build/` directory
 - Both build systems coexist during transition
 - CI runs both builds in parallel for comparison
 
@@ -75,8 +75,8 @@ git revert <security-strcpy-commit>
 git revert <security-strcat-commit>
 
 # 2. Or granular per-file revert
-git checkout main -- Quake/WinQuake/common.c
-git checkout main -- Quake/WinQuake/net_dgrm.c
+git checkout main -- legacy-src/desktop-engine/common.c
+git checkout main -- legacy-src/desktop-engine/net_dgrm.c
 # ... etc for each affected file
 
 # 3. Rebuild
@@ -128,8 +128,8 @@ cmake --build build
 
 ```bash
 # Remove headless backends
-git rm Quake/WinQuake/vid_headless.c
-git rm Quake/WinQuake/sys_headless.c
+git rm legacy-src/desktop-engine/vid_headless.c
+git rm legacy-src/desktop-engine/sys_headless.c
 
 # Build with original video driver
 cmake -B build -DHEADLESS=OFF

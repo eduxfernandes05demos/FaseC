@@ -26,7 +26,7 @@ The Quake codebase currently has **zero automated tests**. This strategy establi
 
 ## 3. Unit Tests
 
-### 3.1 Math Library (`Quake/WinQuake/mathlib.c`)
+### 3.1 Math Library (`legacy-src/desktop-engine/mathlib.c`)
 
 | Test | Function | Validation |
 |------|----------|-----------|
@@ -39,7 +39,7 @@ The Quake codebase currently has **zero automated tests**. This strategy establi
 | Box on plane side | `BoxOnPlaneSide()` | Correct classification |
 | Length calculation | `Length()` | Known distance results |
 
-### 3.2 Common Utilities (`Quake/WinQuake/common.c`)
+### 3.2 Common Utilities (`legacy-src/desktop-engine/common.c`)
 
 | Test | Function/Area | Validation |
 |------|--------------|-----------|
@@ -52,7 +52,7 @@ The Quake codebase currently has **zero automated tests**. This strategy establi
 | Path sanitization | New path validation functions | Reject `../`, null bytes |
 | Argument parsing | `COM_CheckParm()` | Finds arguments correctly |
 
-### 3.3 Console Variables (`Quake/WinQuake/cvar.c`)
+### 3.3 Console Variables (`legacy-src/desktop-engine/cvar.c`)
 
 | Test | Function | Validation |
 |------|----------|-----------|
@@ -63,7 +63,7 @@ The Quake codebase currently has **zero automated tests**. This strategy establi
 | Find by name | `Cvar_FindVar()` | Finds registered cvars |
 | Command integration | `Cvar_Command()` | Console command sets cvar |
 
-### 3.4 Memory Allocator (`Quake/WinQuake/zone.c`)
+### 3.4 Memory Allocator (`legacy-src/desktop-engine/zone.c`)
 
 | Test | Function | Validation |
 |------|----------|-----------|
@@ -74,7 +74,7 @@ The Quake codebase currently has **zero automated tests**. This strategy establi
 | Cache allocate/evict | `Cache_Alloc()` at line 871 | LRU eviction works correctly |
 | Heap integrity | `Z_CheckHeap()` at line 247 | No corruption after operations |
 
-### 3.5 Command System (`Quake/WinQuake/cmd.c`)
+### 3.5 Command System (`legacy-src/desktop-engine/cmd.c`)
 
 | Test | Function | Validation |
 |------|----------|-----------|
@@ -88,9 +88,9 @@ The Quake codebase currently has **zero automated tests**. This strategy establi
 
 | Test | Source | Validation |
 |------|--------|-----------|
-| Packet encoding | `Quake/QW/server/sv_ents.c:155` (`SV_WriteDelta`) | Correct bitmask encoding |
-| Packet decoding | `Quake/QW/client/cl_ents.c:265` (`CL_ParsePacketEntities`) | Correct field extraction |
-| Sequence numbers | `Quake/WinQuake/net_dgrm.c` | Ordering and ACK correctness |
+| Packet encoding | `legacy-src/QW/server/sv_ents.c:155` (`SV_WriteDelta`) | Correct bitmask encoding |
+| Packet decoding | `legacy-src/QW/client/cl_ents.c:265` (`CL_ParsePacketEntities`) | Correct field extraction |
+| Sequence numbers | `legacy-src/desktop-engine/net_dgrm.c` | Ordering and ACK correctness |
 | Message overflow | Network buffer limits | Graceful rejection of oversized messages |
 
 ---
@@ -110,9 +110,9 @@ The Quake codebase currently has **zero automated tests**. This strategy establi
 
 | Test | Description | Source |
 |------|-------------|--------|
-| Opcode execution | All 80 opcodes execute correctly | `Quake/WinQuake/pr_exec.c` |
-| Built-in functions | Engine built-ins return correct results | `Quake/WinQuake/pr_cmds.c` |
-| Entity spawn/remove | Entity lifecycle works | `Quake/WinQuake/pr_edict.c` |
+| Opcode execution | All 80 opcodes execute correctly | `legacy-src/desktop-engine/pr_exec.c` |
+| Built-in functions | Engine built-ins return correct results | `legacy-src/desktop-engine/pr_cmds.c` |
+| Entity spawn/remove | Entity lifecycle works | `legacy-src/desktop-engine/pr_edict.c` |
 | Think/touch callbacks | Entity callbacks fire at correct times | `sv_phys.c` + `pr_exec.c` |
 
 ### 4.3 Configuration & Startup
@@ -206,7 +206,7 @@ Compare rendered frame output:
 ### 7.1 Directory Structure
 
 ```
-Quake/tests/
+legacy-src/tests/
 ├── CMakeLists.txt          # Test build configuration
 ├── unity/                  # Unity test framework (vendored)
 ├── unit/

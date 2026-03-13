@@ -1,6 +1,6 @@
 # Feature: Map/BSP Loading and Rendering
 
-> Reverse-engineered from `Quake/WinQuake/model.c`, `Quake/WinQuake/model.h`, `Quake/WinQuake/bspfile.h`
+> Reverse-engineered from `legacy-src/desktop-engine/model.c`, `legacy-src/desktop-engine/model.h`, `legacy-src/desktop-engine/bspfile.h`
 
 ---
 
@@ -14,19 +14,19 @@ The BSP (Binary Space Partitioning) system is the foundation of Quake's 3D world
 
 | File | Purpose |
 |------|---------|
-| `Quake/WinQuake/model.c` | Model loading: BSP, alias (MDL), sprite (SPR) |
-| `Quake/WinQuake/model.h` | Model data structures |
-| `Quake/WinQuake/gl_model.c` | OpenGL-specific model loading |
-| `Quake/WinQuake/gl_model.h` | GL model structures |
-| `Quake/WinQuake/bspfile.h` | BSP file format definition (v29) |
-| `Quake/WinQuake/r_bsp.c` | BSP tree rendering traversal |
-| `Quake/WinQuake/world.c` | Spatial queries, collision detection |
+| `legacy-src/desktop-engine/model.c` | Model loading: BSP, alias (MDL), sprite (SPR) |
+| `legacy-src/desktop-engine/model.h` | Model data structures |
+| `legacy-src/desktop-engine/gl_model.c` | OpenGL-specific model loading |
+| `legacy-src/desktop-engine/gl_model.h` | GL model structures |
+| `legacy-src/desktop-engine/bspfile.h` | BSP file format definition (v29) |
+| `legacy-src/desktop-engine/r_bsp.c` | BSP tree rendering traversal |
+| `legacy-src/desktop-engine/world.c` | Spatial queries, collision detection |
 
 ---
 
 ## BSP File Format (Version 29)
 
-Defined in `Quake/WinQuake/bspfile.h`:
+Defined in `legacy-src/desktop-engine/bspfile.h`:
 
 ### File Header
 ```c
@@ -63,23 +63,23 @@ typedef struct {
 ### Brush Models (BSP)
 - World geometry (walls, floors, ceilings)
 - Sub-models (doors, platforms, triggers)
-- Loaded by `Mod_LoadBrushModel()` in `Quake/WinQuake/model.c`
+- Loaded by `Mod_LoadBrushModel()` in `legacy-src/desktop-engine/model.c`
 
 ### Alias Models (MDL v6)
 - Characters, items, weapons, projectiles
 - Animated with per-vertex keyframes
 - Magic: `IDPO`, Version: 6
-- Loaded by `Mod_LoadAliasModel()` in `Quake/WinQuake/model.c`
+- Loaded by `Mod_LoadAliasModel()` in `legacy-src/desktop-engine/model.c`
 
 ### Sprite Models (SPR v1)
 - Billboard particles and effects
 - Single or multi-frame sprites
 - Magic: `IDSP`, Version: 1
-- Loaded by `Mod_LoadSpriteModel()` in `Quake/WinQuake/model.c`
+- Loaded by `Mod_LoadSpriteModel()` in `legacy-src/desktop-engine/model.c`
 
 ---
 
-## BSP Loading Pipeline (`Quake/WinQuake/model.c`)
+## BSP Loading Pipeline (`legacy-src/desktop-engine/model.c`)
 
 ```
 Mod_LoadBrushModel()
@@ -107,7 +107,7 @@ Mod_LoadBrushModel()
 - Precomputed at map compile time using `vis` tool
 - Stored compressed in `LUMP_VISIBILITY`
 - Each BSP leaf has a PVS bitfield indicating which other leaves are potentially visible
-- `Mod_LeafPVS()` in `Quake/WinQuake/model.c` decompresses PVS for a given leaf
+- `Mod_LeafPVS()` in `legacy-src/desktop-engine/model.c` decompresses PVS for a given leaf
 - Used by both renderer (skip invisible surfaces) and server (skip invisible entities for network)
 
 ### PVS Compression
@@ -128,7 +128,7 @@ BSP files contain multiple collision hulls for different entity sizes:
 | Hull 1 | 32×32×56 | Player standing |
 | Hull 2 | 64×64×88 | Large entities (shambler) |
 
-### Key Functions (`Quake/WinQuake/world.c`)
+### Key Functions (`legacy-src/desktop-engine/world.c`)
 - `SV_Move()` — Trace a bounding box through the world
 - `SV_RecursiveHullCheck()` — Recursive BSP collision test
 - `SV_HullForEntity()` — Get collision hull for an entity

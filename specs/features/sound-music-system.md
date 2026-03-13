@@ -1,6 +1,6 @@
 # Feature: Sound and Music System
 
-> Reverse-engineered from `Quake/WinQuake/snd_*.c` and `Quake/WinQuake/cd_*.c`
+> Reverse-engineered from `legacy-src/desktop-engine/snd_*.c` and `legacy-src/desktop-engine/cd_*.c`
 
 ---
 
@@ -15,34 +15,34 @@ The Quake sound system provides **DMA-based audio** with **3D spatialization**, 
 ### Sound Engine
 | File | Purpose |
 |------|---------|
-| `Quake/WinQuake/snd_dma.c` | Main sound system: initialization, channel management, 3D spatialization |
-| `Quake/WinQuake/snd_mix.c` | Audio mixing engine — combines all channels into DMA buffer |
-| `Quake/WinQuake/snd_mem.c` | WAV file loading and sample memory management |
-| `Quake/WinQuake/sound.h` | Sound data structures: `channel_t`, `sfx_t`, `dma_t` |
+| `legacy-src/desktop-engine/snd_dma.c` | Main sound system: initialization, channel management, 3D spatialization |
+| `legacy-src/desktop-engine/snd_mix.c` | Audio mixing engine — combines all channels into DMA buffer |
+| `legacy-src/desktop-engine/snd_mem.c` | WAV file loading and sample memory management |
+| `legacy-src/desktop-engine/sound.h` | Sound data structures: `channel_t`, `sfx_t`, `dma_t` |
 
 ### Platform Backends
 | File | Platform | API |
 |------|----------|-----|
-| `Quake/WinQuake/snd_win.c` | Windows | DirectSound / waveOut |
-| `Quake/WinQuake/snd_linux.c` | Linux | OSS (`/dev/dsp`) |
-| `Quake/WinQuake/snd_sun.c` | Solaris | Sun audio device |
-| `Quake/WinQuake/snd_dos.c` | DOS | DMA controller |
-| `Quake/WinQuake/snd_gus.c` | DOS | Gravis UltraSound |
-| `Quake/WinQuake/snd_null.c` | Any | Null driver (stub) |
-| `Quake/WinQuake/snd_next.c` | NeXTSTEP | NeXT audio |
+| `legacy-src/desktop-engine/snd_win.c` | Windows | DirectSound / waveOut |
+| `legacy-src/desktop-engine/snd_linux.c` | Linux | OSS (`/dev/dsp`) |
+| `legacy-src/desktop-engine/snd_sun.c` | Solaris | Sun audio device |
+| `legacy-src/desktop-engine/snd_dos.c` | DOS | DMA controller |
+| `legacy-src/desktop-engine/snd_gus.c` | DOS | Gravis UltraSound |
+| `legacy-src/desktop-engine/snd_null.c` | Any | Null driver (stub) |
+| `legacy-src/desktop-engine/snd_next.c` | NeXTSTEP | NeXT audio |
 
 ### CD Audio
 | File | Platform |
 |------|----------|
-| `Quake/WinQuake/cd_audio.c` | Shared CD audio logic |
-| `Quake/WinQuake/cd_win.c` | Windows MCI |
-| `Quake/WinQuake/cd_linux.c` | Linux CD-ROM ioctl |
-| `Quake/WinQuake/cd_null.c` | Null driver |
+| `legacy-src/desktop-engine/cd_audio.c` | Shared CD audio logic |
+| `legacy-src/desktop-engine/cd_win.c` | Windows MCI |
+| `legacy-src/desktop-engine/cd_linux.c` | Linux CD-ROM ioctl |
+| `legacy-src/desktop-engine/cd_null.c` | Null driver |
 
 ### Assembly Optimizations
 | File | Purpose |
 |------|---------|
-| `Quake/WinQuake/snd_mixa.s` | x86 assembly mixing loop |
+| `legacy-src/desktop-engine/snd_mixa.s` | x86 assembly mixing loop |
 
 ---
 
@@ -68,7 +68,7 @@ The Quake sound system provides **DMA-based audio** with **3D spatialization**, 
 
 ### Data Structures
 
-**`dma_t`** (DMA buffer descriptor — `Quake/WinQuake/sound.h`):
+**`dma_t`** (DMA buffer descriptor — `legacy-src/desktop-engine/sound.h`):
 | Field | Purpose |
 |-------|---------|
 | `channels` | Mono (1) or stereo (2) |
@@ -78,7 +78,7 @@ The Quake sound system provides **DMA-based audio** with **3D spatialization**, 
 | `speed` | Sample rate: 11025, 22050, or 44100 Hz |
 | `buffer` | Pointer to circular buffer memory |
 
-**`channel_t`** (playing sound — `Quake/WinQuake/sound.h`):
+**`channel_t`** (playing sound — `legacy-src/desktop-engine/sound.h`):
 | Field | Purpose |
 |-------|---------|
 | `sfx` | Sound effect handle |
@@ -90,7 +90,7 @@ The Quake sound system provides **DMA-based audio** with **3D spatialization**, 
 | `origin` | 3D world position |
 | `dist_mult` | Distance attenuation multiplier |
 
-**`sfx_t`** (sound effect — `Quake/WinQuake/sound.h`):
+**`sfx_t`** (sound effect — `legacy-src/desktop-engine/sound.h`):
 | Field | Purpose |
 |-------|---------|
 | `name` | Sound file name |
@@ -100,7 +100,7 @@ The Quake sound system provides **DMA-based audio** with **3D spatialization**, 
 
 ## Sound Pipeline
 
-### Per-Frame Update (`S_Update()` in `Quake/WinQuake/snd_dma.c`)
+### Per-Frame Update (`S_Update()` in `legacy-src/desktop-engine/snd_dma.c`)
 
 1. Update listener position (from player view)
 2. For each active channel:
@@ -113,7 +113,7 @@ The Quake sound system provides **DMA-based audio** with **3D spatialization**, 
 3. Mix all active channels into DMA buffer (`S_PaintChannels()` in `snd_mix.c`)
 4. Transfer mixed samples to hardware buffer
 
-### 3D Spatialization (`SND_Spatialize()` in `Quake/WinQuake/snd_dma.c`)
+### 3D Spatialization (`SND_Spatialize()` in `legacy-src/desktop-engine/snd_dma.c`)
 
 ```
 1. Calculate vector from listener to sound source
@@ -126,7 +126,7 @@ The Quake sound system provides **DMA-based audio** with **3D spatialization**, 
 6. rightvol = volume * right_scale
 ```
 
-### Mixing (`S_PaintChannels()` in `Quake/WinQuake/snd_mix.c`)
+### Mixing (`S_PaintChannels()` in `legacy-src/desktop-engine/snd_mix.c`)
 
 1. Zero-fill paint buffer for frame
 2. For each channel, mix samples weighted by left/right volume
@@ -172,7 +172,7 @@ The Quake sound system provides **DMA-based audio** with **3D spatialization**, 
 
 The CD audio system provides background music by playing audio CDs.
 
-**Interface** (`Quake/WinQuake/cdaudio.h`):
+**Interface** (`legacy-src/desktop-engine/cdaudio.h`):
 - `CDAudio_Init()` — Initialize CD drive
 - `CDAudio_Play(byte track, qboolean looping)` — Play CD track
 - `CDAudio_Stop()` — Stop playback

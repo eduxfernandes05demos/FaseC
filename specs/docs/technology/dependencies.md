@@ -15,34 +15,34 @@ The Quake engine has minimal external dependencies by design. The engine is larg
 
 ### 2.1 DirectX SDK
 
-**Location in repo**: `Quake/WinQuake/dxsdk/`, `Quake/QW/dxsdk/`
+**Location in repo**: `legacy-src/desktop-engine/dxsdk/`, `legacy-src/QW/dxsdk/`
 
 | Component | Header | Library | Used By |
 |-----------|--------|---------|---------|
-| **DirectDraw** | `ddraw.h` | `ddraw.lib` | `Quake/WinQuake/vid_win.c` — Fullscreen video mode switching, page flipping |
-| **DirectInput** | `dinput.h` | `dinput.lib` | `Quake/WinQuake/in_win.c` — Mouse input in exclusive mode |
-| **DirectSound** | `dsound.h` | `dsound.lib` | `Quake/WinQuake/snd_win.c` — Primary/secondary sound buffer management |
+| **DirectDraw** | `ddraw.h` | `ddraw.lib` | `legacy-src/desktop-engine/vid_win.c` — Fullscreen video mode switching, page flipping |
+| **DirectInput** | `dinput.h` | `dinput.lib` | `legacy-src/desktop-engine/in_win.c` — Mouse input in exclusive mode |
+| **DirectSound** | `dsound.h` | `dsound.lib` | `legacy-src/desktop-engine/snd_win.c` — Primary/secondary sound buffer management |
 | **DirectX GUIDs** | — | `dxguid.lib` | GUID definitions for COM interface initialization |
 
 **Version**: DirectX 3–5 era headers (1996-1997)
 
-**Linker references** (`Quake/WinQuake/WinQuake.dsp`):
+**Linker references** (`legacy-src/desktop-engine/WinQuake.dsp`):
 ```
 dxguid.lib
 ```
 
 ### 2.2 Scitech MGL (Multi-platform Graphics Library)
 
-**Location in repo**: `Quake/WinQuake/scitech/`, `Quake/QW/scitech/`
+**Location in repo**: `legacy-src/desktop-engine/scitech/`, `legacy-src/QW/scitech/`
 
 | Component | Usage |
 |-----------|-------|
-| **MGL headers** | `Quake/WinQuake/scitech/include/` — Graphics mode enumeration |
+| **MGL headers** | `legacy-src/desktop-engine/scitech/include/` — Graphics mode enumeration |
 | **MGL library** | `mgllt.lib` — Video mode switching, VESA/VBE support |
 
-**Used by**: `Quake/WinQuake/vid_win.c` — Provides video mode enumeration and switching on Windows, especially for VESA-compatible graphics cards.
+**Used by**: `legacy-src/desktop-engine/vid_win.c` — Provides video mode enumeration and switching on Windows, especially for VESA-compatible graphics cards.
 
-**Linker references** (`Quake/WinQuake/WinQuake.dsp`):
+**Linker references** (`legacy-src/desktop-engine/WinQuake.dsp`):
 ```
 mgllt.lib
 ```
@@ -51,14 +51,14 @@ mgllt.lib
 
 | Library | Usage | Used By |
 |---------|-------|---------|
-| `kernel32.lib` | Process, memory, file I/O | `Quake/WinQuake/sys_win.c` |
-| `user32.lib` | Window management, input | `Quake/WinQuake/sys_win.c`, `vid_win.c` |
-| `gdi32.lib` | DIB (Device Independent Bitmap) rendering | `Quake/WinQuake/vid_win.c` |
-| `winmm.lib` | Multimedia timers, joystick, MCI (CD audio) | `Quake/WinQuake/in_win.c`, `cd_win.c` |
-| `wsock32.lib` | Winsock 1.1 networking | `Quake/WinQuake/net_wins.c`, `net_wipx.c` |
-| `opengl32.lib` | OpenGL 1.1 API | `Quake/WinQuake/gl_vidnt.c` |
-| `glu32.lib` | OpenGL Utility Library | `Quake/WinQuake/gl_vidnt.c` |
-| `comctl32.lib` | Common controls (UI dialogs) | `Quake/WinQuake/conproc.c` |
+| `kernel32.lib` | Process, memory, file I/O | `legacy-src/desktop-engine/sys_win.c` |
+| `user32.lib` | Window management, input | `legacy-src/desktop-engine/sys_win.c`, `vid_win.c` |
+| `gdi32.lib` | DIB (Device Independent Bitmap) rendering | `legacy-src/desktop-engine/vid_win.c` |
+| `winmm.lib` | Multimedia timers, joystick, MCI (CD audio) | `legacy-src/desktop-engine/in_win.c`, `cd_win.c` |
+| `wsock32.lib` | Winsock 1.1 networking | `legacy-src/desktop-engine/net_wins.c`, `net_wipx.c` |
+| `opengl32.lib` | OpenGL 1.1 API | `legacy-src/desktop-engine/gl_vidnt.c` |
+| `glu32.lib` | OpenGL Utility Library | `legacy-src/desktop-engine/gl_vidnt.c` |
+| `comctl32.lib` | Common controls (UI dialogs) | `legacy-src/desktop-engine/conproc.c` |
 
 ---
 
@@ -69,31 +69,31 @@ mgllt.lib
 | Library | Flag | Usage | Used By |
 |---------|------|-------|---------|
 | **libc** | — | Standard C library | All source files |
-| **libm** | `-lm` | Math functions (sin, cos, sqrt, etc.) | `Quake/WinQuake/mathlib.c` |
-| **libX11** | `-lX11` | X Window System | `Quake/WinQuake/vid_x.c`, `in_sun.c` |
-| **libXext** | `-lXext` | X11 shared memory extension (XShm) | `Quake/WinQuake/vid_x.c` |
-| **libXxf86dga** | `-lXxf86dga` | XFree86 Direct Graphics Access | `Quake/WinQuake/vid_x.c` |
-| **libvga** | `-lvga` | SVGAlib direct framebuffer access | `Quake/WinQuake/vid_svgalib.c` |
+| **libm** | `-lm` | Math functions (sin, cos, sqrt, etc.) | `legacy-src/desktop-engine/mathlib.c` |
+| **libX11** | `-lX11` | X Window System | `legacy-src/desktop-engine/vid_x.c`, `in_sun.c` |
+| **libXext** | `-lXext` | X11 shared memory extension (XShm) | `legacy-src/desktop-engine/vid_x.c` |
+| **libXxf86dga** | `-lXxf86dga` | XFree86 Direct Graphics Access | `legacy-src/desktop-engine/vid_x.c` |
+| **libvga** | `-lvga` | SVGAlib direct framebuffer access | `legacy-src/desktop-engine/vid_svgalib.c` |
 
-**Referenced in**: `Quake/WinQuake/Makefile.linuxi386`
+**Referenced in**: `legacy-src/desktop-engine/Makefile.linuxi386`
 
 ### 3.2 OpenGL Libraries (Linux)
 
 | Library | Flag | Usage | Used By |
 |---------|------|-------|---------|
-| **Mesa3D** | `-lMesaGL` | Software OpenGL implementation | `Quake/WinQuake/gl_vidlinux.c` |
-| **GLX** | `-lGL` | X11 OpenGL extension | `Quake/WinQuake/gl_vidlinuxglx.c` |
-| **3Dfx GL** | `-l3dfxgl` | 3Dfx Voodoo MiniGL | `Quake/WinQuake/Makefile.linuxi386` |
+| **Mesa3D** | `-lMesaGL` | Software OpenGL implementation | `legacy-src/desktop-engine/gl_vidlinux.c` |
+| **GLX** | `-lGL` | X11 OpenGL extension | `legacy-src/desktop-engine/gl_vidlinuxglx.c` |
+| **3Dfx GL** | `-l3dfxgl` | 3Dfx Voodoo MiniGL | `legacy-src/desktop-engine/Makefile.linuxi386` |
 
 **Mesa include path**: `-I/usr/local/src/Mesa-3.0/include`
-**Referenced in**: `Quake/WinQuake/Makefile.linuxi386`
+**Referenced in**: `legacy-src/desktop-engine/Makefile.linuxi386`
 
 ### 3.3 Linux Sound
 
 | Interface | Device | Usage | Used By |
 |-----------|--------|-------|---------|
-| **OSS (Open Sound System)** | `/dev/dsp` | Audio output | `Quake/WinQuake/snd_linux.c` |
-| **CD-ROM ioctl** | `/dev/cdrom` | CD audio music | `Quake/WinQuake/cd_linux.c` |
+| **OSS (Open Sound System)** | `/dev/dsp` | Audio output | `legacy-src/desktop-engine/snd_linux.c` |
+| **CD-ROM ioctl** | `/dev/cdrom` | CD audio music | `legacy-src/desktop-engine/cd_linux.c` |
 
 > **Note**: No ALSA, PulseAudio, or PipeWire support — these did not exist in 1996-1997.
 
@@ -104,12 +104,12 @@ mgllt.lib
 | Library | Flag | Usage | Used By |
 |---------|------|-------|---------|
 | **libm** | `-lm` | Math functions | All |
-| **libsocket** | `-lsocket` | BSD socket networking | `Quake/WinQuake/net_udp.c` |
+| **libsocket** | `-lsocket` | BSD socket networking | `legacy-src/desktop-engine/net_udp.c` |
 | **libnsl** | `-lnsl` | Name service lookup | Network code |
-| **libX11** | `-lX11` | X11 video output | `Quake/WinQuake/vid_sunx.c` |
-| **libxil** | `-lxil` | XIL imaging library (Sun accelerated) | `Quake/WinQuake/vid_sunxil.c` |
+| **libX11** | `-lX11` | X11 video output | `legacy-src/desktop-engine/vid_sunx.c` |
+| **libxil** | `-lxil` | XIL imaging library (Sun accelerated) | `legacy-src/desktop-engine/vid_sunxil.c` |
 
-**Referenced in**: `Quake/WinQuake/Makefile.Solaris`, `Quake/QW/Makefile.Solaris`
+**Referenced in**: `legacy-src/desktop-engine/Makefile.Solaris`, `legacy-src/QW/Makefile.Solaris`
 
 ---
 
@@ -117,13 +117,13 @@ mgllt.lib
 
 | Dependency | Usage | Used By |
 |------------|-------|---------|
-| **CWSDPMI** | DOS Protected Mode Interface (DPMI host) | `Quake/WinQuake/cwsdpmi.exe` |
+| **CWSDPMI** | DOS Protected Mode Interface (DPMI host) | `legacy-src/desktop-engine/cwsdpmi.exe` |
 | **DJGPP** | GCC cross-compiler for DOS | Build toolchain (not in repo) |
-| **VGA hardware** | Direct register access for video | `Quake/WinQuake/vid_vga.c`, `vid_dos.c` |
-| **DMA controller** | Direct Memory Access for sound | `Quake/WinQuake/snd_dos.c` |
-| **Gravis UltraSound SDK** | GUS-specific sound card support | `Quake/WinQuake/snd_gus.c` |
-| **IPX TSR** | Novell IPX protocol stack | `Quake/WinQuake/net_ipx.c` |
-| **COM ports** | Serial modem I/O | `Quake/WinQuake/net_comx.c`, `net_ser.c` |
+| **VGA hardware** | Direct register access for video | `legacy-src/desktop-engine/vid_vga.c`, `vid_dos.c` |
+| **DMA controller** | Direct Memory Access for sound | `legacy-src/desktop-engine/snd_dos.c` |
+| **Gravis UltraSound SDK** | GUS-specific sound card support | `legacy-src/desktop-engine/snd_gus.c` |
+| **IPX TSR** | Novell IPX protocol stack | `legacy-src/desktop-engine/net_ipx.c` |
+| **COM ports** | Serial modem I/O | `legacy-src/desktop-engine/net_comx.c`, `net_ser.c` |
 
 ---
 
@@ -131,10 +131,10 @@ mgllt.lib
 
 | Dependency | Usage | Source |
 |------------|-------|--------|
-| **3Dfx MiniGL** | OpenGL subset for Voodoo cards | `Quake/WinQuake/3dfx.txt` |
-| **3dfxgl shared library** | Linux 3Dfx OpenGL | `Quake/QW/glqwcl.3dfxgl` |
+| **3Dfx MiniGL** | OpenGL subset for Voodoo cards | `legacy-src/desktop-engine/3dfx.txt` |
+| **3dfxgl shared library** | Linux 3Dfx OpenGL | `legacy-src/QW/glqwcl.3dfxgl` |
 
-**Build target**: `glquake.3dfxgl` in `Quake/WinQuake/Makefile.linuxi386`
+**Build target**: `glquake.3dfxgl` in `legacy-src/desktop-engine/Makefile.linuxi386`
 
 ---
 
@@ -147,7 +147,7 @@ mgllt.lib
 | **GNU as** | Linux | x86 assembler |
 | **MSVC 4.x/5.x** | Windows | C compiler, linker, resource compiler |
 | **MASM** | Windows | x86 assembler |
-| **gas2masm** | Windows | AT&T → MASM assembly converter (`Quake/QW/gas2masm/gas2masm.c`) |
+| **gas2masm** | Windows | AT&T → MASM assembly converter (`legacy-src/QW/gas2masm/gas2masm.c`) |
 | **QuakeC compiler (qcc)** | Any | Compiles `.qc` → `progs.dat` (not included in repo) |
 
 ---

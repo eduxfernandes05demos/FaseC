@@ -132,8 +132,8 @@ Validate the interactions between service boundaries — engine container, sessi
 | `test_frame_during_gameplay` | Frames during active play | Entities move between frames |
 
 **Key source references**:
-- Rendering: `Quake/WinQuake/r_main.c:1049` — `R_RenderView()`
-- Screen update: `Quake/WinQuake/screen.c` — `SCR_UpdateScreen()`
+- Rendering: `legacy-src/desktop-engine/r_main.c:1049` — `R_RenderView()`
+- Screen update: `legacy-src/desktop-engine/screen.c` — `SCR_UpdateScreen()`
 - Framebuffer: `vid_headless.c` — `VID_GetFramebuffer()`
 
 ---
@@ -150,9 +150,9 @@ Validate the interactions between service boundaries — engine container, sessi
 | `test_audio_timing` | Capture buffer fills in real-time | ~44100 samples/second |
 
 **Key source references**:
-- Sound mixing: `Quake/WinQuake/snd_mix.c:261` — `S_PaintChannels()`
-- 8-bit mixing: `Quake/WinQuake/snd_mix.c:346` — `SND_PaintChannelFrom8()`
-- 16-bit mixing: `Quake/WinQuake/snd_mix.c:375` — `SND_PaintChannelFrom16()`
+- Sound mixing: `legacy-src/desktop-engine/snd_mix.c:261` — `S_PaintChannels()`
+- 8-bit mixing: `legacy-src/desktop-engine/snd_mix.c:346` — `SND_PaintChannelFrom8()`
+- 16-bit mixing: `legacy-src/desktop-engine/snd_mix.c:375` — `SND_PaintChannelFrom16()`
 - Capture: `snd_null.c` — `SND_GetCapturedAudio()`
 
 ---
@@ -177,9 +177,9 @@ Validate the interactions between service boundaries — engine container, sessi
 | `test_inject_concurrent` | Multiple inputs same frame | Last input wins |
 
 **Key source references**:
-- Input processing: `Quake/WinQuake/cl_input.c` — `CL_SendMove()`
+- Input processing: `legacy-src/desktop-engine/cl_input.c` — `CL_SendMove()`
 - Input injection: `in_null.c` — `IN_InjectRemoteInput()`
-- Host frame: `Quake/WinQuake/host.c:729` — `Host_Frame()`
+- Host frame: `legacy-src/desktop-engine/host.c:729` — `Host_Frame()`
 
 ---
 

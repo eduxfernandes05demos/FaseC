@@ -1,6 +1,6 @@
 # Feature: Software Rendering Pipeline
 
-> Reverse-engineered from `Quake/WinQuake/`
+> Reverse-engineered from `legacy-src/desktop-engine/`
 
 ---
 
@@ -14,33 +14,33 @@ The software renderer implements a complete 3D rendering pipeline using CPU-only
 
 | File | Purpose |
 |------|---------|
-| `Quake/WinQuake/r_main.c` | Rendering entry point, frustum setup, entity dispatch |
-| `Quake/WinQuake/r_bsp.c` | BSP tree traversal, visible surface enumeration |
-| `Quake/WinQuake/r_edge.c` | Edge-based scan conversion and sorting |
-| `Quake/WinQuake/r_surf.c` | Surface rendering with lightmaps |
-| `Quake/WinQuake/r_alias.c` | Alias model (MDL) rendering for characters and items |
-| `Quake/WinQuake/r_sprite.c` | Sprite rendering (billboard effects) |
-| `Quake/WinQuake/r_sky.c` | Scrolling sky texture with parallax |
-| `Quake/WinQuake/r_light.c` | Dynamic light contribution to lightmaps |
-| `Quake/WinQuake/r_part.c` | Point-based particle effects |
-| `Quake/WinQuake/r_misc.c` | Miscellaneous rendering utilities |
-| `Quake/WinQuake/r_draw.c` | 2D drawing (HUD, status bar) |
-| `Quake/WinQuake/d_edge.c` | Low-level edge processing |
-| `Quake/WinQuake/d_scan.c` | Affine texture mapping span rasterization |
-| `Quake/WinQuake/d_surf.c` | Surface cache management |
-| `Quake/WinQuake/d_init.c` | Software rasterizer initialization |
-| `Quake/WinQuake/d_sky.c` | Sky dome rendering |
-| `Quake/WinQuake/d_sprite.c` | Sprite rasterization |
-| `Quake/WinQuake/d_part.c` | Particle rasterization |
-| `Quake/WinQuake/d_fill.c` | Span filling |
-| `Quake/WinQuake/d_zpoint.c` | Z-buffer point operations |
-| `Quake/WinQuake/d_modech.c` | Mode change handling |
-| `Quake/WinQuake/d_polyse.c` | Polygon setup for edge rasterization |
-| `Quake/WinQuake/d_vars.c` | Software rasterizer global variables |
-| `Quake/WinQuake/draw.c` | 2D picture/graphic drawing |
-| `Quake/WinQuake/screen.c` | Screen management, viewport, SCR_UpdateScreen |
-| `Quake/WinQuake/view.c` | View calculations (bob, roll, blend) |
-| `Quake/WinQuake/sbar.c` | Status bar (HUD) rendering |
+| `legacy-src/desktop-engine/r_main.c` | Rendering entry point, frustum setup, entity dispatch |
+| `legacy-src/desktop-engine/r_bsp.c` | BSP tree traversal, visible surface enumeration |
+| `legacy-src/desktop-engine/r_edge.c` | Edge-based scan conversion and sorting |
+| `legacy-src/desktop-engine/r_surf.c` | Surface rendering with lightmaps |
+| `legacy-src/desktop-engine/r_alias.c` | Alias model (MDL) rendering for characters and items |
+| `legacy-src/desktop-engine/r_sprite.c` | Sprite rendering (billboard effects) |
+| `legacy-src/desktop-engine/r_sky.c` | Scrolling sky texture with parallax |
+| `legacy-src/desktop-engine/r_light.c` | Dynamic light contribution to lightmaps |
+| `legacy-src/desktop-engine/r_part.c` | Point-based particle effects |
+| `legacy-src/desktop-engine/r_misc.c` | Miscellaneous rendering utilities |
+| `legacy-src/desktop-engine/r_draw.c` | 2D drawing (HUD, status bar) |
+| `legacy-src/desktop-engine/d_edge.c` | Low-level edge processing |
+| `legacy-src/desktop-engine/d_scan.c` | Affine texture mapping span rasterization |
+| `legacy-src/desktop-engine/d_surf.c` | Surface cache management |
+| `legacy-src/desktop-engine/d_init.c` | Software rasterizer initialization |
+| `legacy-src/desktop-engine/d_sky.c` | Sky dome rendering |
+| `legacy-src/desktop-engine/d_sprite.c` | Sprite rasterization |
+| `legacy-src/desktop-engine/d_part.c` | Particle rasterization |
+| `legacy-src/desktop-engine/d_fill.c` | Span filling |
+| `legacy-src/desktop-engine/d_zpoint.c` | Z-buffer point operations |
+| `legacy-src/desktop-engine/d_modech.c` | Mode change handling |
+| `legacy-src/desktop-engine/d_polyse.c` | Polygon setup for edge rasterization |
+| `legacy-src/desktop-engine/d_vars.c` | Software rasterizer global variables |
+| `legacy-src/desktop-engine/draw.c` | 2D picture/graphic drawing |
+| `legacy-src/desktop-engine/screen.c` | Screen management, viewport, SCR_UpdateScreen |
+| `legacy-src/desktop-engine/view.c` | View calculations (bob, roll, blend) |
+| `legacy-src/desktop-engine/sbar.c` | Status bar (HUD) rendering |
 
 ---
 
@@ -70,12 +70,12 @@ R_RenderView() [r_main.c]
 ### PVS (Potentially Visible Set)
 - Precomputed at map compile time, stored in `LUMP_VISIBILITY` of BSP file
 - Compressed bitfield: each leaf has a bit for every other leaf indicating mutual visibility
-- `Mod_LeafPVS()` in `Quake/WinQuake/model.c` decompresses PVS for current leaf
+- `Mod_LeafPVS()` in `legacy-src/desktop-engine/model.c` decompresses PVS for current leaf
 - `R_MarkLeaves()` marks all visible leaves, skipping entire BSP subtrees
 
 ### Lightmaps
 - Precomputed lightmaps stored in `LUMP_LIGHTING` of BSP file
-- Dynamic lights add to base lightmaps via `R_AddDynamicLights()` in `Quake/WinQuake/r_light.c`
+- Dynamic lights add to base lightmaps via `R_AddDynamicLights()` in `legacy-src/desktop-engine/r_light.c`
 - Combined lightmap + texture cached in surface cache (`d_surf.c`)
 
 ### Mip-Mapping
@@ -84,7 +84,7 @@ R_RenderView() [r_main.c]
 - Reduces aliasing and improves performance at distance
 
 ### Surface Cache
-- `D_CacheSurface()` in `Quake/WinQuake/d_surf.c` caches pre-lit textured surfaces
+- `D_CacheSurface()` in `legacy-src/desktop-engine/d_surf.c` caches pre-lit textured surfaces
 - Cache entries reused across frames when lighting hasn't changed
 - Evicted when cache is full (LRU policy)
 

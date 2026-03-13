@@ -39,11 +39,11 @@ Validate the complete streaming pipeline from browser client connection through 
 | 8 | Client disconnects | Session cleaned up within 60 seconds |
 
 **Files involved**:
-- Engine rendering: `Quake/WinQuake/r_main.c:1049` (`R_RenderView`)
+- Engine rendering: `legacy-src/desktop-engine/r_main.c:1049` (`R_RenderView`)
 - Frame extraction: `vid_headless.c` (`VID_GetFramebuffer()`)
 - Sound capture: `snd_null.c` (`SND_GetCapturedAudio()`)
 - Input injection: `in_null.c` (`IN_InjectRemoteInput()`)
-- Screen update: `Quake/WinQuake/screen.c` (`SCR_UpdateScreen()`)
+- Screen update: `legacy-src/desktop-engine/screen.c` (`SCR_UpdateScreen()`)
 
 ### E2E-2: Multi-Session Concurrent Streaming
 

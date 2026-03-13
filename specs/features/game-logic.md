@@ -1,6 +1,6 @@
 # Feature: Game Logic — Weapons, Items, AI, Triggers
 
-> Reverse-engineered from `Quake/qw-qc/*.qc`
+> Reverse-engineered from `legacy-src/qw-qc/*.qc`
 
 ---
 
@@ -14,27 +14,27 @@ All gameplay mechanics in Quake are implemented in QuakeC scripts, compiled into
 
 | File | Lines | Purpose |
 |------|-------|---------|
-| `Quake/qw-qc/weapons.qc` | 1,427 | All weapon implementations |
-| `Quake/qw-qc/items.qc` | 1,686 | Health, armor, ammo, keys, powerups |
-| `Quake/qw-qc/combat.qc` | 350 | Damage system (`T_Damage`, `T_RadiusDamage`) |
-| `Quake/qw-qc/client.qc` | 1,524 | Player spawning, death, level transitions |
-| `Quake/qw-qc/doors.qc` | 809 | Door mechanics (linked, keyed, secret) |
-| `Quake/qw-qc/triggers.qc` | 672 | Trigger entities (teleport, hurt, push, relay) |
-| `Quake/qw-qc/plats.qc` | 393 | Platforms and trains |
-| `Quake/qw-qc/buttons.qc` | 166 | Pushbutton mechanics |
-| `Quake/qw-qc/subs.qc` | 310 | Movement utilities, target-firing system |
-| `Quake/qw-qc/world.qc` | 432 | World initialization, asset precaching |
-| `Quake/qw-qc/player.qc` | 736 | Player animation frame definitions |
-| `Quake/qw-qc/spectate.qc` | 111 | Spectator mode |
-| `Quake/qw-qc/misc.qc` | 756 | Lights, fireballs, explosive barrels |
-| `Quake/qw-qc/defs.qc` | 754 | Global definitions, entity fields, builtins |
-| `Quake/qw-qc/server.qc` | 123 | Monster waypoint pathing |
-| `Quake/qw-qc/models.qc` | 611 | Model entity spawning |
-| `Quake/qw-qc/sprites.qc` | 52 | Sprite entities |
+| `legacy-src/qw-qc/weapons.qc` | 1,427 | All weapon implementations |
+| `legacy-src/qw-qc/items.qc` | 1,686 | Health, armor, ammo, keys, powerups |
+| `legacy-src/qw-qc/combat.qc` | 350 | Damage system (`T_Damage`, `T_RadiusDamage`) |
+| `legacy-src/qw-qc/client.qc` | 1,524 | Player spawning, death, level transitions |
+| `legacy-src/qw-qc/doors.qc` | 809 | Door mechanics (linked, keyed, secret) |
+| `legacy-src/qw-qc/triggers.qc` | 672 | Trigger entities (teleport, hurt, push, relay) |
+| `legacy-src/qw-qc/plats.qc` | 393 | Platforms and trains |
+| `legacy-src/qw-qc/buttons.qc` | 166 | Pushbutton mechanics |
+| `legacy-src/qw-qc/subs.qc` | 310 | Movement utilities, target-firing system |
+| `legacy-src/qw-qc/world.qc` | 432 | World initialization, asset precaching |
+| `legacy-src/qw-qc/player.qc` | 736 | Player animation frame definitions |
+| `legacy-src/qw-qc/spectate.qc` | 111 | Spectator mode |
+| `legacy-src/qw-qc/misc.qc` | 756 | Lights, fireballs, explosive barrels |
+| `legacy-src/qw-qc/defs.qc` | 754 | Global definitions, entity fields, builtins |
+| `legacy-src/qw-qc/server.qc` | 123 | Monster waypoint pathing |
+| `legacy-src/qw-qc/models.qc` | 611 | Model entity spawning |
+| `legacy-src/qw-qc/sprites.qc` | 52 | Sprite entities |
 
 ---
 
-## Weapons System (`Quake/qw-qc/weapons.qc`)
+## Weapons System (`legacy-src/qw-qc/weapons.qc`)
 
 ### Available Weapons
 
@@ -77,7 +77,7 @@ All gameplay mechanics in Quake are implemented in QuakeC scripts, compiled into
 
 ---
 
-## Combat System (`Quake/qw-qc/combat.qc`)
+## Combat System (`legacy-src/qw-qc/combat.qc`)
 
 ### `T_Damage(targ, inflictor, attacker, damage)`
 1. Check `takedamage` flag
@@ -98,7 +98,7 @@ All gameplay mechanics in Quake are implemented in QuakeC scripts, compiled into
 
 ---
 
-## Items System (`Quake/qw-qc/items.qc`)
+## Items System (`legacy-src/qw-qc/items.qc`)
 
 ### Item Categories
 
@@ -122,7 +122,7 @@ All gameplay mechanics in Quake are implemented in QuakeC scripts, compiled into
 
 ## Map Entities
 
-### Doors (`Quake/qw-qc/doors.qc`)
+### Doors (`legacy-src/qw-qc/doors.qc`)
 
 **States**: `STATE_TOP (0)`, `STATE_BOTTOM (1)`, `STATE_UP (2)`, `STATE_DOWN (3)`
 
@@ -135,13 +135,13 @@ All gameplay mechanics in Quake are implemented in QuakeC scripts, compiled into
 
 **Key functions**: `func_door()`, `door_use()`, `door_touch()`, `door_blocked()`, `LinkDoors()`
 
-### Buttons (`Quake/qw-qc/buttons.qc`)
+### Buttons (`legacy-src/qw-qc/buttons.qc`)
 - Move from `pos1` (idle) to `pos2` (pressed)
 - Fire targets via `SUB_UseTargets()` when pressed
 - Auto-return after `wait` seconds
 - **Key functions**: `func_button()`, `button_use()`, `button_fire()`
 
-### Triggers (`Quake/qw-qc/triggers.qc`)
+### Triggers (`legacy-src/qw-qc/triggers.qc`)
 
 | Trigger | Purpose |
 |---------|---------|
@@ -156,13 +156,13 @@ All gameplay mechanics in Quake are implemented in QuakeC scripts, compiled into
 | `trigger_monsterjump` | Launches monsters |
 | `trigger_setskill` | Sets difficulty on touch |
 
-### Platforms & Trains (`Quake/qw-qc/plats.qc`)
+### Platforms & Trains (`legacy-src/qw-qc/plats.qc`)
 - **Platforms**: Move between `pos1` (bottom) and `pos2` (top)
 - **Trains**: Follow `path_corner` waypoints linked by `target`
 - Both use `MOVETYPE_PUSH` + `SOLID_BSP`
 - **Key functions**: `func_plat()`, `func_train()`, `train_next()`
 
-### Lights & Misc (`Quake/qw-qc/misc.qc`)
+### Lights & Misc (`legacy-src/qw-qc/misc.qc`)
 - Static lights: `light()`, `light_fluoro()`, `light_torch_small_walltorch()`
 - Flames: `light_flame_large_yellow()`, `light_flame_small_yellow()`
 - Explosive barrels: `misc_explobox()` (50 HP, chain explosions)
@@ -170,7 +170,7 @@ All gameplay mechanics in Quake are implemented in QuakeC scripts, compiled into
 
 ---
 
-## Player System (`Quake/qw-qc/client.qc`)
+## Player System (`legacy-src/qw-qc/client.qc`)
 
 ### Player Lifecycle
 
@@ -200,7 +200,7 @@ ClientDisconnect()   — Player leaves
 
 ---
 
-## Spectator System (`Quake/qw-qc/spectate.qc`)
+## Spectator System (`legacy-src/qw-qc/spectate.qc`)
 
 | Function | Purpose |
 |----------|---------|
@@ -213,7 +213,7 @@ Spectators: no collision, no weapons, no scoring. Can cycle through deathmatch s
 
 ---
 
-## Target/Trigger System (`Quake/qw-qc/subs.qc`)
+## Target/Trigger System (`legacy-src/qw-qc/subs.qc`)
 
 Central activation mechanism:
 

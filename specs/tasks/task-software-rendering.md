@@ -12,7 +12,7 @@ The software rendering subsystem implements CPU-based 3D rendering using edge-ba
 
 ## File Inventory
 
-### Rendering Core (`Quake/WinQuake/`)
+### Rendering Core (`legacy-src/desktop-engine/`)
 
 | File | LOC (approx.) | Responsibility |
 |------|---------------|----------------|
@@ -30,7 +30,7 @@ The software rendering subsystem implements CPU-based 3D rendering using edge-ba
 | `r_aclip.c` | 200 | Alias model clipping |
 | `r_efrag.c` | 200 | Entity fragment management |
 
-### Software Rasterizer (`Quake/WinQuake/`)
+### Software Rasterizer (`legacy-src/desktop-engine/`)
 
 | File | Responsibility |
 |------|----------------|
@@ -47,7 +47,7 @@ The software rendering subsystem implements CPU-based 3D rendering using edge-ba
 | `d_polyse.c` | Polygon edge setup |
 | `d_vars.c` | Global rasterizer variables |
 
-### x86 Assembly Optimizations (`Quake/WinQuake/`)
+### x86 Assembly Optimizations (`legacy-src/desktop-engine/`)
 
 | File | Optimizes |
 |------|-----------|

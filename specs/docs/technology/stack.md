@@ -9,10 +9,10 @@
 
 | Language | Usage | Files | Approximate LOC |
 |----------|-------|-------|-----------------|
-| **C (ANSI C / C89)** | Engine, server, client, tools | `Quake/WinQuake/*.c`, `Quake/QW/**/*.c` | ~100,000 |
-| **x86 Assembly (GAS)** | Performance-critical rendering, math | `Quake/WinQuake/*.s` | ~5,000 |
+| **C (ANSI C / C89)** | Engine, server, client, tools | `legacy-src/desktop-engine/*.c`, `legacy-src/QW/**/*.c` | ~100,000 |
+| **x86 Assembly (GAS)** | Performance-critical rendering, math | `legacy-src/desktop-engine/*.s` | ~5,000 |
 | **x86 Assembly (MASM)** | Windows-specific assembly | Generated via `gas2masm` | — |
-| **QuakeC** | Game logic scripting | `Quake/qw-qc/*.qc` | ~11,000 |
+| **QuakeC** | Game logic scripting | `legacy-src/qw-qc/*.qc` | ~11,000 |
 
 ### C Language Details
 - Standard: ANSI C (C89) with some compiler-specific extensions
@@ -22,8 +22,8 @@
 - `typedef struct` pattern for all data types
 
 ### x86 Assembly Details
-- AT&T syntax (GNU as) for Linux builds: `Quake/WinQuake/*.s`
-- Intel syntax (MASM) for Windows via `gas2masm` converter: `Quake/QW/gas2masm/gas2masm.c`
+- AT&T syntax (GNU as) for Linux builds: `legacy-src/desktop-engine/*.s`
+- Intel syntax (MASM) for Windows via `gas2masm` converter: `legacy-src/QW/gas2masm/gas2masm.c`
 - Used for: inner rendering loops, texture mapping, math operations, sound mixing
 - Key files: `d_draw.s`, `d_draw16.s`, `d_parta.s`, `d_polysa.s`, `d_scana.s`, `d_varsa.s`, `d_copy.s`, `math.s`, `r_aclipa.s`, `r_aliasa.s`, `r_drawa.s`, `r_edgea.s`, `r_varsa.s`, `snd_mixa.s`, `surf8.s`, `surf16.s`, `worlda.s`, `sys_dosa.s`, `sys_wina.s`, `dosasm.s`
 
@@ -43,51 +43,51 @@
 
 | API | Version | Usage | Source Files |
 |-----|---------|-------|-------------|
-| **Win32 API** | Windows 95+ | Window management, timers, file I/O | `Quake/WinQuake/sys_win.c` |
-| **DirectDraw** | DirectX 3-5 | Fullscreen video mode switching, page flipping | `Quake/WinQuake/vid_win.c` |
-| **DirectInput** | DirectX 3-5 | Mouse input in fullscreen | `Quake/WinQuake/in_win.c` |
-| **DirectSound** | DirectX 3-5 | Audio output via DMA-like buffer | `Quake/WinQuake/snd_win.c` |
-| **Winsock** | 1.1 | UDP networking | `Quake/WinQuake/net_wins.c` |
-| **Winsock (IPX)** | 1.1 | IPX/SPX networking | `Quake/WinQuake/net_wipx.c` |
-| **MCI** | Windows 3.1+ | CD audio music playback | `Quake/WinQuake/cd_win.c` |
-| **OpenGL** | 1.1 | Hardware-accelerated rendering | `Quake/WinQuake/gl_vidnt.c` |
-| **MGL (Scitech)** | 4.x | VESA/VBE video mode management | `Quake/WinQuake/vid_win.c` |
+| **Win32 API** | Windows 95+ | Window management, timers, file I/O | `legacy-src/desktop-engine/sys_win.c` |
+| **DirectDraw** | DirectX 3-5 | Fullscreen video mode switching, page flipping | `legacy-src/desktop-engine/vid_win.c` |
+| **DirectInput** | DirectX 3-5 | Mouse input in fullscreen | `legacy-src/desktop-engine/in_win.c` |
+| **DirectSound** | DirectX 3-5 | Audio output via DMA-like buffer | `legacy-src/desktop-engine/snd_win.c` |
+| **Winsock** | 1.1 | UDP networking | `legacy-src/desktop-engine/net_wins.c` |
+| **Winsock (IPX)** | 1.1 | IPX/SPX networking | `legacy-src/desktop-engine/net_wipx.c` |
+| **MCI** | Windows 3.1+ | CD audio music playback | `legacy-src/desktop-engine/cd_win.c` |
+| **OpenGL** | 1.1 | Hardware-accelerated rendering | `legacy-src/desktop-engine/gl_vidnt.c` |
+| **MGL (Scitech)** | 4.x | VESA/VBE video mode management | `legacy-src/desktop-engine/vid_win.c` |
 
 ### Linux
 
 | API | Usage | Source Files |
 |-----|-------|-------------|
-| **POSIX** | File I/O, signals, process management | `Quake/WinQuake/sys_linux.c` |
-| **SVGAlib** | Direct framebuffer access (console mode) | `Quake/WinQuake/vid_svgalib.c` |
-| **X11 (Xlib)** | Windowed rendering, keyboard/mouse | `Quake/WinQuake/vid_x.c` |
-| **X11 SHM Extension** | Shared memory for fast blitting | `Quake/WinQuake/vid_x.c` |
-| **OSS** | Sound output via `/dev/dsp` | `Quake/WinQuake/snd_linux.c` |
-| **BSD Sockets** | UDP networking | `Quake/WinQuake/net_udp.c` |
-| **Mesa3D / GLX** | OpenGL rendering | `Quake/WinQuake/gl_vidlinux.c`, `gl_vidlinuxglx.c` |
-| **CD-ROM ioctl** | CD audio via `/dev/cdrom` | `Quake/WinQuake/cd_linux.c` |
+| **POSIX** | File I/O, signals, process management | `legacy-src/desktop-engine/sys_linux.c` |
+| **SVGAlib** | Direct framebuffer access (console mode) | `legacy-src/desktop-engine/vid_svgalib.c` |
+| **X11 (Xlib)** | Windowed rendering, keyboard/mouse | `legacy-src/desktop-engine/vid_x.c` |
+| **X11 SHM Extension** | Shared memory for fast blitting | `legacy-src/desktop-engine/vid_x.c` |
+| **OSS** | Sound output via `/dev/dsp` | `legacy-src/desktop-engine/snd_linux.c` |
+| **BSD Sockets** | UDP networking | `legacy-src/desktop-engine/net_udp.c` |
+| **Mesa3D / GLX** | OpenGL rendering | `legacy-src/desktop-engine/gl_vidlinux.c`, `gl_vidlinuxglx.c` |
+| **CD-ROM ioctl** | CD audio via `/dev/cdrom` | `legacy-src/desktop-engine/cd_linux.c` |
 
 ### DOS
 
 | API | Usage | Source Files |
 |-----|-------|-------------|
-| **VGA Registers** | Direct hardware video access | `Quake/WinQuake/vid_dos.c`, `vid_vga.c` |
-| **VESA BIOS** | Extended video modes | `Quake/WinQuake/vid_ext.c` |
-| **DMA Controller** | Sound output | `Quake/WinQuake/snd_dos.c` |
-| **Gravis UltraSound** | GUS-specific sound | `Quake/WinQuake/snd_gus.c` |
-| **IPX** | DOS networking | `Quake/WinQuake/net_ipx.c` |
-| **Serial ports** | Modem multiplayer | `Quake/WinQuake/net_ser.c`, `net_comx.c` |
-| **DPMI** | Protected mode memory management | `Quake/WinQuake/sys_dos.c` |
-| **CWSDPMI** | DOS extender (included: `cwsdpmi.exe`) | `Quake/WinQuake/cwsdpmi.exe` |
+| **VGA Registers** | Direct hardware video access | `legacy-src/desktop-engine/vid_dos.c`, `vid_vga.c` |
+| **VESA BIOS** | Extended video modes | `legacy-src/desktop-engine/vid_ext.c` |
+| **DMA Controller** | Sound output | `legacy-src/desktop-engine/snd_dos.c` |
+| **Gravis UltraSound** | GUS-specific sound | `legacy-src/desktop-engine/snd_gus.c` |
+| **IPX** | DOS networking | `legacy-src/desktop-engine/net_ipx.c` |
+| **Serial ports** | Modem multiplayer | `legacy-src/desktop-engine/net_ser.c`, `net_comx.c` |
+| **DPMI** | Protected mode memory management | `legacy-src/desktop-engine/sys_dos.c` |
+| **CWSDPMI** | DOS extender (included: `cwsdpmi.exe`) | `legacy-src/desktop-engine/cwsdpmi.exe` |
 
 ### Solaris/SunOS
 
 | API | Usage | Source Files |
 |-----|-------|-------------|
-| **X11 (Xlib)** | Video output | `Quake/WinQuake/vid_sunx.c` |
-| **XIL** | Accelerated imaging library | `Quake/WinQuake/vid_sunxil.c` |
-| **Solaris audio** | Sound output | `Quake/WinQuake/snd_sun.c` |
-| **BSD Sockets** | Networking | `Quake/WinQuake/net_udp.c` |
-| **X11 input** | Keyboard/mouse | `Quake/WinQuake/in_sun.c` |
+| **X11 (Xlib)** | Video output | `legacy-src/desktop-engine/vid_sunx.c` |
+| **XIL** | Accelerated imaging library | `legacy-src/desktop-engine/vid_sunxil.c` |
+| **Solaris audio** | Sound output | `legacy-src/desktop-engine/snd_sun.c` |
+| **BSD Sockets** | Networking | `legacy-src/desktop-engine/net_udp.c` |
+| **X11 input** | Keyboard/mouse | `legacy-src/desktop-engine/in_sun.c` |
 
 ---
 
@@ -95,16 +95,16 @@
 
 | Tool | Platform | Usage | Build Files |
 |------|----------|-------|-------------|
-| **GCC** | Linux, Solaris | C compiler | `Quake/WinQuake/Makefile.linuxi386`, `Quake/QW/Makefile.Linux` |
+| **GCC** | Linux, Solaris | C compiler | `legacy-src/desktop-engine/Makefile.linuxi386`, `legacy-src/QW/Makefile.Linux` |
 | **GNU as** | Linux | x86 assembler (AT&T syntax) | Assembly `.s` files |
 | **GNU Make** | Linux, Solaris | Build automation | `Makefile.linuxi386`, `Makefile.Solaris`, `Makefile.Linux` |
 | **MSVC 4.x/5.x** | Windows | C compiler + linker | `WinQuake.dsp`, `WinQuake.dsw`, `qw.dsw` |
 | **MASM** | Windows | x86 assembler (Intel syntax) | Via `gas2masm` conversion |
-| **QuakeC Compiler** | Any | Compiles `.qc` to `progs.dat` | `Quake/qw-qc/progs.src` (not included in repo) |
+| **QuakeC Compiler** | Any | Compiles `.qc` to `progs.dat` | `legacy-src/qw-qc/progs.src` (not included in repo) |
 
 ### Compiler Flags
 
-**GCC Release** (`Quake/WinQuake/Makefile.linuxi386`):
+**GCC Release** (`legacy-src/desktop-engine/Makefile.linuxi386`):
 ```
 -O6 -m486 -ffast-math -funroll-loops -fomit-frame-pointer -fexpensive-optimizations
 ```
@@ -114,7 +114,7 @@
 -g
 ```
 
-**MSVC Release** (`Quake/WinQuake/WinQuake.dsp`):
+**MSVC Release** (`legacy-src/desktop-engine/WinQuake.dsp`):
 ```
 /G5 /GX /Ox /Ot /Og /Ob2
 ```
@@ -125,16 +125,16 @@
 
 | Format | Extension | Usage | Defined In |
 |--------|-----------|-------|------------|
-| **BSP v29** | `.bsp` | Map/level geometry, visibility, lighting | `Quake/WinQuake/bspfile.h` |
-| **MDL v6** | `.mdl` | Animated character/item models (alias models) | `Quake/WinQuake/modelgen.h`, `model.c` |
-| **SPR v1** | `.spr` | Billboard sprites for effects | `Quake/WinQuake/spritegn.h`, `model.c` |
-| **WAD2** | `.wad` | Texture/graphic archives | `Quake/WinQuake/wad.c`, `wad.h` |
-| **WAV** | `.wav` | Sound effects | `Quake/WinQuake/snd_mem.c` |
-| **LMP** | `.lmp` | Lump graphics (HUD elements) | `Quake/WinQuake/draw.c` |
-| **DEM** | `.dem` | Demo recordings (gameplay playback) | `Quake/WinQuake/cl_demo.c` |
-| **PAK** | `.pak` | Archive files containing game assets | `Quake/WinQuake/common.c` |
-| **progs.dat** | `.dat` | Compiled QuakeC bytecode | `Quake/WinQuake/pr_edict.c` |
-| **config.cfg** | `.cfg` | Saved key bindings and cvar values | `Quake/WinQuake/host_cmd.c` |
+| **BSP v29** | `.bsp` | Map/level geometry, visibility, lighting | `legacy-src/desktop-engine/bspfile.h` |
+| **MDL v6** | `.mdl` | Animated character/item models (alias models) | `legacy-src/desktop-engine/modelgen.h`, `model.c` |
+| **SPR v1** | `.spr` | Billboard sprites for effects | `legacy-src/desktop-engine/spritegn.h`, `model.c` |
+| **WAD2** | `.wad` | Texture/graphic archives | `legacy-src/desktop-engine/wad.c`, `wad.h` |
+| **WAV** | `.wav` | Sound effects | `legacy-src/desktop-engine/snd_mem.c` |
+| **LMP** | `.lmp` | Lump graphics (HUD elements) | `legacy-src/desktop-engine/draw.c` |
+| **DEM** | `.dem` | Demo recordings (gameplay playback) | `legacy-src/desktop-engine/cl_demo.c` |
+| **PAK** | `.pak` | Archive files containing game assets | `legacy-src/desktop-engine/common.c` |
+| **progs.dat** | `.dat` | Compiled QuakeC bytecode | `legacy-src/desktop-engine/pr_edict.c` |
+| **config.cfg** | `.cfg` | Saved key bindings and cvar values | `legacy-src/desktop-engine/host_cmd.c` |
 
 ---
 
@@ -142,8 +142,8 @@
 
 | Protocol | Port | Usage | Source |
 |----------|------|-------|--------|
-| **Quake Protocol** (v15) | 26000 | WinQuake client-server | `Quake/WinQuake/protocol.h` |
-| **QuakeWorld Protocol** (v28) | 27500 (server), 27001 (client), 27000 (master) | QW internet multiplayer | `Quake/QW/client/protocol.h` |
+| **Quake Protocol** (v15) | 26000 | WinQuake client-server | `legacy-src/desktop-engine/protocol.h` |
+| **QuakeWorld Protocol** (v28) | 27500 (server), 27001 (client), 27000 (master) | QW internet multiplayer | `legacy-src/QW/client/protocol.h` |
 | **UDP** | — | Primary transport | `net_udp.c`, `net_wins.c` |
 | **IPX/SPX** | — | LAN transport (Windows/DOS) | `net_wipx.c`, `net_ipx.c` |
 | **Serial** | COM1-4 | Modem-to-modem | `net_ser.c`, `net_comx.c` |
@@ -154,10 +154,10 @@
 
 | Library | Version | Usage | Location |
 |---------|---------|-------|----------|
-| **DirectX SDK** | 3-5 | Windows DirectDraw/DirectInput/DirectSound headers | `Quake/WinQuake/dxsdk/`, `Quake/QW/dxsdk/` |
-| **Scitech MGL** | 4.x | Multi-platform graphics library (VESA/VBE) | `Quake/WinQuake/scitech/`, `Quake/QW/scitech/` |
-| **3Dfx SDK** | — | 3Dfx Voodoo MiniGL headers | `Quake/WinQuake/3dfx.txt` |
-| **CWSDPMI** | — | DOS protected mode interface | `Quake/WinQuake/cwsdpmi.exe` |
+| **DirectX SDK** | 3-5 | Windows DirectDraw/DirectInput/DirectSound headers | `legacy-src/desktop-engine/dxsdk/`, `legacy-src/QW/dxsdk/` |
+| **Scitech MGL** | 4.x | Multi-platform graphics library (VESA/VBE) | `legacy-src/desktop-engine/scitech/`, `legacy-src/QW/scitech/` |
+| **3Dfx SDK** | — | 3Dfx Voodoo MiniGL headers | `legacy-src/desktop-engine/3dfx.txt` |
+| **CWSDPMI** | — | DOS protected mode interface | `legacy-src/desktop-engine/cwsdpmi.exe` |
 
 > **Note**: No standard C library beyond libc, no STL, no external frameworks. The engine is almost entirely self-contained.
 

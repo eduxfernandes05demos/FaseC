@@ -46,7 +46,7 @@ The engine pioneered real-time 3D rendering with true 3D environments (BSP-based
 - **Particle system**: Point-based particle effects for impacts, blood, explosions
 - **Console overlay**: Drop-down developer console with command input
 
-> Source: `Quake/WinQuake/r_main.c`, `Quake/WinQuake/gl_rmain.c`, `Quake/WinQuake/r_bsp.c`
+> Source: `legacy-src/desktop-engine/r_main.c`, `legacy-src/desktop-engine/gl_rmain.c`, `legacy-src/desktop-engine/r_bsp.c`
 
 ### 3.2 Networking
 
@@ -56,7 +56,7 @@ The engine pioneered real-time 3D rendering with true 3D environments (BSP-based
 - Sequence-numbered reliable delivery with ACK retransmission
 - Entity state snapshot broadcasting
 
-> Source: `Quake/WinQuake/net_main.c`, `Quake/WinQuake/net_dgrm.c`, `Quake/WinQuake/protocol.h`
+> Source: `legacy-src/desktop-engine/net_main.c`, `legacy-src/desktop-engine/net_dgrm.c`, `legacy-src/desktop-engine/protocol.h`
 
 #### QuakeWorld (Internet-optimized)
 - **Delta compression**: Only transmit changed entity fields using bitmask flags
@@ -66,7 +66,7 @@ The engine pioneered real-time 3D rendering with true 3D environments (BSP-based
 - **Master server registration**: Servers register with central master for discovery
 - **Anti-cheat**: Model checksums, download restrictions, choke counting
 
-> Source: `Quake/QW/client/cl_pred.c`, `Quake/QW/client/cl_ents.c`, `Quake/QW/server/sv_ents.c`
+> Source: `legacy-src/QW/client/cl_pred.c`, `legacy-src/QW/client/cl_ents.c`, `legacy-src/QW/server/sv_ents.c`
 
 ### 3.3 QuakeC Scripting Engine
 
@@ -75,7 +75,7 @@ The engine pioneered real-time 3D rendering with true 3D environments (BSP-based
 - Entity-field system with think/touch/use/blocked callbacks
 - Compiled from `.qc` source files into `progs.dat` / `qwprogs.dat`
 
-> Source: `Quake/WinQuake/pr_exec.c`, `Quake/WinQuake/pr_edict.c`, `Quake/WinQuake/pr_cmds.c`
+> Source: `legacy-src/desktop-engine/pr_exec.c`, `legacy-src/desktop-engine/pr_edict.c`, `legacy-src/desktop-engine/pr_cmds.c`
 
 ### 3.4 Sound System
 
@@ -85,7 +85,7 @@ The engine pioneered real-time 3D rendering with true 3D environments (BSP-based
 - CD audio music support
 - Platform backends: Windows (DirectSound/waveOut), Linux (OSS `/dev/dsp`), DOS (DMA/GUS), Sun (audio device)
 
-> Source: `Quake/WinQuake/snd_dma.c`, `Quake/WinQuake/snd_mix.c`, `Quake/WinQuake/sound.h`
+> Source: `legacy-src/desktop-engine/snd_dma.c`, `legacy-src/desktop-engine/snd_mix.c`, `legacy-src/desktop-engine/sound.h`
 
 ### 3.5 Input System
 
@@ -95,7 +95,7 @@ The engine pioneered real-time 3D rendering with true 3D environments (BSP-based
 - DirectInput support on Windows
 - Platform-specific drivers: Windows, DOS, Sun, null
 
-> Source: `Quake/WinQuake/in_win.c`, `Quake/WinQuake/keys.c`, `Quake/WinQuake/input.h`
+> Source: `legacy-src/desktop-engine/in_win.c`, `legacy-src/desktop-engine/keys.c`, `legacy-src/desktop-engine/input.h`
 
 ### 3.6 Console & Command System
 
@@ -105,7 +105,7 @@ The engine pioneered real-time 3D rendering with true 3D environments (BSP-based
 - Key binding system mapping keys to commands
 - Command aliasing and scripting via `alias` command
 
-> Source: `Quake/WinQuake/cmd.c`, `Quake/WinQuake/cvar.c`, `Quake/WinQuake/console.c`
+> Source: `legacy-src/desktop-engine/cmd.c`, `legacy-src/desktop-engine/cvar.c`, `legacy-src/desktop-engine/console.c`
 
 ### 3.7 Game Logic (QuakeC)
 
@@ -116,7 +116,7 @@ The engine pioneered real-time 3D rendering with true 3D environments (BSP-based
 - **Spectator mode**: Non-interactive observer with spawn-point teleportation
 - **Damage system**: Armor reduction, quad multiplier, knockback, radius damage, team protection
 
-> Source: `Quake/qw-qc/weapons.qc`, `Quake/qw-qc/items.qc`, `Quake/qw-qc/combat.qc`, `Quake/qw-qc/client.qc`
+> Source: `legacy-src/qw-qc/weapons.qc`, `legacy-src/qw-qc/items.qc`, `legacy-src/qw-qc/combat.qc`, `legacy-src/qw-qc/client.qc`
 
 ### 3.8 Map/BSP System
 
@@ -128,7 +128,7 @@ The engine pioneered real-time 3D rendering with true 3D environments (BSP-based
 - PVS (Potentially Visible Set) precomputed visibility data
 - Collision detection via clip nodes (multiple hull sizes)
 
-> Source: `Quake/WinQuake/model.c`, `Quake/WinQuake/bspfile.h`, `Quake/WinQuake/model.h`
+> Source: `legacy-src/desktop-engine/model.c`, `legacy-src/desktop-engine/bspfile.h`, `legacy-src/desktop-engine/model.h`
 
 ### 3.9 Demo Recording & Playback
 
@@ -136,7 +136,7 @@ The engine pioneered real-time 3D rendering with true 3D environments (BSP-based
 - Play back recorded demos with full rendering
 - Time-demo mode for benchmarking
 
-> Source: `Quake/WinQuake/cl_demo.c`, `Quake/QW/client/cl_demo.c`
+> Source: `legacy-src/desktop-engine/cl_demo.c`, `legacy-src/QW/client/cl_demo.c`
 
 ### 3.10 Save/Load System
 
@@ -144,7 +144,7 @@ The engine pioneered real-time 3D rendering with true 3D environments (BSP-based
 - Restore game state including entity positions, health, inventory
 - Quick-save and quick-load key bindings
 
-> Source: `Quake/WinQuake/host_cmd.c`
+> Source: `legacy-src/desktop-engine/host_cmd.c`
 
 ---
 

@@ -30,7 +30,7 @@ This document provides contingency plans for the most severe failure scenarios d
 
 ### Scenario
 
-Containerized Quake engine cannot receive or send UDP game traffic. Kubernetes Service or Network Policy blocks game packets on port 26000 (defined at `Quake/WinQuake/net_main.c:34`).
+Containerized Quake engine cannot receive or send UDP game traffic. Kubernetes Service or Network Policy blocks game packets on port 26000 (defined at `legacy-src/desktop-engine/net_main.c:34`).
 
 ### Detection
 
@@ -326,7 +326,7 @@ CMake migration is incomplete or incorrect — cannot compile certain targets.
 
 ```bash
 # Step 1: Fall back to original build system
-cd Quake/WinQuake
+cd legacy-src/desktop-engine
 make -f Makefile.linuxi386 clean
 make -f Makefile.linuxi386
 

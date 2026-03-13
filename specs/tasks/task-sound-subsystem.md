@@ -10,7 +10,7 @@ The sound subsystem provides DMA-based audio mixing with 3D spatialization, supp
 
 ---
 
-## File Inventory (`Quake/WinQuake/`)
+## File Inventory (`legacy-src/desktop-engine/`)
 
 ### Core Sound Engine
 | File | Responsibility |

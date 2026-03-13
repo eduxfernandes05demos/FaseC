@@ -1,6 +1,6 @@
 # Feature: Save/Load System
 
-> Reverse-engineered from `Quake/WinQuake/host_cmd.c`
+> Reverse-engineered from `legacy-src/desktop-engine/host_cmd.c`
 
 ---
 
@@ -14,10 +14,10 @@ The save/load system allows players to persist and restore complete game state d
 
 | File | Purpose |
 |------|---------|
-| `Quake/WinQuake/host_cmd.c` | Save and load implementation (`Host_Savegame_f`, `Host_Loadgame_f`) |
-| `Quake/WinQuake/pr_edict.c` | Entity serialization (`ED_Write`, `ED_ParseEdict`) |
-| `Quake/WinQuake/sv_main.c` | Server state management |
-| `Quake/WinQuake/host.c` | Level transition support |
+| `legacy-src/desktop-engine/host_cmd.c` | Save and load implementation (`Host_Savegame_f`, `Host_Loadgame_f`) |
+| `legacy-src/desktop-engine/pr_edict.c` | Entity serialization (`ED_Write`, `ED_ParseEdict`) |
+| `legacy-src/desktop-engine/sv_main.c` | Server state management |
+| `legacy-src/desktop-engine/host.c` | Level transition support |
 
 ---
 
@@ -46,7 +46,7 @@ Save files are stored as human-readable text files in the game directory (e.g., 
 
 ## Key Functions
 
-### Saving (`Host_Savegame_f` in `Quake/WinQuake/host_cmd.c`)
+### Saving (`Host_Savegame_f` in `legacy-src/desktop-engine/host_cmd.c`)
 1. Validate: must be in single-player, not a demo, client must be alive
 2. Create save file in game directory
 3. Write version, description, spawn parms, skill, map name, time
@@ -54,7 +54,7 @@ Save files are stored as human-readable text files in the game directory (e.g., 
 5. For each entity: `ED_Write()` serializes all non-default fields
 6. Close file
 
-### Loading (`Host_Loadgame_f` in `Quake/WinQuake/host_cmd.c`)
+### Loading (`Host_Loadgame_f` in `legacy-src/desktop-engine/host_cmd.c`)
 1. Open save file
 2. Read and validate version number
 3. Read spawn parameters, skill, map name, time

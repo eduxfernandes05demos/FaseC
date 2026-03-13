@@ -1,6 +1,6 @@
 # Feature: Demo Recording and Playback
 
-> Reverse-engineered from `Quake/WinQuake/cl_demo.c` and `Quake/QW/client/cl_demo.c`
+> Reverse-engineered from `legacy-src/desktop-engine/cl_demo.c` and `legacy-src/QW/client/cl_demo.c`
 
 ---
 
@@ -14,8 +14,8 @@ The demo system records and plays back gameplay sessions by capturing the stream
 
 | File | Purpose |
 |------|---------|
-| `Quake/WinQuake/cl_demo.c` | WinQuake demo recording and playback |
-| `Quake/QW/client/cl_demo.c` | QuakeWorld demo recording and playback |
+| `legacy-src/desktop-engine/cl_demo.c` | WinQuake demo recording and playback |
+| `legacy-src/QW/client/cl_demo.c` | QuakeWorld demo recording and playback |
 
 ---
 

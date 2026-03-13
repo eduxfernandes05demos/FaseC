@@ -10,7 +10,7 @@ The OpenGL renderer provides hardware-accelerated 3D rendering as an alternative
 
 ---
 
-## File Inventory (`Quake/WinQuake/`)
+## File Inventory (`legacy-src/desktop-engine/`)
 
 | File | Responsibility |
 |------|----------------|

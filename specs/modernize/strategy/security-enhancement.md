@@ -21,7 +21,7 @@ This plan addresses the **664+ buffer overflow vectors**, **9+ unchecked allocat
 
 **Pattern**:
 ```c
-/* Before (Quake/WinQuake/common.c:1286): */
+/* Before (legacy-src/desktop-engine/common.c:1286): */
 sprintf(name, "%s/%s", com_gamedir, filename);
 
 /* After: */
@@ -32,17 +32,17 @@ snprintf(name, sizeof(name), "%s/%s", com_gamedir, filename);
 
 | File | Instances | Risk Level |
 |------|-----------|-----------|
-| `Quake/WinQuake/common.c` | 7+ | Critical — file path construction |
-| `Quake/WinQuake/net_dgrm.c` | 3+ | Critical — network address handling |
-| `Quake/WinQuake/console.c` | 4 | High — vsprintf with variadic args |
-| `Quake/WinQuake/sys_win.c` | 4 | High — error message formatting |
-| `Quake/QW/server/sv_main.c` | 5+ | Critical — server log/data handling |
-| `Quake/QW/client/cl_main.c` | 5+ | Critical — RCON command building |
-| `Quake/QW/qwfwd/misc.c` | 2+ | Critical — IP formatting, user info |
+| `legacy-src/desktop-engine/common.c` | 7+ | Critical — file path construction |
+| `legacy-src/desktop-engine/net_dgrm.c` | 3+ | Critical — network address handling |
+| `legacy-src/desktop-engine/console.c` | 4 | High — vsprintf with variadic args |
+| `legacy-src/desktop-engine/sys_win.c` | 4 | High — error message formatting |
+| `legacy-src/QW/server/sv_main.c` | 5+ | Critical — server log/data handling |
+| `legacy-src/QW/client/cl_main.c` | 5+ | Critical — RCON command building |
+| `legacy-src/QW/qwfwd/misc.c` | 2+ | Critical — IP formatting, user info |
 
 **vsprintf special handling**: Replace with `vsnprintf` and add buffer size parameter:
 ```c
-/* Before (Quake/WinQuake/console.c:360): */
+/* Before (legacy-src/desktop-engine/console.c:360): */
 vsprintf(data, fmt, argptr);
 
 /* After: */
@@ -72,10 +72,10 @@ size_t Q_strlcpy(char *dst, const char *src, size_t dstsize) {
 
 | File | Line Examples | Risk |
 |------|-------------|------|
-| `Quake/WinQuake/common.c` | 1696, 1744, 1767, 1817 | Directory/path from user input |
-| `Quake/WinQuake/net_dgrm.c` | 132-133, 558, 562, 680, 683, 1074 | Network address data |
-| `Quake/WinQuake/gl_model.c` | 203, 1220, 1260 | Model names from file data |
-| `Quake/QW/client/cl_demo.c` | various | User-provided demo names |
+| `legacy-src/desktop-engine/common.c` | 1696, 1744, 1767, 1817 | Directory/path from user input |
+| `legacy-src/desktop-engine/net_dgrm.c` | 132-133, 558, 562, 680, 683, 1074 | Network address data |
+| `legacy-src/desktop-engine/gl_model.c` | 203, 1220, 1260 | Model names from file data |
+| `legacy-src/QW/client/cl_demo.c` | various | User-provided demo names |
 
 ### 2.3 Replace strcat/Q_strcat with Bounded Concatenation
 
@@ -101,12 +101,12 @@ size_t Q_strlcat(char *dst, const char *src, size_t dstsize) {
 
 | File | Line Examples | Risk |
 |------|-------------|------|
-| `Quake/WinQuake/host_cmd.c` | 275-278, 1054-1055 | Map/say command building |
-| `Quake/WinQuake/pr_cmds.c` | 41 | QuakeC string concatenation |
-| `Quake/QW/server/sv_send.c` | 120 | Server output buffer |
-| `Quake/QW/server/sv_main.c` | 428, 757-758, 1035 | Log/command building |
-| `Quake/QW/client/cl_main.c` | 328-336 | RCON command building |
-| `Quake/QW/client/keys.c` | 330 | Clipboard paste |
+| `legacy-src/desktop-engine/host_cmd.c` | 275-278, 1054-1055 | Map/say command building |
+| `legacy-src/desktop-engine/pr_cmds.c` | 41 | QuakeC string concatenation |
+| `legacy-src/QW/server/sv_send.c` | 120 | Server output buffer |
+| `legacy-src/QW/server/sv_main.c` | 428, 757-758, 1035 | Log/command building |
+| `legacy-src/QW/client/cl_main.c` | 328-336 | RCON command building |
+| `legacy-src/QW/client/keys.c` | 330 | Clipboard paste |
 
 ### 2.4 Add NULL Checks for malloc
 
@@ -114,7 +114,7 @@ size_t Q_strlcat(char *dst, const char *src, size_t dstsize) {
 
 **Pattern**:
 ```c
-/* Before (Quake/WinQuake/host.c:791): */
+/* Before (legacy-src/desktop-engine/host.c:791): */
 com_argv = malloc(com_argc * sizeof(char *));
 
 /* After: */
@@ -127,13 +127,13 @@ if (!com_argv)
 
 | File | Line | Allocation |
 |------|------|-----------|
-| `Quake/WinQuake/host.c` | 791, 796 | Startup argument parsing |
-| `Quake/WinQuake/gl_warp.c` | 410, 520 | Texture loading |
-| `Quake/WinQuake/gl_screen.c` | 618 | Screenshot buffer |
-| `Quake/QW/client/gl_screen.c` | 651, 879 | Screenshot/resize buffers |
-| `Quake/QW/client/cl_parse.c` | 490 | Download data buffer |
-| `Quake/QW/client/screen.c` | 845 | Screen resize buffer |
-| `Quake/QW/qwfwd/qwfwd.c` | 225 | Forwarding proxy allocation |
+| `legacy-src/desktop-engine/host.c` | 791, 796 | Startup argument parsing |
+| `legacy-src/desktop-engine/gl_warp.c` | 410, 520 | Texture loading |
+| `legacy-src/desktop-engine/gl_screen.c` | 618 | Screenshot buffer |
+| `legacy-src/QW/client/gl_screen.c` | 651, 879 | Screenshot/resize buffers |
+| `legacy-src/QW/client/cl_parse.c` | 490 | Download data buffer |
+| `legacy-src/QW/client/screen.c` | 845 | Screen resize buffer |
+| `legacy-src/QW/qwfwd/qwfwd.c` | 225 | Forwarding proxy allocation |
 
 ### 2.5 Remove system() Calls
 
@@ -141,8 +141,8 @@ if (!com_argv)
 
 | File | Line | Replacement |
 |------|------|-------------|
-| `Quake/WinQuake/sys_linux.c` | 276 | Remove or replace with `posix_spawn()` |
-| `Quake/QW/client/sys_linux.c` | 278 | Remove or replace with `posix_spawn()` |
+| `legacy-src/desktop-engine/sys_linux.c` | 276 | Remove or replace with `posix_spawn()` |
+| `legacy-src/QW/client/sys_linux.c` | 278 | Remove or replace with `posix_spawn()` |
 
 ---
 

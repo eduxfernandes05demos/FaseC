@@ -12,7 +12,7 @@ The QuakeC VM is a bytecode interpreter that executes compiled game logic. It br
 
 ## File Inventory
 
-### Engine VM Files (`Quake/WinQuake/`)
+### Engine VM Files (`legacy-src/desktop-engine/`)
 
 | File | LOC (approx.) | Responsibility |
 |------|---------------|----------------|
@@ -23,7 +23,7 @@ The QuakeC VM is a bytecode interpreter that executes compiled game logic. It br
 | `progs.h` | 130 | VM data structures |
 | `progdefs.h` | — | Auto-generated entity field offsets |
 
-### QuakeC Source Files (`Quake/qw-qc/`)
+### QuakeC Source Files (`legacy-src/qw-qc/`)
 
 | File | LOC | Responsibility |
 |------|-----|----------------|
@@ -49,10 +49,10 @@ The QuakeC VM is a bytecode interpreter that executes compiled game logic. It br
 
 | File | Purpose |
 |------|---------|
-| `Quake/qw-qc/progs.src` | Compilation order (output: `qwprogs.dat`) |
-| `Quake/qw-qc/qwprogs.dat` | Compiled bytecode binary |
-| `Quake/qw-qc/files.dat` | File listing |
-| `Quake/qw-qc/progdefs.h` | Auto-generated C struct matching QuakeC fields |
+| `legacy-src/qw-qc/progs.src` | Compilation order (output: `qwprogs.dat`) |
+| `legacy-src/qw-qc/qwprogs.dat` | Compiled bytecode binary |
+| `legacy-src/qw-qc/files.dat` | File listing |
+| `legacy-src/qw-qc/progdefs.h` | Auto-generated C struct matching QuakeC fields |
 
 ---
 
@@ -81,7 +81,7 @@ typedef struct {
 - Strings stored in `char *pr_strings` table (referenced by offset)
 - Functions stored in `dfunction_t *pr_functions` array
 
-### Execution Flow (`PR_ExecuteProgram()` — `Quake/WinQuake/pr_exec.c`)
+### Execution Flow (`PR_ExecuteProgram()` — `legacy-src/desktop-engine/pr_exec.c`)
 1. Enter function: push call stack, copy parameters to locals
 2. Fetch statement at program counter
 3. Switch on opcode, execute operation

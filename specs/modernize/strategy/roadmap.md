@@ -41,11 +41,11 @@ M0.1 (CMake) → M0.2 (CI/CD) → M0.3 (Tests)
 
 | Current File | Action |
 |-------------|--------|
-| `Quake/WinQuake/Makefile.linuxi386` | Replace with CMake |
-| `Quake/WinQuake/Makefile.Solaris` | Replace with CMake |
-| `Quake/QW/Makefile.Linux` | Replace with CMake |
-| `Quake/WinQuake/WinQuake.dsp` | Replace with CMake |
-| `Quake/QW/qw.dsw` | Replace with CMake |
+| `legacy-src/desktop-engine/Makefile.linuxi386` | Replace with CMake |
+| `legacy-src/desktop-engine/Makefile.Solaris` | Replace with CMake |
+| `legacy-src/QW/Makefile.Linux` | Replace with CMake |
+| `legacy-src/desktop-engine/WinQuake.dsp` | Replace with CMake |
+| `legacy-src/QW/qw.dsw` | Replace with CMake |
 
 ### Exit Criteria
 
@@ -79,8 +79,8 @@ M0.3 (Tests) → M1.3 (Security tests)
 - **362 files** with sprintf → snprintf
 - **232 files** with strcpy → strncpy/strlcpy
 - **70 files** with strcat → strncat/strlcat
-- `Quake/WinQuake/sys_linux.c:276` — Remove system() call
-- `Quake/QW/client/sys_linux.c:278` — Remove system() call
+- `legacy-src/desktop-engine/sys_linux.c:276` — Remove system() call
+- `legacy-src/QW/client/sys_linux.c:278` — Remove system() call
 
 ### Exit Criteria
 

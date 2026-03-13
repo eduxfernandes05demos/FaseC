@@ -19,13 +19,13 @@ The software renderer is entirely CPU-bound with critical inner loops:
 
 | Bottleneck | File | Line | Description |
 |------------|------|------|-------------|
-| **Span rasterization** | `Quake/WinQuake/d_scan.c` | 274-382 | `D_DrawSpans8()` — Main texture-mapped span loop. Pixel-by-pixel iteration at line 370-375 |
-| **Turbulent water** | `Quake/WinQuake/d_scan.c` | 100-112 | `D_DrawTurbulent8Span()` — Per-pixel warping for water surfaces |
-| **Z-buffer spans** | `Quake/WinQuake/d_scan.c` | 395+ | `D_DrawZSpans()` — Z-buffer fill |
-| **Edge processing** | `Quake/WinQuake/d_edge.c` | 123 | `D_CalcGradients()` — Surface gradient computation per surface |
-| **Surface dispatch** | `Quake/WinQuake/d_edge.c` | 174-204 | `D_DrawSurfaces()` — Surface type dispatch with iteration |
-| **BSP traversal** | `Quake/WinQuake/r_bsp.c` | varies | `R_RecursiveWorldNode()` — Recursive front-to-back BSP traversal |
-| **Edge sorting** | `Quake/WinQuake/r_edge.c` | varies | Edge-based scan conversion and sorting |
+| **Span rasterization** | `legacy-src/desktop-engine/d_scan.c` | 274-382 | `D_DrawSpans8()` — Main texture-mapped span loop. Pixel-by-pixel iteration at line 370-375 |
+| **Turbulent water** | `legacy-src/desktop-engine/d_scan.c` | 100-112 | `D_DrawTurbulent8Span()` — Per-pixel warping for water surfaces |
+| **Z-buffer spans** | `legacy-src/desktop-engine/d_scan.c` | 395+ | `D_DrawZSpans()` — Z-buffer fill |
+| **Edge processing** | `legacy-src/desktop-engine/d_edge.c` | 123 | `D_CalcGradients()` — Surface gradient computation per surface |
+| **Surface dispatch** | `legacy-src/desktop-engine/d_edge.c` | 174-204 | `D_DrawSurfaces()` — Surface type dispatch with iteration |
+| **BSP traversal** | `legacy-src/desktop-engine/r_bsp.c` | varies | `R_RecursiveWorldNode()` — Recursive front-to-back BSP traversal |
+| **Edge sorting** | `legacy-src/desktop-engine/r_edge.c` | varies | Edge-based scan conversion and sorting |
 
 **Assembly optimized inner loops** (21 files, 10,748 lines in WinQuake):
 
@@ -49,10 +49,10 @@ The software renderer is entirely CPU-bound with critical inner loops:
 
 | Component | File | Line | Performance Note |
 |-----------|------|------|-----------------|
-| Entry point | `Quake/WinQuake/gl_rmain.c` | 1104 | `R_RenderView()` — GPU-bound on modern hardware |
-| Surface rendering | `Quake/WinQuake/gl_rsurf.c` | varies | Lightmap updates are CPU-bound |
-| Mesh rendering | `Quake/WinQuake/gl_mesh.c` | varies | Per-vertex transformation (OpenGL 1.1) |
-| Texture management | `Quake/WinQuake/gl_draw.c` | varies | Immediate mode GL calls (no VBO/VAO) |
+| Entry point | `legacy-src/desktop-engine/gl_rmain.c` | 1104 | `R_RenderView()` — GPU-bound on modern hardware |
+| Surface rendering | `legacy-src/desktop-engine/gl_rsurf.c` | varies | Lightmap updates are CPU-bound |
+| Mesh rendering | `legacy-src/desktop-engine/gl_mesh.c` | varies | Per-vertex transformation (OpenGL 1.1) |
+| Texture management | `legacy-src/desktop-engine/gl_draw.c` | varies | Immediate mode GL calls (no VBO/VAO) |
 
 **Key Issue**: Uses **OpenGL 1.1 immediate mode** — no vertex buffers, no shaders, no modern GPU pipeline utilization.
 
@@ -64,18 +64,18 @@ The software renderer is entirely CPU-bound with critical inner loops:
 
 | Bottleneck | File | Line | Description |
 |------------|------|------|-------------|
-| **Packet transmission** | `Quake/WinQuake/net_dgrm.c` | 161 | `Datagram_SendMessage()` — Reliable message with ACK/retransmit |
-| **Message fragmentation** | `Quake/WinQuake/net_dgrm.c` | varies | MAX_DATAGRAM = 1024 bytes forces fragmentation |
-| **Full state broadcasts** | `Quake/WinQuake/sv_main.c` | varies | Entire entity state sent each frame |
+| **Packet transmission** | `legacy-src/desktop-engine/net_dgrm.c` | 161 | `Datagram_SendMessage()` — Reliable message with ACK/retransmit |
+| **Message fragmentation** | `legacy-src/desktop-engine/net_dgrm.c` | varies | MAX_DATAGRAM = 1024 bytes forces fragmentation |
+| **Full state broadcasts** | `legacy-src/desktop-engine/sv_main.c` | varies | Entire entity state sent each frame |
 
 ### 3.2 QuakeWorld Protocol (Improved)
 
 | Component | File | Line | Performance |
 |-----------|------|------|-------------|
-| **Delta encoding** | `Quake/QW/server/sv_ents.c` | 155 | `SV_WriteDelta()` — Bitmask field differencing |
-| **Packet building** | `Quake/QW/server/sv_ents.c` | 250 | `SV_EmitPacketEntities()` — Delta-compressed entity updates |
-| **Entity parsing** | `Quake/QW/client/cl_ents.c` | 265 | `CL_ParsePacketEntities()` — Delta decompression |
-| **Entity linking** | `Quake/QW/client/cl_ents.c` | 408 | `CL_LinkPacketEntities()` — Scene integration |
+| **Delta encoding** | `legacy-src/QW/server/sv_ents.c` | 155 | `SV_WriteDelta()` — Bitmask field differencing |
+| **Packet building** | `legacy-src/QW/server/sv_ents.c` | 250 | `SV_EmitPacketEntities()` — Delta-compressed entity updates |
+| **Entity parsing** | `legacy-src/QW/client/cl_ents.c` | 265 | `CL_ParsePacketEntities()` — Delta decompression |
+| **Entity linking** | `legacy-src/QW/client/cl_ents.c` | 408 | `CL_LinkPacketEntities()` — Scene integration |
 
 **Optimization Opportunity**: QuakeWorld's delta compression is already efficient but operates over raw UDP without congestion control, MTU discovery, or quality-of-service guarantees.
 
@@ -87,28 +87,28 @@ The software renderer is entirely CPU-bound with critical inner loops:
 
 | Function | File | Line | Bottleneck |
 |----------|------|------|-----------|
-| `Z_Malloc()` | `Quake/WinQuake/zone.c` | 142 | Wrapper — calls Z_TagMalloc |
-| `Z_TagMalloc()` | `Quake/WinQuake/zone.c` | 155 | **Linear free-list search** at line 182 — O(n) allocation |
-| `Z_Free()` | `Quake/WinQuake/zone.c` | 99 | Block merging with validation |
-| `Z_CheckHeap()` | `Quake/WinQuake/zone.c` | 247 | Full heap walk — O(n) debug validation |
+| `Z_Malloc()` | `legacy-src/desktop-engine/zone.c` | 142 | Wrapper — calls Z_TagMalloc |
+| `Z_TagMalloc()` | `legacy-src/desktop-engine/zone.c` | 155 | **Linear free-list search** at line 182 — O(n) allocation |
+| `Z_Free()` | `legacy-src/desktop-engine/zone.c` | 99 | Block merging with validation |
+| `Z_CheckHeap()` | `legacy-src/desktop-engine/zone.c` | 247 | Full heap walk — O(n) debug validation |
 
 ### 4.2 Hunk Allocator
 
 | Function | File | Line | Characteristic |
 |----------|------|------|---------------|
-| `Hunk_AllocName()` | `Quake/WinQuake/zone.c` | 399 | Stack-based — O(1) allocation, no deallocation |
-| `Hunk_Alloc()` | `Quake/WinQuake/zone.c` | 434 | Unnamed wrapper |
+| `Hunk_AllocName()` | `legacy-src/desktop-engine/zone.c` | 399 | Stack-based — O(1) allocation, no deallocation |
+| `Hunk_Alloc()` | `legacy-src/desktop-engine/zone.c` | 434 | Unnamed wrapper |
 
 **Heavy callers**:
-- `Quake/WinQuake/gl_model.c` — 25+ `Hunk_AllocName` calls for model/texture loading
-- `Quake/WinQuake/model.c` — 25+ calls for BSP geometry loading
-- `Quake/WinQuake/host.c` — Lines 195, 915 for engine initialization
+- `legacy-src/desktop-engine/gl_model.c` — 25+ `Hunk_AllocName` calls for model/texture loading
+- `legacy-src/desktop-engine/model.c` — 25+ calls for BSP geometry loading
+- `legacy-src/desktop-engine/host.c` — Lines 195, 915 for engine initialization
 
 ### 4.3 Cache Allocator
 
 | Function | File | Line | Characteristic |
 |----------|------|------|---------------|
-| `Cache_Alloc()` | `Quake/WinQuake/zone.c` | 871 | LRU eviction — can cause stalls on cache miss |
+| `Cache_Alloc()` | `legacy-src/desktop-engine/zone.c` | 871 | LRU eviction — can cause stalls on cache miss |
 
 **Performance Issue**: Cache eviction during gameplay causes frame stutters when sounds or model data must be reloaded.
 
@@ -129,13 +129,13 @@ The software renderer is entirely CPU-bound with critical inner loops:
 
 | Function | File | Line | Bottleneck |
 |----------|------|------|-----------|
-| **Main mixing loop** | `Quake/WinQuake/snd_mix.c` | 261 | `S_PaintChannels()` — Outer time loop at line 269 |
-| **Channel iteration** | `Quake/WinQuake/snd_mix.c` | 281 | `for (i=0; i<total_channels; i++, ch++)` |
-| **Sample processing** | `Quake/WinQuake/snd_mix.c` | 293 | Inner `while (ltime < end)` loop |
-| **8-bit mixing** | `Quake/WinQuake/snd_mix.c` | 346-362 | `SND_PaintChannelFrom8()` — Per-sample loop |
-| **16-bit mixing** | `Quake/WinQuake/snd_mix.c` | 375-387 | `SND_PaintChannelFrom16()` — Per-sample loop |
-| **Buffer transfer** | `Quake/WinQuake/snd_mix.c` | 65-87 | `S_TransferStereo16()` — Retry loop for buffer locking |
-| **Assembly mixing** | `Quake/WinQuake/snd_mixa.s` | 218 lines | x86-optimized mixing inner loops |
+| **Main mixing loop** | `legacy-src/desktop-engine/snd_mix.c` | 261 | `S_PaintChannels()` — Outer time loop at line 269 |
+| **Channel iteration** | `legacy-src/desktop-engine/snd_mix.c` | 281 | `for (i=0; i<total_channels; i++, ch++)` |
+| **Sample processing** | `legacy-src/desktop-engine/snd_mix.c` | 293 | Inner `while (ltime < end)` loop |
+| **8-bit mixing** | `legacy-src/desktop-engine/snd_mix.c` | 346-362 | `SND_PaintChannelFrom8()` — Per-sample loop |
+| **16-bit mixing** | `legacy-src/desktop-engine/snd_mix.c` | 375-387 | `SND_PaintChannelFrom16()` — Per-sample loop |
+| **Buffer transfer** | `legacy-src/desktop-engine/snd_mix.c` | 65-87 | `S_TransferStereo16()` — Retry loop for buffer locking |
+| **Assembly mixing** | `legacy-src/desktop-engine/snd_mixa.s` | 218 lines | x86-optimized mixing inner loops |
 
 **Supported sample rates**: 8000, 11025, 16000, 22051, 32000, 44100, 48000 Hz (`snd_gus.c:563-574`, `snd_linux.c:35`)
 

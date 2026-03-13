@@ -27,7 +27,7 @@ Package the headless Quake engine as a container image with HTTP health endpoint
 
 ### Step 1: Create Dockerfile
 
-**New file**: `Quake/Dockerfile`
+**New file**: `Dockerfile`
 
 ```dockerfile
 # Stage 1: Build environment
@@ -51,8 +51,8 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/* \
     && useradd -m -s /bin/bash -u 1000 quake
-COPY --from=builder /src/Quake/build/quake-headless /usr/local/bin/
-COPY --from=builder /src/Quake/build/qwsv /usr/local/bin/
+COPY --from=builder /src/legacy-src/build/quake-headless /usr/local/bin/
+COPY --from=builder /src/legacy-src/build/qwsv /usr/local/bin/
 USER quake
 WORKDIR /home/quake
 EXPOSE 26000/udp
@@ -65,7 +65,7 @@ CMD ["-dedicated", "+map", "start"]
 
 ### Step 2: Create docker-compose.yml
 
-**New file**: `Quake/docker-compose.yml`
+**New file**: `docker-compose.yml`
 
 ```yaml
 version: '3.8'
@@ -94,7 +94,7 @@ services:
 
 ### Step 3: Implement Health Endpoints
 
-**New file**: `Quake/WinQuake/health.c`
+**New file**: `legacy-src/desktop-engine/health.c`
 
 Lightweight HTTP server for Kubernetes health probes:
 
@@ -138,7 +138,7 @@ void Health_Shutdown(void) {
 
 ### Step 4: Implement Structured Logging
 
-**Modified file**: `Quake/WinQuake/console.c`
+**Modified file**: `legacy-src/desktop-engine/console.c`
 
 Replace `Con_Printf` output (line 360) with JSON structured logging:
 
@@ -165,7 +165,7 @@ Log levels:
 
 ### Step 5: Implement Graceful Shutdown
 
-**Modified file**: `Quake/WinQuake/host.c`
+**Modified file**: `legacy-src/desktop-engine/host.c`
 
 Add SIGTERM handler for clean container shutdown:
 
@@ -202,7 +202,7 @@ void Host_Frame(float time) {
 
 ### Step 6: Implement Environment Variable Configuration
 
-**Modified file**: `Quake/WinQuake/host.c` (Host_Init, line 835)
+**Modified file**: `legacy-src/desktop-engine/host.c` (Host_Init, line 835)
 
 Read configuration from environment variables before command-line parsing:
 
@@ -234,16 +234,16 @@ void Host_Init(quakeparms_t *parms) {
 
 | File | Change Type | Description |
 |------|------------|-------------|
-| `Quake/Dockerfile` | **New** | Multi-stage container build |
-| `Quake/docker-compose.yml` | **New** | Local development orchestration |
-| `Quake/.dockerignore` | **New** | Exclude unnecessary files from build context |
-| `Quake/WinQuake/health.c` | **New** | HTTP health endpoint server |
-| `Quake/WinQuake/health.h` | **New** | Health module header |
-| `Quake/WinQuake/host.c` | **Edit** | SIGTERM handler (line 729, 835), env var config, health integration |
-| `Quake/WinQuake/console.c` | **Edit** | Structured JSON logging (line 360, 384) |
-| `Quake/WinQuake/net_main.c` | **Edit** | Environment variable for port (line 34) |
-| `Quake/WinQuake/common.c` | **Edit** | Environment variable for game directory (line 1775) |
-| `Quake/WinQuake/CMakeLists.txt` | **Edit** | Add health.c, container build options |
+| `Dockerfile` | **New** | Multi-stage container build |
+| `docker-compose.yml` | **New** | Local development orchestration |
+| `.dockerignore` | **New** | Exclude unnecessary files from build context |
+| `legacy-src/desktop-engine/health.c` | **New** | HTTP health endpoint server |
+| `legacy-src/desktop-engine/health.h` | **New** | Health module header |
+| `legacy-src/desktop-engine/host.c` | **Edit** | SIGTERM handler (line 729, 835), env var config, health integration |
+| `legacy-src/desktop-engine/console.c` | **Edit** | Structured JSON logging (line 360, 384) |
+| `legacy-src/desktop-engine/net_main.c` | **Edit** | Environment variable for port (line 34) |
+| `legacy-src/desktop-engine/common.c` | **Edit** | Environment variable for game directory (line 1775) |
+| `legacy-src/desktop-engine/CMakeLists.txt` | **Edit** | Add health.c, container build options |
 
 ---
 

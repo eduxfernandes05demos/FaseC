@@ -10,7 +10,7 @@ The input subsystem provides keyboard, mouse, and joystick input across all supp
 
 ---
 
-## File Inventory (`Quake/WinQuake/`)
+## File Inventory (`legacy-src/desktop-engine/`)
 
 ### Platform Drivers
 | File | Platform | Devices |
@@ -33,7 +33,7 @@ The input subsystem provides keyboard, mouse, and joystick input across all supp
 
 ---
 
-## Interface Functions (`Quake/WinQuake/input.h`)
+## Interface Functions (`legacy-src/desktop-engine/input.h`)
 
 | Function | Called By | Purpose |
 |----------|----------|---------|
@@ -100,7 +100,7 @@ Platform input event (e.g., WM_KEYDOWN on Windows)
 
 ---
 
-## User Command Output (`Quake/WinQuake/protocol.h`)
+## User Command Output (`legacy-src/desktop-engine/protocol.h`)
 
 ```c
 typedef struct {

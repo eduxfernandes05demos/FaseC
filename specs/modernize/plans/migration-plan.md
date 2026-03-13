@@ -29,12 +29,12 @@ This document provides the step-by-step migration plan for transforming the Quak
 
 | Action | Files Affected | Validation |
 |--------|---------------|-----------|
-| Create root `CMakeLists.txt` | New file at `Quake/CMakeLists.txt` | `cmake --build .` succeeds |
-| Create WinQuake CMake target | Replaces `Quake/WinQuake/Makefile.linuxi386` | Binary runs identical to Makefile build |
-| Create QW client CMake target | Replaces `Quake/QW/Makefile.Linux` (client part) | Binary runs identical |
-| Create QW server CMake target | Replaces `Quake/QW/Makefile.Linux` (server part) | Binary runs identical |
+| Create root `CMakeLists.txt` | New file at `legacy-src/CMakeLists.txt` | `cmake --build .` succeeds |
+| Create WinQuake CMake target | Replaces `legacy-src/desktop-engine/Makefile.linuxi386` | Binary runs identical to Makefile build |
+| Create QW client CMake target | Replaces `legacy-src/QW/Makefile.Linux` (client part) | Binary runs identical |
+| Create QW server CMake target | Replaces `legacy-src/QW/Makefile.Linux` (server part) | Binary runs identical |
 | Add assembly toggle | `option(USE_ASM "Use x86 assembly" ON)` | Builds with and without assembly |
-| Keep original build files | Move to `Quake/legacy-build/` | Original builds still work |
+| Keep original build files | Move to `legacy-src/legacy-build/` | Original builds still work |
 
 **Exit Criteria**:
 - [ ] CMake builds all three targets (WinQuake, QW client, QW server) on Linux
@@ -74,7 +74,7 @@ This document provides the step-by-step migration plan for transforming the Quak
 
 **Exit Criteria**:
 - [ ] Zero instances of `sprintf`, `strcpy`, `strcat` (unbounded) in codebase
-- [ ] `grep -r "sprintf\|strcpy\|strcat" Quake/ --include="*.c"` returns zero unbounded calls
+- [ ] `grep -r "sprintf\|strcpy\|strcat" legacy-src/ --include="*.c"` returns zero unbounded calls
 - [ ] All malloc calls have NULL checks
 - [ ] Security fuzzing runs without crashes
 
@@ -90,11 +90,11 @@ This document provides the step-by-step migration plan for transforming the Quak
 | 4d: Runtime backend selection | Add startup option `--backend=headless` | `host.c:835` (Host_Init) |
 
 **Key Files**:
-- `Quake/WinQuake/sys_linux.c` → Wrap as `platform_linux` implementation
-- `Quake/WinQuake/vid_svgalib.c` (line 555: `VID_Init()`) → Wrap behind `video_interface_t`
-- `Quake/WinQuake/vid_null.c` → Enhance for headless mode
-- `Quake/WinQuake/snd_null.c` → Enhance with audio capture
-- `Quake/WinQuake/in_null.c` → Enhance with remote input injection
+- `legacy-src/desktop-engine/sys_linux.c` → Wrap as `platform_linux` implementation
+- `legacy-src/desktop-engine/vid_svgalib.c` (line 555: `VID_Init()`) → Wrap behind `video_interface_t`
+- `legacy-src/desktop-engine/vid_null.c` → Enhance for headless mode
+- `legacy-src/desktop-engine/snd_null.c` → Enhance with audio capture
+- `legacy-src/desktop-engine/in_null.c` → Enhance with remote input injection
 
 **Exit Criteria**:
 - [ ] Engine starts with `--backend=headless` (no display, no audio, no input hardware)

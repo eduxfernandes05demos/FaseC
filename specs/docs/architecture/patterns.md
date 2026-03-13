@@ -24,11 +24,11 @@ graph TD
 ```
 
 - The BSP tree is **precomputed** at map compile time and stored in `LUMP_NODES` / `LUMP_LEAFS` of the BSP file
-- At runtime, `R_RecursiveWorldNode()` in `Quake/WinQuake/r_bsp.c` traverses the tree front-to-back relative to the camera
+- At runtime, `R_RecursiveWorldNode()` in `legacy-src/desktop-engine/r_bsp.c` traverses the tree front-to-back relative to the camera
 - Each leaf contains a **PVS** (Potentially Visible Set) — a compressed bitfield indicating which other leaves are visible from that position
-- `R_MarkLeaves()` in `Quake/WinQuake/r_main.c` uses the PVS to skip entire branches that are not visible
+- `R_MarkLeaves()` in `legacy-src/desktop-engine/r_main.c` uses the PVS to skip entire branches that are not visible
 
-**Source files**: `Quake/WinQuake/r_bsp.c`, `Quake/WinQuake/model.c`, `Quake/WinQuake/bspfile.h`
+**Source files**: `legacy-src/desktop-engine/r_bsp.c`, `legacy-src/desktop-engine/model.c`, `legacy-src/desktop-engine/bspfile.h`
 
 ---
 
@@ -54,12 +54,12 @@ sequenceDiagram
     S->>C2: Entity state (positions, angles, etc.)
 ```
 
-- **Server** (`Quake/WinQuake/sv_main.c`, `Quake/WinQuake/sv_phys.c`) runs physics at a fixed tick rate (`sys_ticrate`, default 0.05s = 20Hz)
+- **Server** (`legacy-src/desktop-engine/sv_main.c`, `legacy-src/desktop-engine/sv_phys.c`) runs physics at a fixed tick rate (`sys_ticrate`, default 0.05s = 20Hz)
 - **Clients** send `usercmd_t` containing movement input, timestamps, and button presses
 - Server processes all commands, runs QuakeC game logic, and broadcasts entity state
 - Clients receive updates and interpolate between states for smooth rendering
 
-**Source files**: `Quake/WinQuake/sv_main.c`, `Quake/WinQuake/sv_phys.c`, `Quake/WinQuake/cl_main.c`, `Quake/WinQuake/host.c`
+**Source files**: `legacy-src/desktop-engine/sv_main.c`, `legacy-src/desktop-engine/sv_phys.c`, `legacy-src/desktop-engine/cl_main.c`, `legacy-src/desktop-engine/host.c`
 
 ---
 
@@ -81,13 +81,13 @@ graph TD
     RECONCILE --> CORRECT[Snap or interpolate<br/>to correct position]
 ```
 
-1. Client runs `CL_PredictUsercmd()` (`Quake/QW/client/cl_pred.c:64`) — applies user input to local physics simulation
+1. Client runs `CL_PredictUsercmd()` (`legacy-src/QW/client/cl_pred.c:64`) — applies user input to local physics simulation
 2. Predicted position is rendered immediately for responsive feel
 3. When server state arrives, client compares predicted vs. actual position
 4. Corrections are applied (can cause visible "snapping" on misprediction)
 5. Up to 64 frames of history stored (`UPDATE_BACKUP`) for delta replay
 
-**Source files**: `Quake/QW/client/cl_pred.c`, `Quake/QW/client/cl_ents.c`
+**Source files**: `legacy-src/QW/client/cl_pred.c`, `legacy-src/QW/client/cl_ents.c`
 
 ---
 
@@ -107,15 +107,15 @@ graph LR
     FLAGS --> WRITE[Write entity number<br/>+ flags + changed data only]
 ```
 
-- Server: `SV_WriteDelta()` in `Quake/QW/server/sv_ents.c:155` compares old and new `entity_state_t`
+- Server: `SV_WriteDelta()` in `legacy-src/QW/server/sv_ents.c:155` compares old and new `entity_state_t`
 - Sets flag bits (e.g., `U_ORIGIN1`, `U_ANGLE2`, `U_MODEL`) for each changed field
 - Writes only the entity number, flags, and changed field data
-- Client: `CL_ParseDelta()` in `Quake/QW/client/cl_ents.c:160` decompresses by copying previous state and overwriting flagged fields
+- Client: `CL_ParseDelta()` in `legacy-src/QW/client/cl_ents.c:160` decompresses by copying previous state and overwriting flagged fields
 - Entity list deltas handled by `SV_EmitPacketEntities()` — adds new entities, updates changed ones, removes deleted ones
 
 **Bandwidth savings**: Typical frame sends ~50-200 bytes instead of ~2000+ bytes for full state.
 
-**Source files**: `Quake/QW/server/sv_ents.c`, `Quake/QW/client/cl_ents.c`, `Quake/QW/client/protocol.h`
+**Source files**: `legacy-src/QW/server/sv_ents.c`, `legacy-src/QW/client/cl_ents.c`, `legacy-src/QW/client/protocol.h`
 
 ---
 
@@ -140,12 +140,12 @@ Cmd_ExecuteString("map e1m1")
 SV_Map_f() — registered handler executes
 ```
 
-- `Cbuf_AddText()` in `Quake/WinQuake/cmd.c` appends to a text buffer
+- `Cbuf_AddText()` in `legacy-src/desktop-engine/cmd.c` appends to a text buffer
 - `Cbuf_Execute()` processes one line at a time, tokenizing and dispatching
 - Commands are registered with `Cmd_AddCommand(name, function)` — stores name → function pointer mapping
 - CVars are runtime-configurable via `Cvar_Set()` / `Cvar_RegisterVariable()`
 
-**Source files**: `Quake/WinQuake/cmd.c`, `Quake/WinQuake/cvar.c`, `Quake/WinQuake/keys.c`
+**Source files**: `legacy-src/desktop-engine/cmd.c`, `legacy-src/desktop-engine/cvar.c`, `legacy-src/desktop-engine/keys.c`
 
 ---
 
@@ -171,12 +171,12 @@ graph TD
     BLOCKED --> |"door_blocked()"| CRUSH[Entity crushed]
 ```
 
-- All game objects share the `edict_t` structure (`Quake/WinQuake/progs.h`)
+- All game objects share the `edict_t` structure (`legacy-src/desktop-engine/progs.h`)
 - Behavior is determined by assigning callback functions to `think`, `touch`, `use`, `blocked` fields
 - The server calls these callbacks based on game events (timer expiry, collision, targeting)
 - Entity types are distinguished by `classname` string, not by C type
 
-**Source files**: `Quake/WinQuake/progs.h`, `Quake/WinQuake/pr_edict.c`, `Quake/qw-qc/defs.qc`
+**Source files**: `legacy-src/desktop-engine/progs.h`, `legacy-src/desktop-engine/pr_edict.c`, `legacy-src/qw-qc/defs.qc`
 
 ---
 
@@ -196,11 +196,11 @@ graph LR
 
 - Entity A sets `self.target = "name"` in the map editor
 - Entity B sets `self.targetname = "name"`
-- When A fires, `SUB_UseTargets()` (`Quake/qw-qc/subs.qc`) finds all entities with matching `targetname` and calls their `use()` function
+- When A fires, `SUB_UseTargets()` (`legacy-src/qw-qc/subs.qc`) finds all entities with matching `targetname` and calls their `use()` function
 - Supports delays (`self.delay`), kill targets (`self.killtarget`), and messages (`self.message`)
 - Chains can be arbitrarily deep: Button → Door → Trigger_relay → Platform → ...
 
-**Source files**: `Quake/qw-qc/subs.qc`, `Quake/qw-qc/triggers.qc`, `Quake/qw-qc/doors.qc`, `Quake/qw-qc/buttons.qc`
+**Source files**: `legacy-src/qw-qc/subs.qc`, `legacy-src/qw-qc/triggers.qc`, `legacy-src/qw-qc/doors.qc`, `legacy-src/qw-qc/buttons.qc`
 
 ---
 
@@ -223,15 +223,15 @@ stateDiagram-v2
     STATE_DOWN --> STATE_DOWN: blocked → reverse
 ```
 
-**States defined in `Quake/qw-qc/doors.qc`:**
+**States defined in `legacy-src/qw-qc/doors.qc`:**
 - `STATE_TOP = 0` — Fully open
 - `STATE_BOTTOM = 1` — Fully closed
 - `STATE_UP = 2` — Moving open
 - `STATE_DOWN = 3` — Moving closed
 
-**Movement** uses `SUB_CalcMove()` in `Quake/qw-qc/subs.qc` which computes velocity as `(destination - origin) / travel_time` and sets `nextthink` to the arrival time.
+**Movement** uses `SUB_CalcMove()` in `legacy-src/qw-qc/subs.qc` which computes velocity as `(destination - origin) / travel_time` and sets `nextthink` to the arrival time.
 
-**Source files**: `Quake/qw-qc/doors.qc`, `Quake/qw-qc/plats.qc`, `Quake/qw-qc/buttons.qc`, `Quake/qw-qc/subs.qc`
+**Source files**: `legacy-src/qw-qc/doors.qc`, `legacy-src/qw-qc/plats.qc`, `legacy-src/qw-qc/buttons.qc`, `legacy-src/qw-qc/subs.qc`
 
 ---
 
@@ -260,7 +260,7 @@ The same pattern is repeated for:
 
 Selection is done via Makefile object file lists — only the correct platform file is compiled and linked.
 
-**Source files**: `Quake/WinQuake/sys.h`, `Quake/WinQuake/vid.h`, `Quake/WinQuake/input.h`, `Quake/WinQuake/sound.h`
+**Source files**: `legacy-src/desktop-engine/sys.h`, `legacy-src/desktop-engine/vid.h`, `legacy-src/desktop-engine/input.h`, `legacy-src/desktop-engine/sound.h`
 
 ---
 
@@ -286,9 +286,9 @@ graph LR
 - `paintedtime` tracks how far the mixer has written
 - `samplepos` tracks where the hardware is currently reading
 - Mixer fills `(samplepos + latency) - paintedtime` samples each frame
-- 3D spatialization calculates per-channel volume based on listener position relative to sound source (`SND_Spatialize()` in `Quake/WinQuake/snd_dma.c`)
+- 3D spatialization calculates per-channel volume based on listener position relative to sound source (`SND_Spatialize()` in `legacy-src/desktop-engine/snd_dma.c`)
 
-**Source files**: `Quake/WinQuake/snd_dma.c`, `Quake/WinQuake/snd_mix.c`, `Quake/WinQuake/sound.h`
+**Source files**: `legacy-src/desktop-engine/snd_dma.c`, `legacy-src/desktop-engine/snd_mix.c`, `legacy-src/desktop-engine/sound.h`
 
 ---
 
@@ -314,11 +314,11 @@ Store in hunk memory, add to cache
 Return cached pointer
 ```
 
-- `mod_known[MAX_MOD_KNOWN]` in `Quake/WinQuake/model.c` stores up to 256 loaded models
+- `mod_known[MAX_MOD_KNOWN]` in `legacy-src/desktop-engine/model.c` stores up to 256 loaded models
 - Sound samples use `Cache_Alloc()` — can be evicted if memory runs low
 - `Mod_ClearAll()` flushes cache on level change
 
-**Source files**: `Quake/WinQuake/model.c`, `Quake/WinQuake/zone.c`
+**Source files**: `legacy-src/desktop-engine/model.c`, `legacy-src/desktop-engine/zone.c`
 
 ---
 
@@ -346,7 +346,7 @@ net_main.c — Network Manager
 - `net_main.c` iterates over registered drivers to find one that works
 - The datagram layer (`net_dgrm.c`) adds reliable messaging (sequence numbers + ACK) on top of raw transport
 
-**Source files**: `Quake/WinQuake/net_main.c`, `Quake/WinQuake/net_dgrm.c`, `Quake/WinQuake/net.h`
+**Source files**: `legacy-src/desktop-engine/net_main.c`, `legacy-src/desktop-engine/net_dgrm.c`, `legacy-src/desktop-engine/net.h`
 
 ---
 

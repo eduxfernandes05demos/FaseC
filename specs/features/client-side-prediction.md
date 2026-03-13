@@ -1,6 +1,6 @@
 # Feature: Client-Side Prediction
 
-> Reverse-engineered from `Quake/QW/client/cl_pred.c` and `Quake/QW/client/cl_ents.c`
+> Reverse-engineered from `legacy-src/QW/client/cl_pred.c` and `legacy-src/QW/client/cl_ents.c`
 
 ---
 
@@ -14,11 +14,11 @@ Client-side prediction is a key QuakeWorld innovation that masks network latency
 
 | File | Purpose |
 |------|---------|
-| `Quake/QW/client/cl_pred.c` | Prediction algorithm — `CL_PredictMove()`, `CL_PredictUsercmd()` |
-| `Quake/QW/client/cl_ents.c` | Entity state management, `CL_SetUpPlayerPrediction()` |
-| `Quake/QW/client/cl_input.c` | Input command generation (`usercmd_t`) |
-| `Quake/QW/client/client.h` | `frame_t`, `player_state_t` structures |
-| `Quake/QW/client/protocol.h` | `usercmd_t` structure |
+| `legacy-src/QW/client/cl_pred.c` | Prediction algorithm — `CL_PredictMove()`, `CL_PredictUsercmd()` |
+| `legacy-src/QW/client/cl_ents.c` | Entity state management, `CL_SetUpPlayerPrediction()` |
+| `legacy-src/QW/client/cl_input.c` | Input command generation (`usercmd_t`) |
+| `legacy-src/QW/client/client.h` | `frame_t`, `player_state_t` structures |
+| `legacy-src/QW/client/protocol.h` | `usercmd_t` structure |
 
 ---
 

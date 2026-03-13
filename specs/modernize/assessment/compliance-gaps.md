@@ -19,11 +19,11 @@ The engine uses ad-hoc `printf`-style output with no structured logging:
 
 | Output Method | Files | Description |
 |---------------|-------|-------------|
-| `Con_Printf()` | `Quake/WinQuake/console.c:360` | Console output (vsprintf to buffer) |
-| `Con_DPrintf()` | `Quake/WinQuake/console.c:384` | Debug-only console output |
-| `Sys_Printf()` | `Quake/WinQuake/sys_win.c:435` | System-level output |
-| `Sys_Error()` | `Quake/WinQuake/sys_win.c:367` | Fatal error output (vsprintf to stack buffer) |
-| `Host_Error()` | `Quake/WinQuake/host.c` | Host-level error reporting |
+| `Con_Printf()` | `legacy-src/desktop-engine/console.c:360` | Console output (vsprintf to buffer) |
+| `Con_DPrintf()` | `legacy-src/desktop-engine/console.c:384` | Debug-only console output |
+| `Sys_Printf()` | `legacy-src/desktop-engine/sys_win.c:435` | System-level output |
+| `Sys_Error()` | `legacy-src/desktop-engine/sys_win.c:367` | Fatal error output (vsprintf to stack buffer) |
+| `Host_Error()` | `legacy-src/desktop-engine/host.c` | Host-level error reporting |
 
 ### 2.2 Gaps
 
@@ -65,9 +65,9 @@ There are **no health check mechanisms** in the engine:
 
 | Function | File | Line | Behavior |
 |----------|------|------|----------|
-| `Sys_Error()` | `Quake/WinQuake/sys_win.c` | 367 | Displays message box + `exit(1)` |
-| `Sys_Error()` | `Quake/WinQuake/sys_linux.c` | various | Printf + `exit(1)` |
-| `Host_Error()` | `Quake/WinQuake/host.c` | various | Attempts recovery, falls back to `Sys_Error` |
+| `Sys_Error()` | `legacy-src/desktop-engine/sys_win.c` | 367 | Displays message box + `exit(1)` |
+| `Sys_Error()` | `legacy-src/desktop-engine/sys_linux.c` | various | Printf + `exit(1)` |
+| `Host_Error()` | `legacy-src/desktop-engine/host.c` | various | Attempts recovery, falls back to `Sys_Error` |
 | `Sys_Quit()` | Various `sys_*.c` | various | Immediate `exit(0)` |
 
 **Gap**: No graceful shutdown — `exit()` terminates without connection draining, state persistence, or cleanup signaling.
@@ -94,11 +94,11 @@ There are **no health check mechanisms** in the engine:
 
 | File | Purpose | Modern Equivalent |
 |------|---------|-------------------|
-| `Quake/WinQuake/Makefile.linuxi386` | Linux x86 build | CMake + GitHub Actions |
-| `Quake/WinQuake/Makefile.Solaris` | Solaris build | Cross-compilation in CMake |
-| `Quake/QW/Makefile.Linux` | QW Linux build | CMake targets |
-| `Quake/WinQuake/WinQuake.dsp` | MSVC 4-6 project | CMake + MSBuild |
-| `Quake/QW/qw.dsw` | MSVC workspace | CMake workspace |
+| `legacy-src/desktop-engine/Makefile.linuxi386` | Linux x86 build | CMake + GitHub Actions |
+| `legacy-src/desktop-engine/Makefile.Solaris` | Solaris build | Cross-compilation in CMake |
+| `legacy-src/QW/Makefile.Linux` | QW Linux build | CMake targets |
+| `legacy-src/desktop-engine/WinQuake.dsp` | MSVC 4-6 project | CMake + MSBuild |
+| `legacy-src/QW/qw.dsw` | MSVC workspace | CMake workspace |
 
 ---
 
@@ -162,8 +162,8 @@ The codebase has **minimal code comments**:
 |-----------|---------|------------|
 | Quake Engine | GPL v2 | `LICENSE.md` — requires source distribution |
 | Game Data | Proprietary | Not included — must be separately licensed |
-| Third-party (Scitech MGL) | Commercial | `Quake/WinQuake/scitech/` — licensing unclear |
-| DirectX SDK | Microsoft | `Quake/WinQuake/dxsdk/` — redistribution terms apply |
+| Third-party (Scitech MGL) | Commercial | `legacy-src/desktop-engine/scitech/` — licensing unclear |
+| DirectX SDK | Microsoft | `legacy-src/desktop-engine/dxsdk/` — redistribution terms apply |
 
 ### 7.2 Cloud Compliance Gaps
 

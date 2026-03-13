@@ -25,11 +25,11 @@ sys_win.c / sys_linux.c → Host_Init() → Host_Frame() loop → Host_Shutdown(
 
 | Component | Entry Point | Source |
 |-----------|-------------|--------|
-| Main Loop | `Host_Frame()` | `Quake/WinQuake/host.c:729` |
-| Initialization | `Host_Init()` | `Quake/WinQuake/host.c:835` |
-| Shutdown | `Host_Shutdown()` | `Quake/WinQuake/host.c:932` |
-| Local Init | `Host_InitLocal()` | `Quake/WinQuake/host.c:209` |
-| Server Shutdown | `Host_ShutdownServer()` | `Quake/WinQuake/host.c:405` |
+| Main Loop | `Host_Frame()` | `legacy-src/desktop-engine/host.c:729` |
+| Initialization | `Host_Init()` | `legacy-src/desktop-engine/host.c:835` |
+| Shutdown | `Host_Shutdown()` | `legacy-src/desktop-engine/host.c:932` |
+| Local Init | `Host_InitLocal()` | `legacy-src/desktop-engine/host.c:209` |
+| Server Shutdown | `Host_ShutdownServer()` | `legacy-src/desktop-engine/host.c:405` |
 
 Each frame processes input, runs server simulation (physics + QuakeC), runs client prediction, renders the scene, mixes audio, and sends/receives network packets — all sequentially in a single thread.
 
@@ -113,7 +113,7 @@ These are **x86-only** (i386 AT&T syntax) and cannot run on ARM, RISC-V, or othe
 
 ## 4. Memory Management Architecture
 
-The engine implements a **three-tiered custom memory allocator** in `Quake/WinQuake/zone.c`:
+The engine implements a **three-tiered custom memory allocator** in `legacy-src/desktop-engine/zone.c`:
 
 | Allocator | Function | Line | Use Case |
 |-----------|----------|------|----------|

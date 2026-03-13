@@ -47,17 +47,17 @@ This document defines the measurable success criteria and Key Performance Indica
 
 | Criterion | Metric | Threshold | Measurement |
 |-----------|--------|-----------|-------------|
-| sprintf elimination | Instances of unbounded sprintf | 0 | `grep -rn "sprintf\b" Quake/ --include="*.c" | grep -v snprintf | wc -l` |
-| strcpy elimination | Instances of unbounded strcpy | 0 | `grep -rn "\bstrcpy\b" Quake/ --include="*.c" | grep -v strncpy | wc -l` |
-| strcat elimination | Instances of unbounded strcat | 0 | `grep -rn "\bstrcat\b" Quake/ --include="*.c" | grep -v strncat | wc -l` |
-| vsprintf elimination | Instances of vsprintf | 0 | `grep -rn "vsprintf\b" Quake/ --include="*.c" | grep -v vsnprintf | wc -l` |
+| sprintf elimination | Instances of unbounded sprintf | 0 | `grep -rn "sprintf\b" legacy-src/ --include="*.c" | grep -v snprintf | wc -l` |
+| strcpy elimination | Instances of unbounded strcpy | 0 | `grep -rn "\bstrcpy\b" legacy-src/ --include="*.c" | grep -v strncpy | wc -l` |
+| strcat elimination | Instances of unbounded strcat | 0 | `grep -rn "\bstrcat\b" legacy-src/ --include="*.c" | grep -v strncat | wc -l` |
+| vsprintf elimination | Instances of vsprintf | 0 | `grep -rn "vsprintf\b" legacy-src/ --include="*.c" | grep -v vsnprintf | wc -l` |
 
 ### Memory Safety
 
 | Criterion | Metric | Threshold | Measurement |
 |-----------|--------|-----------|-------------|
 | Malloc NULL checks | Unchecked malloc calls | 0 | Static analysis (Cppcheck) |
-| system() removal | Instances of system() | 0 | `grep -rn "system(" Quake/ --include="*.c" | wc -l` |
+| system() removal | Instances of system() | 0 | `grep -rn "system(" legacy-src/ --include="*.c" | wc -l` |
 | ASan clean | AddressSanitizer findings | 0 | Run timedemo with `-fsanitize=address` |
 | Fuzzing stability | Crashes during fuzzing | 0 in 1 hour | AFL++ with network protocol corpus |
 

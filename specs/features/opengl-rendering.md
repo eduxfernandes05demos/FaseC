@@ -1,6 +1,6 @@
 # Feature: OpenGL Rendering Pipeline
 
-> Reverse-engineered from `Quake/WinQuake/gl_*.c`
+> Reverse-engineered from `legacy-src/desktop-engine/gl_*.c`
 
 ---
 
@@ -16,22 +16,22 @@ Enabled by the `GLQUAKE` preprocessor macro at compile time.
 
 | File | Purpose |
 |------|---------|
-| `Quake/WinQuake/gl_rmain.c` | GL rendering entry point, entity rendering |
-| `Quake/WinQuake/gl_rsurf.c` | GL BSP surface/world rendering |
-| `Quake/WinQuake/gl_mesh.c` | GL alias model mesh compilation and rendering |
-| `Quake/WinQuake/gl_rlight.c` | GL dynamic lighting (point lights as spheres) |
-| `Quake/WinQuake/gl_draw.c` | GL 2D drawing, texture upload (palette → RGBA) |
-| `Quake/WinQuake/gl_warp.c` | GL sky and water surface warping |
-| `Quake/WinQuake/gl_model.c` | GL-specific model loading (texture creation) |
-| `Quake/WinQuake/gl_model.h` | GL model data structures |
-| `Quake/WinQuake/gl_refrag.c` | GL entity fragment storage |
-| `Quake/WinQuake/gl_rmisc.c` | GL miscellaneous rendering utilities |
-| `Quake/WinQuake/gl_screen.c` | GL screen management |
-| `Quake/WinQuake/gl_test.c` | GL testing/debugging utilities |
-| `Quake/WinQuake/gl_vidnt.c` | GL Windows video driver (WGL context) |
-| `Quake/WinQuake/gl_vidlinux.c` | GL Linux SVGA video driver |
-| `Quake/WinQuake/gl_vidlinuxglx.c` | GL Linux X11/GLX video driver |
-| `Quake/WinQuake/glquake.h` | GL-specific definitions and headers |
+| `legacy-src/desktop-engine/gl_rmain.c` | GL rendering entry point, entity rendering |
+| `legacy-src/desktop-engine/gl_rsurf.c` | GL BSP surface/world rendering |
+| `legacy-src/desktop-engine/gl_mesh.c` | GL alias model mesh compilation and rendering |
+| `legacy-src/desktop-engine/gl_rlight.c` | GL dynamic lighting (point lights as spheres) |
+| `legacy-src/desktop-engine/gl_draw.c` | GL 2D drawing, texture upload (palette → RGBA) |
+| `legacy-src/desktop-engine/gl_warp.c` | GL sky and water surface warping |
+| `legacy-src/desktop-engine/gl_model.c` | GL-specific model loading (texture creation) |
+| `legacy-src/desktop-engine/gl_model.h` | GL model data structures |
+| `legacy-src/desktop-engine/gl_refrag.c` | GL entity fragment storage |
+| `legacy-src/desktop-engine/gl_rmisc.c` | GL miscellaneous rendering utilities |
+| `legacy-src/desktop-engine/gl_screen.c` | GL screen management |
+| `legacy-src/desktop-engine/gl_test.c` | GL testing/debugging utilities |
+| `legacy-src/desktop-engine/gl_vidnt.c` | GL Windows video driver (WGL context) |
+| `legacy-src/desktop-engine/gl_vidlinux.c` | GL Linux SVGA video driver |
+| `legacy-src/desktop-engine/gl_vidlinuxglx.c` | GL Linux X11/GLX video driver |
+| `legacy-src/desktop-engine/glquake.h` | GL-specific definitions and headers |
 
 ---
 
@@ -73,7 +73,7 @@ R_RenderView() [gl_rmain.c]
 
 ### Texture Upload
 - Palette-indexed 8-bit textures converted to RGBA on upload
-- `GL_Upload8()` / `GL_Upload32()` in `Quake/WinQuake/gl_draw.c`
+- `GL_Upload8()` / `GL_Upload32()` in `legacy-src/desktop-engine/gl_draw.c`
 - Textures bound to OpenGL texture objects with `glBindTexture()`
 
 ### Lightmap Textures
@@ -82,7 +82,7 @@ R_RenderView() [gl_rmain.c]
 - Dynamic light changes trigger partial lightmap texture re-upload
 
 ### Alias Model Display Lists
-- `GL_MakeAliasModelDisplayLists()` in `Quake/WinQuake/gl_mesh.c`
+- `GL_MakeAliasModelDisplayLists()` in `legacy-src/desktop-engine/gl_mesh.c`
 - Compiled into OpenGL display lists for efficient repeated rendering
 - Vertex animation interpolated between frames
 

@@ -27,14 +27,14 @@ Replace all platform-specific build files with a unified CMake build system that
 
 | File | Purpose | Targets |
 |------|---------|---------|
-| `Quake/WinQuake/Makefile.linuxi386` | Linux WinQuake build | `squake`, `glquake`, `unixded` |
-| `Quake/WinQuake/Makefile.Solaris` | Solaris WinQuake build | Solaris targets |
-| `Quake/QW/Makefile.Linux` | QuakeWorld Linux build | `qwcl`, `glqwcl`, `qwsv` |
-| `Quake/QW/Makefile.Solaris` | QuakeWorld Solaris build | Solaris targets |
-| `Quake/WinQuake/WinQuake.dsp` | MSVC 4-6 project | WinQuake Windows |
-| `Quake/WinQuake/WinQuake.dsw` | MSVC workspace | WinQuake workspace |
-| `Quake/WinQuake/WinQuake.mdp` | MSVC makefile project | WinQuake |
-| `Quake/QW/qw.dsw` | MSVC workspace | QuakeWorld workspace |
+| `legacy-src/desktop-engine/Makefile.linuxi386` | Linux WinQuake build | `squake`, `glquake`, `unixded` |
+| `legacy-src/desktop-engine/Makefile.Solaris` | Solaris WinQuake build | Solaris targets |
+| `legacy-src/QW/Makefile.Linux` | QuakeWorld Linux build | `qwcl`, `glqwcl`, `qwsv` |
+| `legacy-src/QW/Makefile.Solaris` | QuakeWorld Solaris build | Solaris targets |
+| `legacy-src/desktop-engine/WinQuake.dsp` | MSVC 4-6 project | WinQuake Windows |
+| `legacy-src/desktop-engine/WinQuake.dsw` | MSVC workspace | WinQuake workspace |
+| `legacy-src/desktop-engine/WinQuake.mdp` | MSVC makefile project | WinQuake |
+| `legacy-src/QW/qw.dsw` | MSVC workspace | QuakeWorld workspace |
 
 ---
 
@@ -42,7 +42,7 @@ Replace all platform-specific build files with a unified CMake build system that
 
 ### Step 1: Create Root CMakeLists.txt
 
-**New file**: `Quake/CMakeLists.txt`
+**New file**: `legacy-src/CMakeLists.txt`
 
 ```cmake
 cmake_minimum_required(VERSION 3.16)
@@ -73,7 +73,7 @@ add_subdirectory(QW)
 
 ### Step 2: Create WinQuake CMakeLists.txt
 
-**New file**: `Quake/WinQuake/CMakeLists.txt`
+**New file**: `legacy-src/desktop-engine/CMakeLists.txt`
 
 Extract source file lists from `Makefile.linuxi386`:
 
@@ -87,11 +87,11 @@ Extract source file lists from `Makefile.linuxi386`:
 
 ### Step 3: Create QW CMakeLists.txt
 
-**New file**: `Quake/QW/CMakeLists.txt`
+**New file**: `legacy-src/QW/CMakeLists.txt`
 
 Extract source lists from `Makefile.Linux` for:
-- `qwcl` (QuakeWorld client) — `Quake/QW/client/*.c`
-- `qwsv` (QuakeWorld dedicated server) — `Quake/QW/server/*.c`
+- `qwcl` (QuakeWorld client) — `legacy-src/QW/client/*.c`
+- `qwsv` (QuakeWorld dedicated server) — `legacy-src/QW/server/*.c`
 
 ### Step 4: Add CTest Integration
 
@@ -101,7 +101,7 @@ enable_testing()
 add_subdirectory(tests)
 ```
 
-**New file**: `Quake/tests/CMakeLists.txt` — Test target setup
+**New file**: `legacy-src/tests/CMakeLists.txt` — Test target setup
 
 ### Step 5: Add gas2masm Build (Windows assembly support)
 
@@ -110,15 +110,15 @@ add_subdirectory(tests)
 add_executable(gas2masm QW/gas2masm/gas2masm.c)
 ```
 
-Source: `Quake/QW/gas2masm/gas2masm.c`
+Source: `legacy-src/QW/gas2masm/gas2masm.c`
 
 ### Step 6: Preserve Original Build Files
 
-Move to `Quake/legacy-build/`:
+Move to `legacy-src/legacy-build/`:
 ```bash
-mkdir -p Quake/legacy-build
-mv Quake/WinQuake/Makefile.* Quake/legacy-build/
-mv Quake/WinQuake/WinQuake.dsp Quake/legacy-build/
+mkdir -p legacy-src/legacy-build
+mv legacy-src/desktop-engine/Makefile.* legacy-src/legacy-build/
+mv legacy-src/desktop-engine/WinQuake.dsp legacy-src/legacy-build/
 # ... etc
 ```
 
